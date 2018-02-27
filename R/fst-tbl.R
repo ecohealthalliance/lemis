@@ -1,0 +1,19 @@
+#' Create a tbl from an fst file
+#'
+#' A convenience wrapper to create a table from a single-file source
+#'
+#' @param path Path to the fst file
+#'
+#' @return A tbl with an fst source
+#' @export
+#' @importFrom dplyr tbl
+#' @importFrom fstplyr src_fst
+#' @importFrom tools file_path_sans_ext
+fst_tbl <- function(path) {
+  path <- normalizePath(path)
+  dir <- dirname(path)
+  tblname <- basename(tools::file_path_sans_ext(path))
+  fst_src <- fstplyr::src_fst(dir)
+  fst_tbl <- dplyr::tbl(fst_src, tblname)
+  return(fst_tbl)
+}
