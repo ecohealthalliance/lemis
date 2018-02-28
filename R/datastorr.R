@@ -1,6 +1,11 @@
-##' Download the example data set from ecohealthalliance/lemis
-##'  (\url{https://github.com/ecohealthalliance/lemis/})
-##' @title Download example data set
+##' Load the LEMIS database
+##'
+##' This function loads the LEMIS database as an out-of-memory **dplyr**
+##' table.  It will download the latest database from the remote repo the first
+##' time you use it or if you specify a version of the database not on your
+##' computer.  Available versions can be found at
+##' \url{https://github.com/ecohealthalliance/lemis/releases}
+##'
 ##'
 ##' @param version Version number.  The default will load the most
 ##'   recent version on your computer or the most recent version known
