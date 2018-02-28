@@ -30,11 +30,9 @@ This function returns a data frame field descriptions for \code{\link[=lemis_dat
     }
     mytext
   }
-}{
-  \Sexpr[echo=FALSE, results=rd, stage=build]{
-     lemis:::tabular(lemis::lemis_metadata())
-  }
 }
+
+\if{text,latex}{ \Sexpr[echo=FALSE, results=rd, stage=build]{lemis:::tabular(lemis::lemis_metadata())}}
 }
 \seealso{
 \code{\link[=lemis_codes]{lemis_codes()}} \code{\link[=lemis_data]{lemis_data()}}

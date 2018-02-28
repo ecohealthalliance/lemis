@@ -60,11 +60,9 @@ lemis_codes <- function() {
 #'     }
 #'     mytext
 #'   }
-#' }{
-#'   \Sexpr[echo=FALSE, results=rd, stage=build]{
-#'      lemis:::tabular(lemis::lemis_metadata())
-#'   }
 #' }
+#'
+#' \if{text,latex}{ \Sexpr[echo=FALSE, results=rd, stage=build]{lemis:::tabular(lemis::lemis_metadata())}}
 #'
 #' @return A tibble with field, code, code value, and whether the field is present post-2013.
 #' @importFrom DT datatable
