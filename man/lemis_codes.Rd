@@ -35,12 +35,14 @@ Original as-published PDFs of codes from pre- and post-2013 can be found in this
       mytext <- paste('Below is a searchable version of the LEMIS codes.',
       '\\\out{<div style="width:100\%">',
          paste(stringi::stri_subset_regex(readLines(tmp), "^</?(!DOCTYPE|meta|body|html)",negate=TRUE), collapse="\n"),
-      '</div>}',
+      '</div>}\n',
       sep="\n")
     }
     mytext
   }
-}{The HTML version of this help file includes a searchable table of the LEMIS }
+}
+
+\if{text,latex}{The HTML version of this help file includes a searchable table of the LEMIS}
 }
 \seealso{
 \code{\link[=lemis_metadata]{lemis_metadata()}} \code{\link[=lemis_data]{lemis_data()}}

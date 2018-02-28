@@ -16,7 +16,7 @@ Install the **lemis** package with this command:
 source("https://install-github.me/ecohealthalliance/lemis")
 ```
 
-As this is currently a private repository, you must have a GitHub personal access token set up to install and use the package. Instructions for this can be found [here](http://happygitwithr.com/github-pat.html#step-by-step). (Note that your token requires both "repo" and "user" permissions.)
+As this is currently a private repository, you must have a GitHub personal access token set up to install and use the package. Instructions for this can be found [here](http://happygitwithr.com/github-pat.html#step-by-step).
 
 Usage
 -----

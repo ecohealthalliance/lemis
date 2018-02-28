@@ -23,12 +23,14 @@
 #'       mytext <- paste('Below is a searchable version of the LEMIS codes.',
 #'       '\\\out{<div style="width:100\%">',
 #'          paste(stringi::stri_subset_regex(readLines(tmp), "^</?(!DOCTYPE|meta|body|html)",negate=TRUE), collapse="\n"),
-#'       '</div>}',
+#'       '</div>}\n',
 #'       sep="\n")
 #'     }
 #'     mytext
 #'   }
-#' }{The HTML version of this help file includes a searchable table of the LEMIS }
+#' }
+#'
+#' \if{text,latex}{The HTML version of this help file includes a searchable table of the LEMIS}
 #'
 #' @return A tibble with field, code, code value, and whether the field is present post-2013.
 #' @importFrom DT datatable
