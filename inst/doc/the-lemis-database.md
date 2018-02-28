@@ -223,25 +223,6 @@ lemis_data() %>%
 
 ![](the-lemis-database_files/figure-markdown_github/unnamed-chunk-4-1.png) Hmm, probably some data errors given that there are several coral and aquarium companies on this list.
 
-***What species' genetalia are people importing?***
-
-``` r
-lemis_data() %>% 
-  filter(import_export == "I", description == "GEN") %>% 
-  group_by(generic_name, country_origin, action) %>% 
-  summarize(shipments = n()) %>% 
-  left_join(filter(lemis_codes(), field=="country"), by=c("country_origin"="code")) %>%
-  left_join(filter(lemis_codes(), field=="action"), by=c("action"="code")) %>% 
-  arrange(desc(shipments)) %>% 
-  mutate(label = paste(stri_trans_totitle(generic_name), value.x, sep=", ")) %>% 
-  ggplot(aes(x=fct_reorder(label, shipments), y=shipments, fill=value.y)) +
-  geom_col() +
-  coord_flip() +
-  labs(title="U.S. Imports of Animal Genitalia, 2000-2013", x="Taxa / Origin Country", y="No. Shipments, 2000-2013", fill="USFWS Action")
-```
-
-![](the-lemis-database_files/figure-markdown_github/unnamed-chunk-5-1.png)
-
 ***What countries have the highest fraction of seized shipments?***
 
 ``` r
@@ -260,4 +241,4 @@ lemis_data() %>%
        x="Origin Country", y="Fraction of Shipments Seized, 2000-2013")
 ```
 
-![](the-lemis-database_files/figure-markdown_github/unnamed-chunk-6-1.png)
+![](the-lemis-database_files/figure-markdown_github/unnamed-chunk-5-1.png)
