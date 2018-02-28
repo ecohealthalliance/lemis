@@ -2,7 +2,6 @@
 .Rhistory
 .RData
 .Ruserdata
-inst/doc
 *.fst
 data-raw/*
 !data-raw/*.R
