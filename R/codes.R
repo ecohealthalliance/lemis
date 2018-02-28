@@ -86,14 +86,18 @@ tabular <- function(df, col_names = TRUE, ...) {
   col_align <- vapply(df, align, character(1))
 
   cols <- lapply(df, format, ...)
-  contents <- do.call("paste",
-                      c(cols, list(sep = " \\tab ", collapse = "\\cr\n  ")))
+  contents <- do.call(
+    "paste",
+    c(cols, list(sep = " \\tab ", collapse = "\\cr\n  "))
+  )
 
-  if(col_names) {
+  if (col_names) {
     header <- paste0("\\bold{", colnames(df), "}", collapse = " \\tab")
     contents <- paste0(header, "\\cr\n  ", contents)
   }
 
-  paste("\\tabular{", paste(col_align, collapse = ""), "}{\n  ",
-        contents, "\n}\n", sep = "")
+  paste(
+    "\\tabular{", paste(col_align, collapse = ""), "}{\n  ",
+    contents, "\n}\n", sep = ""
+  )
 }
