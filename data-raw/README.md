@@ -18,3 +18,5 @@ Once the `.fst` file is generated, it can be attached to this package as a
 release using `datastorr::github_release_create`.  Please read the help file
 for this function before doing so.  Also, before relase,
 one should update the package version in `DESCRIPTION` and commit all changes to GitHub.
+
+v1.0.0 of **lemis** has the 2000-2013 data set.

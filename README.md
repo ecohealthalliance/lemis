@@ -36,7 +36,7 @@ Note that the full database will be approximately 1 GB in memory.
 
 `lemis_codes()` returns a data frame with descriptions of the codes used by USFWS in the various columns of `lemis_data()`. This is useful for lookup or joining with the main data for more descriptive outputs. The `?lemis_code` help file also has a searchable table of these codes.
 
-See the [vignette](https://github.com/ecohealthalliance/lemis/tree/master/inst/doc/the-lemis-database.md) for a more in-depth tutorial and example use cases for the package.
+See the [vignette](https://github.com/ecohealthalliance/lemis/tree/master/inst/doc/the-lemis-database.md) for a more in-depth tutorial and example use cases for the package. See the [developer README](https://github.com/ecohealthalliance/lemis/tree/master/data-raw/README.md) for more on the data-cleaning process.
 
 About
 -----
