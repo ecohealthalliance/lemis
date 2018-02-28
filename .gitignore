@@ -6,3 +6,4 @@ inst/doc
 *.fst
 data-raw/*
 !data-raw/*.R
+/home/noamross/.local/share/datastorr/httr-oath

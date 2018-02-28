@@ -14,7 +14,8 @@ Encoding: UTF-8
 LazyData: true
 Imports:
   datastorr,
-  fstplyr
+  fstplyr,
+  DT
 Remotes:
   ropenscilabs/datastorr@i14-private-repos,
   krlmlr/fstplyr
@@ -29,5 +30,4 @@ Suggests:
     ggplot2,
     here,
     desc,
-    DT
 VignetteBuilder: knitr
