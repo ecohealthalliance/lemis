@@ -46,7 +46,9 @@ lemis <- lemis_raw %>%
          value = as.integer(readr::parse_number(value))) %>%
   mutate_at(c("us_co", "foreign_co"),
             funs(stri_replace_all_fixed(., "&amp;", "&"))) %>%
-  mutate_if(is.character, funs(if_else(. == "na", NA_character_, .)))
-
+  mutate_if(is.character, funs(if_else(. == "na", NA_character_, .))) %>%
+  mutate(port = stri_trans_toupper(port))
+# TODO Look for non-legal field codes
 write_fst(lemis, h("data-raw", "lemis.fst"), compress=100)
-
+#lemis:::lemis_release(description = "Initial test release", filename = h("data-raw", "lemis.fst"),
+#                      target = "master", ignore_dirty = FALSE)

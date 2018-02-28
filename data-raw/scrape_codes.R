@@ -32,7 +32,7 @@ ports_2009 <- data_frame(
 ) %>%
   mutate(value = stri_extract_last_regex(value, "(?<=-).+$")) %>%
   filter(!(is.na(code) | code == "")) %>%
-  mutate(code = stri_replace_all_regex(code, "^(\\d)$", "0$1"))
+  mutate(code = stri_replace_all_regex(code, "^0(\\d)$", "$1"))
 
 #dput(locate_areas(cf2009, pages=1))
 unit_2009_1 <- list(structure(c(517.45499468325, 50.21604706872, 551.003157403381,
@@ -147,7 +147,9 @@ port_2013 <- data_frame(
   code = c(port_2013_raw[[1]][-1,-1])
 ) %>%
   filter(code != "") %>%
-  separate(code, into = c("code", "value"), sep = "-", extra="merge", fill="right")
+  separate(code, into = c("code", "value"), sep = "-", extra="merge", fill="right") %>%
+  mutate(code = stri_replace_all_regex(code, "^0(\\d)$", "$1"))
+
 
 #dput(extract_areas(cf2013, pages=1))
 unit_2013_raw <- list(structure(c("C2", "C3", "CM", "Square Centimeter", "Cubic Centimeters",

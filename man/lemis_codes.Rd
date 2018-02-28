@@ -2,6 +2,9 @@
 % Please edit documentation in R/codes.R
 \name{lemis_codes}
 \alias{lemis_codes}
+\alias{lemis_metadata}
+\alias{codes}
+\alias{metadata}
 \title{LEMIS Code Values}
 \usage{
 lemis_codes()
@@ -11,7 +14,7 @@ A tibble with field, code, code value, and whether the field is present post-201
 }
 \description{
 This function returns a data frame with descriptions of all the code values
-used in \code{\link[=lemis]{lemis()}}.  This is useful for lookup (see searchable table in this help file)
+used in \code{\link[=lemis_data]{lemis_data()}}.  This is useful for lookup (see searchable table in this help file)
 as well as merging with the data for more descriptive summaries.
 }
 \details{
@@ -26,11 +29,11 @@ Original as-published PDFs of codes from pre- and post-2013 can be found in this
 \if{html}{
   \Sexpr[echo=FALSE, results=rd, stage=build]{
   in_pkgdown <- any(grepl("as_html.tag_Sexpr", sapply(sys.calls(), function(a) paste(deparse(a), collapse = "\n"))))
-    if(in_pkgdown) {
+    if(FALSE) {
       mytext <- c('In RStudio, this help file includes a searchable table of values.')
     } else {
     tmp <- tempfile(fileext=".html")
-      htmlwidgets::saveWidget(DT::datatable(lemis::lemis_codes(), rownames = FALSE), tmp)
+      htmlwidgets::saveWidget(DT::datatable(lemis::lemis_codes(), rownames = FALSE, width=700), tmp)
       mytext <- paste('Below is a searchable version of the LEMIS codes.',
       '\\\out{<div style="width:100\%">',
          paste(stringi::stri_subset_regex(readLines(tmp), "^</?(!DOCTYPE|meta|body|html)",negate=TRUE), collapse="\n"),

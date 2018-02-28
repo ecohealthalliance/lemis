@@ -5,7 +5,7 @@
 \alias{lemis_versions}
 \alias{lemis_version_current}
 \alias{lemis_del}
-\title{Download example data set}
+\title{Load the LEMIS database}
 \usage{
 lemis_data(version = NULL, path = NULL)
 
@@ -36,6 +36,9 @@ be polled.  With any luck, \code{local=FALSE} is a superset of
 for the most recent github version.}
 }
 \description{
-Download the example data set from ecohealthalliance/lemis
-(\url{https://github.com/ecohealthalliance/lemis/})
+This function loads the LEMIS database as an out-of-memory \strong{dplyr}
+table.  It will download the latest database from the remote repo the first
+time you use it or if you specify a version of the database not on your
+computer.  Available versions can be found at
+\url{https://github.com/ecohealthalliance/lemis/releases}
 }

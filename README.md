@@ -19,16 +19,20 @@ source("https://install-github.me/ecohealthalliance/lemis")
 Usage
 -----
 
-**lemis** makes use of [**datastorr**](https://github.com/ropenscilabs/datastorr) to manage data versioning. The first time you run `lemis_data()` the package will download the database. Subsequent calls will load the database from storage on your computer.
+The main function in **lemis** is `lemis_data()`. This returns the main cleaned LEMIS database as a **dplyr** tibble.
 
-The LEMIS database is stored as an [`.fst` file](https://github.com/fstpackage/fst), and loading it loads it a a [remote dplyr source](https://github.com/krlmlr/fstplyr). This means that it does not load fully into memory, but can be filtered and manipulated on-disk. If you wish to manipulate it as a data frame, simply call `dplyr::collect()` to load it fully into memory, like so:
+**lemis** makes use of [**datastorr**](https://github.com/ropenscilabs/datastorr) to manage data download. The first time you run `lemis_data()` the package will download the most recent version of the database (~160MB). Subsequent calls will load the database from storage on your computer.
+
+The LEMIS database is stored as an efficiently compressed [`.fst` file](https://github.com/fstpackage/fst), and loading it loads it a a [remote dplyr source](https://github.com/krlmlr/fstplyr). This means that it does not load fully into memory, but can be filtered and manipulated on-disk. If you wish to manipulate it as a data frame, simply call `dplyr::collect()` to load it fully into memory, like so:
 
 ``` r
 all_lemis <- lemis_data() %>% 
   collect()
 ```
 
-Note that the full database will be approximately 1 GB in memory. (On-disk, due to `fst` compression, the database is approximately 160MB).
+Note that the full database will be approximately 1 GB in memory.
+
+`lemis_codes()` returns a data frame with descriptions of the codes used by USFWS in the various columns of `lemis_data()`. This is useful for lookup or joining with the main data for more descriptive outputs. The `?lemis_code` help file also has a searchable table of these codes.
 
 About
 -----

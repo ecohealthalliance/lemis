@@ -1,11 +1,10 @@
 #' Create a tbl from an fst file
 #'
-#' A convenience wrapper to create a table from a single-file source
+#' A convenience wrapper to create a table from a single-file fst source
 #'
 #' @param path Path to the fst file
-#'
-#' @return A tbl with an fst source
 #' @export
+#' @return A tbl with an fst source
 #' @importFrom dplyr tbl
 #' @importFrom fstplyr src_fst
 #' @importFrom tools file_path_sans_ext

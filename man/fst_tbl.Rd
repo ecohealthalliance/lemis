@@ -13,5 +13,5 @@ fst_tbl(path)
 A tbl with an fst source
 }
 \description{
-A convenience wrapper to create a table from a single-file source
+A convenience wrapper to create a table from a single-file fst source
 }
