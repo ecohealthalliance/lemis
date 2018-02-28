@@ -15,7 +15,9 @@ LazyData: true
 Imports:
   datastorr,
   fstplyr,
-  DT
+  DT,
+  htmlwidgets,
+  stringi
 Remotes:
   ropenscilabs/datastorr@i14-private-repos,
   krlmlr/fstplyr
