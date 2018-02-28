@@ -2,9 +2,7 @@
 % Please edit documentation in R/codes.R
 \name{lemis_codes}
 \alias{lemis_codes}
-\alias{lemis_metadata}
 \alias{codes}
-\alias{metadata}
 \title{LEMIS Code Values}
 \usage{
 lemis_codes()
@@ -14,12 +12,12 @@ A tibble with field, code, code value, and whether the field is present post-201
 }
 \description{
 This function returns a data frame with descriptions of all the code values
-used in \code{\link[=lemis_data]{lemis_data()}}.  This is useful for lookup (see searchable table in this help file)
+used in \code{\link[=lemis_data]{lemis_data()}}.  This is useful for lookup
 as well as merging with the data for more descriptive summaries.
 }
 \details{
-There are some changes to coding pre- and post- Febrary 2013.  Most
-are just slight changes in wording and in these cases we use the post-2013
+USFWS made some changes in the data dictionary in Febrary 2013.  Most
+are changes slight tweaks in wording and in these cases we use the post-2013
 description.  Some fields codes are not used post-2013 and these have \code{FALSE}
 values in the \code{post_feb_2013} column.
 
@@ -29,7 +27,7 @@ Original as-published PDFs of codes from pre- and post-2013 can be found in this
 \if{html}{
   \Sexpr[echo=FALSE, results=rd, stage=build]{
   in_pkgdown <- any(grepl("as_html.tag_Sexpr", sapply(sys.calls(), function(a) paste(deparse(a), collapse = "\n"))))
-    if(FALSE) {
+    if(in_pkgdown) {
       mytext <- c('In RStudio, this help file includes a searchable table of values.')
     } else {
     tmp <- tempfile(fileext=".html")
@@ -42,5 +40,8 @@ Original as-published PDFs of codes from pre- and post-2013 can be found in this
     }
     mytext
   }
+}{The HTML version of this help file includes a searchable table of the LEMIS }
 }
+\seealso{
+\code{\link[=lemis_metadata]{lemis_metadata()}} \code{\link[=lemis_data]{lemis_data()}}
 }

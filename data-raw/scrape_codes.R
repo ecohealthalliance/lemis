@@ -245,5 +245,34 @@ lemis_codes_ <- full_join(select(codes_2009, -year), select(codes_2013, -year),
   mutate(post_feb_2013 = !(is.na(value.y) | value.y == "")) %>%
   select(-value.x, -value.y)
 
-devtools::use_data(lemis_codes_, internal = TRUE, overwrite = TRUE)
+
+lemis_metadata_ <- dplyr::tribble(
+  ~field_name, ~description,
+  "control_number", "unique ID",
+  "species_code", "A USFWS code for teh species",
+  "taxa", "an EHA-derived broad taxonomic categorization",
+  "genus", "genus of the wildlife product",
+  "species", "species of the wildlife product",
+  "subspecies", "subspecies of the wildlife product",
+  "specific_name", "the species-specific common name",
+  "generic_name", "a general common name",
+  "description", "description of the type/form of wildlife import, (see codes)",
+  "quantity", "numeric quantity of the shipment",
+  "unit", "units for the numeric quantity (see codes)",
+  "value", "reported value of the shipment in dollars",
+  "country_origin", "ISO2C code for the country of origin of the product (see codes)",
+  "country_imp_exp", "ISO2C code for the country to/from which the product is shipped (see codes)",
+  "purpose", "the reason the item is being imported or exported",
+  "source", "the type of source within the origin country (e.g., wild, bred, see codes)",
+  "action", "action taken by USFWS on import ((C)leared/(R)efused)",
+  "disposition", "what happens to the import (see codes)",
+  "disposition_date", "when disposition occurred",
+  "shipment_date", "when the shipment arrived",
+  "import_export", "whether the shipmnet is an (I)mport or (Export)",
+  "port", "port or region of shipment (see codes)",
+  "us_co", "U.S. party of the shipment",
+  "foreign_co", "Foreign party of the shipment"
+)
+
+devtools::use_data(lemis_codes_, lemis_metadata_, internal = TRUE, overwrite = TRUE)
 

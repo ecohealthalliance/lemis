@@ -14,8 +14,7 @@ Encoding: UTF-8
 LazyData: true
 Imports:
   datastorr,
-  fstplyr,
-  fst
+  fstplyr
 Remotes:
   ropenscilabs/datastorr@i14-private-repos,
   krlmlr/fstplyr
