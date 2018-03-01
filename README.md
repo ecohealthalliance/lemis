@@ -1,5 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
+[![CircleCI](https://circleci.com/gh/ecohealthalliance/lemis.svg?style=svg)](https://circleci.com/gh/ecohealthalliance/lemis)
+
 lemis
 =====
 
