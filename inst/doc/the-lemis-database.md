@@ -132,7 +132,6 @@ Here we show some examples of questions that can be answered with this data.
 ``` r
 library(lemis)
 library(tidyverse)
-library(lubridate)
 library(stringi)
 theme_set(theme_minimal())
 ```
