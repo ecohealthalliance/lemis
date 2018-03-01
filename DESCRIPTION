@@ -32,4 +32,6 @@ Suggests:
     ggplot2,
     here,
     desc,
+    testthat,
+    lintr
 VignetteBuilder: knitr
