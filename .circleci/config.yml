@@ -3,7 +3,7 @@ jobs:
   build:
     working_directory: ~/main
     docker:
-      - image: rocker/tidyverse
+      - image: rocker/verse
     steps:
       - checkout
       - restore_cache:
