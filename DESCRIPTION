@@ -33,5 +33,7 @@ Suggests:
     here,
     desc,
     testthat,
-    lintr
+    lintr,
+    taxize,
+    tidyverse
 VignetteBuilder: knitr
