@@ -3,7 +3,7 @@ jobs:
   build:
     working_directory: ~/main
     docker:
-      - image: noamross/circle-r-docker
+      - image: rocker/verse
     steps:
       - checkout
       - restore_cache:
@@ -14,6 +14,7 @@ jobs:
       - run:
           command: |
             R -e "devtools::install_deps(dependencies = TRUE)"
+            R -e "devtools::install_github('MangoTheCat/goodpractice')
       - run:
           command: |
             R -e 'devtools::check()'
