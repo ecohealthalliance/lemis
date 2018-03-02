@@ -3,7 +3,7 @@ jobs:
   build:
     working_directory: ~/main
     docker:
-      - image: rocker/verse
+      - image: rocker/verse:3.4.0
     steps:
       - checkout
       - restore_cache:
