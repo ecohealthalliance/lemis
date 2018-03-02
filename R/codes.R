@@ -35,6 +35,7 @@
 #' @return A tibble with field, code, code value, and whether the field is present post-2013.
 #' @importFrom DT datatable
 #' @importFrom htmlwidgets saveWidget
+#' @importFrom stringi stri_subset_regex
 #' @aliases codes
 #' @seealso [lemis_metadata()] [lemis_data()]
 #' @export
@@ -69,6 +70,7 @@ lemis_codes <- function() {
 #' @return A tibble with field, code, code value, and whether the field is present post-2013.
 #' @importFrom DT datatable
 #' @importFrom htmlwidgets saveWidget
+#' @importFrom stringi stri_subset_regex
 #' @aliases metadata
 #' @seealso [lemis_codes()] [lemis_data()]
 #' @export

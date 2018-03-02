@@ -9,7 +9,7 @@ Authors@R: c(
     person("EcoHealth Alliance", role="cph"))
 Description: Provides cleaned data and metadata from the US Fish and Wildlife
     Service's data on wildlife and wildlife product imports and exports.
-URL: https://github.com/ecohealthalliance/lemis
+URL: https://github.com/ecohealthalliance/lemis#readme
 BugReports: https://github.com/ecohealthalliance/lemis/issues
 License: MIT + file LICENSE
 Encoding: UTF-8

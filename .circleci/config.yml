@@ -3,25 +3,32 @@ jobs:
   build:
     working_directory: ~/main
     docker:
-      - image: rocker/verse
+      - image: noamross/circle-r-docker
     steps:
       - checkout
       - restore_cache:
           keys:
-            - deps1-{{ .Branch }}-{{ checksum "DESCRIPTION" }}
+            - deps1-{{ .Branch }}-{{ checksum "DESCRIPTION" }}-{{ checksum ".circleci/config.yml" }}
             - deps1-{{ .Branch }}
             - deps1-
       - run:
           command: |
-            R -e 'devtools::install_deps(dependencies = TRUE)'
+            R -e "devtools::install_deps(dependencies = TRUE)"
+      - run:
+          command: |
+            R -e 'devtools::check()'
       - save_cache:
-          key: deps1-{{ .Branch }}-{{ checksum "DESCRIPTION" }}
+          key: deps1-{{ .Branch }}-{{ checksum "DESCRIPTION" }}-{{ checksum ".circleci/config.yml" }}
           paths:
             - "/usr/local/lib/R/site-library"
       - run:
           command: |
-            R -e 'devtools::check()'
+            mkdir /root/main/artifacts
+            R -e "devtools::install()"
+            R -e "goodpractice::gp(checks = grep('(rcmdcheck|covr)', goodpractice::all_checks(), invert=TRUE, value=TRUE))"
+            R -e "covr::report(file = '/root/main/artifacts/lemis-coverage.html', browse=FALSE)"
+            R CMD Rd2pdf --force --output='/root/main/artifacts/lemis-manual.pdf' .
       - store_artifacts:
-          path: man/
-          destination: man
+          path: /root/main/artifacts/
+          destination: artifacts
 

@@ -6,8 +6,8 @@
 \alias{lemis-package}
 \title{lemis: The LEMIS Wildlife Trade Database}
 \description{
-Provides cleaned data and metadata from the U.S. Fish and Wildlife
-Service's data on wildlife and wildlife product imports and exports
+Provides cleaned data and metadata from the US Fish and Wildlife
+Service's data on wildlife and wildlife product imports and exports.
 }
 \seealso{
 Useful links:
