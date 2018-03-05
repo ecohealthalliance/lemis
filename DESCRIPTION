@@ -24,15 +24,12 @@ Imports:
   stringi
 Remotes:
   ropenscilabs/datastorr@i14-private-repos,
-  krlmlr/fstplyr,
-  ropensci/tabulizer
-  ropensci/tabulizerjars
+  krlmlr/fstplyr
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 6.0.1
 Suggests: 
     knitr,
     rmarkdown,
-    tabulizer,
     purrr,
     ggplot2,
     here,
