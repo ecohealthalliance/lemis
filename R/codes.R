@@ -30,7 +30,7 @@
 #'   }
 #' }
 #'
-#' \if{text,latex}{The HTML version of this help file includes a searchable table of the LEMIS}
+#' \if{text,latex}{The HTML version of this help file includes a searchable table of the LEMIS codes.}
 #'
 #' @return A tibble with field, code, code value, and whether the field is present post-2013.
 #' @importFrom DT datatable

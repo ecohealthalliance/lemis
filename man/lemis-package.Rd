@@ -12,7 +12,7 @@ Service's data on wildlife and wildlife product imports and exports.
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://github.com/ecohealthalliance/lemis}
+  \item \url{https://github.com/ecohealthalliance/lemis#readme}
   \item Report bugs at \url{https://github.com/ecohealthalliance/lemis/issues}
 }
 
