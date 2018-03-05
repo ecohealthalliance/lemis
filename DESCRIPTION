@@ -26,6 +26,7 @@ Remotes:
   ropenscilabs/datastorr@i14-private-repos,
   krlmlr/fstplyr,
   ropensci/tabulizer
+  ropensci/tabulizerjars
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 6.0.1
 Suggests: 
