@@ -68,7 +68,7 @@ The LEMIS database is a single table listing import and export shipments of wild
 products.  Here are the field descriptions, which can be found in `lemis_metadata()`.
 
 ```{r table1, echo=FALSE, message=FALSE, fig.cap="Table 1. LEMIS database field names"}
-knitr::kable(lemis::lemis_metadata())
+knitr::kable(lemis::lemis_metadata(), format = "markdown")
 ```
 
 # Tutorial
