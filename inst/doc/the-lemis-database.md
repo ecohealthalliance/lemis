@@ -1,82 +1,102 @@
-The LEMIS Database
-================
-Noam Ross, Allison White, Carlos Zambrana-Torrelio
-2018-02-28
+---
+title: "The LEMIS Database"
+author: "Noam Ross, Allison White, Carlos Zambrana-Torrelio"
+date: "2018-03-05"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    theme: readable
+    keep_md: true
+  github_document:
+    toc: true
+    html_preview: false
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+---
 
--   [Introduction](#introduction)
--   [Installation](#installation)
--   [Usage](#usage)
--   [Data structure](#data-structure)
--   [Tutorial](#tutorial)
--   [Use Cases](#use-cases)
 
-Introduction
-============
 
-The **lemis** package provides access U.S. Fish and Wildlife Service data on wildlife and wildlife product imports to and exports from the United States. This data was obtained via more than 14 years of FOIA requests by EcoHealth Alliance.
+# Introduction
 
-Installation
-============
+The **lemis** package provides access U.S. Fish and Wildlife Service
+data on wildlife and wildlife product imports to and exports from the
+United States.  This data was obtained via more than 14 years of FOIA
+requests by EcoHealth Alliance.
+
+# Installation
 
 Install the **lemis** package with this command:
 
-``` r
+
+```r
 source("https://install-github.me/ecohealthalliance/lemis")
 ```
 
-As LEMIS currently lives in a private repository, you must have a GitHub personal access token set up to install and use the package. Instructions for this can be found [here](http://happygitwithr.com/github-pat.html#step-by-step).
+As LEMIS currently lives in a private repository, you must have a
+GitHub personal access token set up to install and use the package. Instructions
+for this can be found [here](http://happygitwithr.com/github-pat.html#step-by-step).
 
-Usage
-=====
+# Usage
 
-The main function in **lemis** is `lemis_data()`. This returns the main cleaned LEMIS database as a **dplyr** tibble.
+The main function in **lemis** is `lemis_data()`. This returns the main cleaned
+LEMIS database as a **dplyr** tibble.
 
-**lemis** makes use of [**datastorr**](https://github.com/ropenscilabs/datastorr) to manage data download. The first time you run `lemis_data()` the package will download the most recent version of the database (~160MB). Subsequent calls will load the database from storage on your computer.
+**lemis** makes use of [**datastorr**](https://github.com/ropenscilabs/datastorr) to manage data download. 
+The first time you run `lemis_data()` the package will download the most recent version of the database (~160MB).  Subsequent calls will load the database from storage on your computer.
 
-The LEMIS database is stored as an efficiently compressed [`.fst` file](https://github.com/fstpackage/fst), and loading it loads it a a [remote dplyr source](https://github.com/krlmlr/fstplyr). This means that it does not load fully into memory until *after* `filter()` commands on run, reducing memoery usage. If you wish to manipulate it as a data frame, simply call `dplyr::collect()` to load it fully into memory.
+The LEMIS database is stored as an efficiently compressed [`.fst` file](https://github.com/fstpackage/fst), and loading it loads it a
+a [remote dplyr source](https://github.com/krlmlr/fstplyr).  This means that it does not load fully into memory until _after_ `filter()` commands on run, reducing memoery usage. If you wish to manipulate it as a data frame, simply call `dplyr::collect()` to load
+it fully into memory.
 
 Note that the full database will be approximately 1 GB in memory.
 
-`lemis_codes()` returns a data frame with descriptions of the codes used by USFWS in the various columns of `lemis_data()`. This is useful for lookup or joining with the main data for more descriptive outputs. The `?lemis_code` help file also has a searchable table of these codes.
+`lemis_codes()` returns a data frame with descriptions of the codes used by
+USFWS in the various columns of `lemis_data()`. This is useful for lookup
+or joining with the main data for more descriptive outputs.  The `?lemis_code`
+help file also has a searchable table of these codes.
 
-Data structure
-==============
+# Data structure
 
-The LEMIS database is a single table listing import and export shipments of wildlife products. Here are the field descriptions, which can be found in `lemis_metadata()`.
+The LEMIS database is a single table listing import and export shipments of wildlife
+products.  Here are the field descriptions, which can be found in `lemis_metadata()`.
 
-| field\_name       | description                                                                 |
-|:------------------|:----------------------------------------------------------------------------|
-| control\_number   | unique ID                                                                   |
-| species\_code     | A USFWS code for teh species                                                |
-| taxa              | an EHA-derived broad taxonomic categorization                               |
-| genus             | genus of the wildlife product                                               |
-| species           | species of the wildlife product                                             |
-| subspecies        | subspecies of the wildlife product                                          |
-| specific\_name    | the species-specific common name                                            |
-| generic\_name     | a general common name                                                       |
-| description       | description of the type/form of wildlife import, (see codes)                |
-| quantity          | numeric quantity of the shipment                                            |
-| unit              | units for the numeric quantity (see codes)                                  |
-| value             | reported value of the shipment in dollars                                   |
-| country\_origin   | ISO2C code for the country of origin of the product (see codes)             |
-| country\_imp\_exp | ISO2C code for the country to/from which the product is shipped (see codes) |
-| purpose           | the reason the item is being imported or exported                           |
-| source            | the type of source within the origin country (e.g., wild, bred, see codes)  |
-| action            | action taken by USFWS on import ((C)leared/(R)efused)                       |
-| disposition       | what happens to the import (see codes)                                      |
-| disposition\_date | when disposition occurred                                                   |
-| shipment\_date    | when the shipment arrived                                                   |
-| import\_export    | whether the shipmnet is an (I)mport or (Export)                             |
-| port              | port or region of shipment (see codes)                                      |
-| us\_co            | U.S. party of the shipment                                                  |
-| foreign\_co       | Foreign party of the shipment                                               |
 
-Tutorial
-========
+field_name         description                                                                 
+-----------------  ----------------------------------------------------------------------------
+control_number     unique ID                                                                   
+species_code       A USFWS code for teh species                                                
+taxa               an EHA-derived broad taxonomic categorization                               
+genus              genus of the wildlife product                                               
+species            species of the wildlife product                                             
+subspecies         subspecies of the wildlife product                                          
+specific_name      the species-specific common name                                            
+generic_name       a general common name                                                       
+description        description of the type/form of wildlife import, (see codes)                
+quantity           numeric quantity of the shipment                                            
+unit               units for the numeric quantity (see codes)                                  
+value              reported value of the shipment in dollars                                   
+country_origin     ISO2C code for the country of origin of the product (see codes)             
+country_imp_exp    ISO2C code for the country to/from which the product is shipped (see codes) 
+purpose            the reason the item is being imported or exported                           
+source             the type of source within the origin country (e.g., wild, bred, see codes)  
+action             action taken by USFWS on import ((C)leared/(R)efused)                       
+disposition        what happens to the import (see codes)                                      
+disposition_date   when disposition occurred                                                   
+shipment_date      when the shipment arrived                                                   
+import_export      whether the shipmnet is an (I)mport or (Export)                             
+port               port or region of shipment (see codes)                                      
+us_co              U.S. party of the shipment                                                  
+foreign_co         Foreign party of the shipment                                               
+
+# Tutorial
 
 This script walks through the basic LEMIS functions
 
-``` r
+
+```r
 library(lemis)
 library(dplyr)
 
@@ -124,12 +144,12 @@ lemis_versions()
 lemis_versions(local=FALSE)
 ```
 
-Use Cases
-=========
+# Use Cases
 
 Here we show some examples of questions that can be answered with this data.
 
-``` r
+
+```r
 library(lemis)
 library(tidyverse)
 library(stringi)
@@ -138,7 +158,8 @@ theme_set(theme_minimal())
 
 ***What kind of animals are being imported through Sault Sainte Marie?***
 
-``` r
+
+```r
 sss_port <- # Lookup the port code
   lemis_codes() %>% 
   filter(field == "port", value=="Sault Sainte Marie") %>% 
@@ -156,13 +177,14 @@ ggplot(aes(x = fct_reorder(generic_name, shipments), y = shipments)) +
   xlab("Generic Animal Type") + ylab("Shipments via Sault Sainte Marie 2000-2013")
 ```
 
-![](the-lemis-database_files/figure-markdown_github/unnamed-chunk-1-1.png)
+![](the-lemis-database_files/figure-html/unnamed-chunk-1-1.png)<!-- -->
 
 Lots o' bears, it seems.
 
-***In what form are *Pteropus* imported***
+***In what form are _Pteropus_ imported?***
 
-``` r
+
+```r
 lemis_data() %>% 
   filter(genus == "pteropus", import_export == "I") %>% 
   collect() %>% 
@@ -176,15 +198,18 @@ ggplot(aes(x = fct_reorder(value, shipments), y = shipments)) +
   xlab("Description of Pteropus Imports") + ylab("No. Shipments 2000-2013")
 ```
 
-![](the-lemis-database_files/figure-markdown_github/unnamed-chunk-2-1.png)
+![](the-lemis-database_files/figure-html/unnamed-chunk-2-1.png)<!-- -->
 
-Mostly as scientific specimens. There are a few clear errors in this.
+Mostly as scientific specimens.  There are a few clear errors in this.
 
 ***Where are live bats imported from?***
 
-As soon as we start dealing with species it's useful to bring in taxonomic resources. The [**taxize**](https://github.com/ropensci/taxize) package is a great toolbelt for looking up taxonomic data.
+As soon as we start dealing with species it's useful to bring in taxonomic
+resources.  The [**taxize**](https://github.com/ropensci/taxize) package is a 
+great toolbelt for looking up taxonomic data.
 
-``` r
+
+```r
 library(taxize)
 bat_genera <- downstream(get_tsn("Chiroptera", rows=1), downto = "Genus", db = "itis") %>% 
   `[[`(1)%>% 
@@ -205,11 +230,12 @@ lemis_data() %>%
   xlab("Origin Country") + ylab("No. Live Bats Imported to U.S., 2000-2013")
 ```
 
-![](the-lemis-database_files/figure-markdown_github/unnamed-chunk-3-1.png)
+![](the-lemis-database_files/figure-html/unnamed-chunk-3-1.png)<!-- -->
 
-**Who is importing these live bats?**\*
+***Who is importing these live bats?***
 
-``` r
+
+```r
 lemis_data() %>% 
   filter(import_export == "I", description == "LIV", genus %in% bat_genera) %>% 
   group_by(us_co) %>% 
@@ -220,11 +246,14 @@ lemis_data() %>%
   xlab("U.S. Importer") + ylab("No. Live Bats Imported to U.S., 2000-2013")
 ```
 
-![](the-lemis-database_files/figure-markdown_github/unnamed-chunk-4-1.png) Hmm, probably some data errors given that there are several coral and aquarium companies on this list.
+![](the-lemis-database_files/figure-html/unnamed-chunk-4-1.png)<!-- -->
+Hmm, probably some data errors given that there are several coral and aquarium
+companies on this list.
 
 ***What countries have the highest fraction of seized shipments?***
 
-``` r
+
+```r
 lemis_data() %>% 
   filter(import_export == "I") %>% 
   group_by(country_origin) %>% 
@@ -240,4 +269,5 @@ lemis_data() %>%
        x="Origin Country", y="Fraction of Shipments Seized, 2000-2013")
 ```
 
-![](the-lemis-database_files/figure-markdown_github/unnamed-chunk-5-1.png)
+![](the-lemis-database_files/figure-html/unnamed-chunk-5-1.png)<!-- -->
+

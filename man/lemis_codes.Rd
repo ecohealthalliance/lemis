@@ -42,7 +42,7 @@ Original as-published PDFs of codes from pre- and post-2013 can be found in this
   }
 }
 
-\if{text,latex}{The HTML version of this help file includes a searchable table of the LEMIS}
+\if{text,latex}{The HTML version of this help file includes a searchable table of the LEMIS codes.}
 }
 \seealso{
 \code{\link[=lemis_metadata]{lemis_metadata()}} \code{\link[=lemis_data]{lemis_data()}}

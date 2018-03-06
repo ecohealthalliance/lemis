@@ -156,7 +156,7 @@ ggplot(aes(x = fct_reorder(generic_name, shipments), y = shipments)) +
 
 Lots o' bears, it seems.
 
-***In what form are _Pteropus_ imported***
+***In what form are _Pteropus_ imported?***
 
 ```{r}
 lemis_data() %>% 
@@ -201,7 +201,7 @@ lemis_data() %>%
   
 ```
 
-**Who is importing these live bats?***
+***Who is importing these live bats?***
 
 ```{r}
 lemis_data() %>% 
