@@ -12,19 +12,14 @@
 #' Original as-published PDFs of codes from pre- and post-2013 can be found in this package's
 #' [\code{extdata/} directory](https://github.com/ecohealthalliance/lemis/tree/master/inst/extdata)
 #'
+#'
 #' \if{html}{
 #'   \Sexpr[echo=FALSE, results=rd, stage=build]{
 #'   in_pkgdown <- any(grepl("as_html.tag_Sexpr", sapply(sys.calls(), function(a) paste(deparse(a), collapse = "\n"))))
 #'     if(in_pkgdown) {
 #'       mytext <- c('In RStudio, this help file includes a searchable table of values.')
 #'     } else {
-#'     tmp <- tempfile(fileext=".html")
-#'       htmlwidgets::saveWidget(DT::datatable(lemis::lemis_codes(), rownames = FALSE, width=700), tmp)
-#'       mytext <- paste('Below is a searchable version of the LEMIS codes.',
-#'       '\\\out{<div style="width:100\%">',
-#'          paste(stringi::stri_subset_regex(readLines(tmp), "^</?(!DOCTYPE|meta|body|html)",negate=TRUE), collapse="\n"),
-#'       '</div>}\n',
-#'       sep="\n")
+#'       mytext <- lemis::rd_datatable(lemis::lemis_codes())
 #'     }
 #'     mytext
 #'   }
@@ -47,25 +42,20 @@ lemis_codes <- function() {
 #'
 #' This function returns a data frame field descriptions for [lemis_data()].
 #'
+#'
 #' \if{html}{
 #'   \Sexpr[echo=FALSE, results=rd, stage=build]{
 #'   in_pkgdown <- any(grepl("as_html.tag_Sexpr", sapply(sys.calls(), function(a) paste(deparse(a), collapse = "\n"))))
 #'     if(in_pkgdown) {
-#'       mytext <- lemis:::tabular(lemis::lemis_metadata())
+#'       mytext <- c('In RStudio, this help file includes a searchable table of values.')
 #'     } else {
-#'     tmp <- tempfile(fileext=".html")
-#'       htmlwidgets::saveWidget(DT::datatable(lemis::lemis_codes(), rownames = FALSE, width=700), tmp)
-#'       mytext <- paste('Below is a searchable version of the LEMIS codes.',
-#'       '\\\out{<div style="width:100\%">',
-#'          paste(stringi::stri_subset_regex(readLines(tmp), "^</?(!DOCTYPE|meta|body|html)",negate=TRUE), collapse="\n"),
-#'       '</div>}',
-#'       sep="\n")
+#'       mytext <- lemis::rd_datatable(lemis::lemis_metadata())
 #'     }
 #'     mytext
 #'   }
 #' }
 #'
-#' \if{text,latex}{ \Sexpr[echo=FALSE, results=rd, stage=build]{lemis:::tabular(lemis::lemis_metadata())}}
+#' \if{text,latex}{The HTML version of this help file includes a searchable table of the LEMIS field metadata.}
 #'
 #' @return A tibble with field, code, code value, and whether the field is present post-2013.
 #' @importFrom DT datatable
@@ -102,4 +92,36 @@ tabular <- function(df, col_names = TRUE, ...) {
     "\\tabular{", paste(col_align, collapse = ""), "}{\n  ",
     contents, "\n}\n", sep = ""
   )
+}
+
+
+#'@export
+#'@importFrom DT datatable
+#'@noRd
+rd_datatable <- function(df, width="100%", ...) {
+  wrap_widget(datatable(df, width=width, ...))
+}
+
+#'@export
+#'@importFrom stringi stri_subset_regex
+#'@importFrom htmlwidgets saveWidget
+#'@noRd
+wrap_widget <- function(widget) {
+  tmp <- tempfile(fileext=".html")
+  saveWidget(widget, tmp)
+  widg <- paste(stringi::stri_subset_regex(readLines(tmp), "^</?(!DOCTYPE|meta|body|html|head|title)",negate=TRUE), collapse="\n")
+  paste('\\out{', escape_rd(widg), '}\n', sep="\n")
+}
+
+#'@export
+#'@importFrom stringi stri_replace_all_fixed
+#'@noRd
+escape_rd <- function(x) {
+  stri_replace_all_fixed(
+    stri_replace_all_fixed(
+      stri_replace_all_fixed(
+        stri_replace_all_fixed(x, "\\", "\\\\"),
+        "%", "\\%"),
+      "{", "\\{"),
+    "}", "\\}")
 }

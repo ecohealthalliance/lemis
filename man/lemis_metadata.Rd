@@ -18,21 +18,15 @@ This function returns a data frame field descriptions for \code{\link[=lemis_dat
   \Sexpr[echo=FALSE, results=rd, stage=build]{
   in_pkgdown <- any(grepl("as_html.tag_Sexpr", sapply(sys.calls(), function(a) paste(deparse(a), collapse = "\n"))))
     if(in_pkgdown) {
-      mytext <- lemis:::tabular(lemis::lemis_metadata())
+      mytext <- c('In RStudio, this help file includes a searchable table of values.')
     } else {
-    tmp <- tempfile(fileext=".html")
-      htmlwidgets::saveWidget(DT::datatable(lemis::lemis_codes(), rownames = FALSE, width=700), tmp)
-      mytext <- paste('Below is a searchable version of the LEMIS codes.',
-      '\\\out{<div style="width:100\%">',
-         paste(stringi::stri_subset_regex(readLines(tmp), "^</?(!DOCTYPE|meta|body|html)",negate=TRUE), collapse="\n"),
-      '</div>}',
-      sep="\n")
+      mytext <- lemis::rd_datatable(lemis::lemis_metadata())
     }
     mytext
   }
 }
 
-\if{text,latex}{ \Sexpr[echo=FALSE, results=rd, stage=build]{lemis:::tabular(lemis::lemis_metadata())}}
+\if{text,latex}{The HTML version of this help file includes a searchable table of the LEMIS field metadata.}
 }
 \seealso{
 \code{\link[=lemis_codes]{lemis_codes()}} \code{\link[=lemis_data]{lemis_data()}}
