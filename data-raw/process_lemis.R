@@ -1,7 +1,9 @@
 # Script to download latest LEMIS data from AWS, clean, generate the compressed
 # fst file and upload to GitHub
+
 # Access to the EHA AWS bucket is required and it is expected that
 # credentials are in .aws/credentials
+
 
 library(aws.s3)
 library(tidyverse)
@@ -9,24 +11,19 @@ library(stringi)
 library(fst)
 h <- here::here
 aws.signature::use_credentials()
+
 save_object(
   "cleaned_data/lemis_2000_2013_cleaned.csv", bucket = "eha.wild.db",
   file = h("data-raw", "lemis_2000_2013_cleaned.csv")
 )
-save_object(
-  "csv_by_year/lemis_2000_2013.csv", bucket = "eha.wild.db",
-  file = h("data-raw", "lemis_2000_2013.csv")
-)
-save_object(
-  "csv_by_year/lemis_2000_2013.csv", bucket = "eha.wild.db",
-  file = h("data-raw", "lemis_2000_2013.csv")
-)
+
 # get_bucket_df("eha.wild.db", prefix="csv_by_year/") %>%
 #   pull(Key) %>%
 #   stri_subset_regex("\\/$", negate = TRUE) %>%
 #   map(~save_object(., bucket = "eha.wild.db", file = h("inst", .)))
 #
 # lemis_files <- fs::dir_ls( h("data-raw", "csv_by_year"), regex="lemis_")
+
 lemis_raw <- read_csv(
   h("data-raw", "lemis_2000_2013_cleaned.csv"),
   col_types = cols(
@@ -62,7 +59,9 @@ lemis <- lemis_raw %>%
   ) %>%
   mutate_if(is.character, funs(if_else(. == "na", NA_character_, .))) %>%
   mutate(port = stri_trans_toupper(port))
+
 # TODO Look for non-legal field codes
+
 write_fst(lemis, h("data-raw", "lemis.fst"), compress = 100)
-# lemis:::lemis_release(description = "Initial test release", filename = h("data-raw", "lemis.fst"),
-#                      target = "master", ignore_dirty = FALSE)
+
+# lemis:::lemis_release(description = "Initial test release", filename = h("data-raw", "lemis.fst"), target = "master", ignore_dirty = FALSE)

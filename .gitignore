@@ -7,3 +7,4 @@ data-raw/*
 !data-raw/*.R
 !data-raw/*.md
 /home/noamross/.local/share/datastorr/httr-oath
+*.DS_Store
