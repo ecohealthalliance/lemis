@@ -5,7 +5,7 @@
 lemis
 =====
 
-Authors: *Noam Ross, Allison White, Carlos Zambrana-Torrelio*
+Authors: *Noam Ross, Allison White, Carlos Zambrana-Torrelio, Evan Eskew*
 
 The **lemis** package provides access to U.S. Fish and Wildlife Service (USFWS) data on wildlife and wildlife product imports to and exports from the United States. This data was obtained via more than 14 years of Freedom of Information Act (FOIA) requests by EcoHealth Alliance.
 
@@ -43,7 +43,7 @@ Our [paper (Smith et. al. 2017)](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC53
 About
 -----
 
-Please give us feedback or ask questions by filing [issues](https://github.com/ecohealthalliance/lemis/issues)
+Please give us feedback or ask questions by filing [issues](https://github.com/ecohealthalliance/lemis/issues).
 
 **lemis** is developed at [EcoHealth Alliance](https://github.com/ecohealthalliance). Please note that this project is released with a [Contributor Code of Conduct](CODE_OF_CONDUCT.md). By participating in this project, you agree to abide by its terms.
 
