@@ -4,6 +4,9 @@
 # The goal of this script is to convert raw LEMIS Excel files to CSVs and
 # merge them to create yearly files
 
+# Access to the EHA Amazon Web Services bucket is required, and it is
+# expected that credentials are in .aws/credentials
+
 
 # Load packages
 library(dplyr)
