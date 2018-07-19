@@ -20,7 +20,7 @@ This function returns a data frame field descriptions for \code{\link[=lemis_dat
     if(in_pkgdown) {
       mytext <- c('In RStudio, this help file includes a searchable table of values.')
     } else {
-      mytext <- lemis::rd_datatable(lemis::lemis_metadata())
+      mytext <- lemis:::rd_datatable(lemis:::lemis_metadata())
     }
     mytext
   }

@@ -19,7 +19,7 @@
 #'     if(in_pkgdown) {
 #'       mytext <- c('In RStudio, this help file includes a searchable table of values.')
 #'     } else {
-#'       mytext <- lemis::rd_datatable(lemis::lemis_codes())
+#'       mytext <- lemis:::rd_datatable(lemis:::lemis_codes())
 #'     }
 #'     mytext
 #'   }
@@ -49,7 +49,7 @@ lemis_codes <- function() {
 #'     if(in_pkgdown) {
 #'       mytext <- c('In RStudio, this help file includes a searchable table of values.')
 #'     } else {
-#'       mytext <- lemis::rd_datatable(lemis::lemis_metadata())
+#'       mytext <- lemis:::rd_datatable(lemis:::lemis_metadata())
 #'     }
 #'     mytext
 #'   }
@@ -95,14 +95,12 @@ tabular <- function(df, col_names = TRUE, ...) {
 }
 
 
-#'@export
 #'@importFrom DT datatable
 #'@noRd
 rd_datatable <- function(df, width="100%", ...) {
   wrap_widget(datatable(df, width=width, ...))
 }
 
-#'@export
 #'@importFrom stringi stri_subset_regex
 #'@importFrom htmlwidgets saveWidget
 #'@noRd
@@ -113,7 +111,6 @@ wrap_widget <- function(widget) {
   paste('\\out{', escape_rd(widg), '}\n', sep="\n")
 }
 
-#'@export
 #'@importFrom stringi stri_replace_all_fixed
 #'@noRd
 escape_rd <- function(x) {
