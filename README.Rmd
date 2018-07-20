@@ -4,8 +4,6 @@ output: github_document
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-[![CircleCI](https://circleci.com/gh/ecohealthalliance/lemis.svg?style=svg&circle-token=23cd13e8d5276a8100a83984982d065d1773fd77)](https://circleci.com/gh/ecohealthalliance/lemis)
-
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
@@ -17,6 +15,8 @@ library(magrittr)
 ```
 
 # lemis
+
+[![CircleCI](https://circleci.com/gh/ecohealthalliance/lemis.svg?style=shield&circle-token=23cd13e8d5276a8100a83984982d065d1773fd77)](https://circleci.com/gh/ecohealthalliance/lemis)
 
 ```{r authors, echo = FALSE, results = 'asis'}
 unclass(desc::desc_get_authors(here::here("DESCRIPTION"))) %>% 
