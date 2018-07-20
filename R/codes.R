@@ -90,34 +90,42 @@ tabular <- function(df, col_names = TRUE, ...) {
 
   paste(
     "\\tabular{", paste(col_align, collapse = ""), "}{\n  ",
-    contents, "\n}\n", sep = ""
+    contents, "\n}\n",
+    sep = ""
   )
 }
 
-#'@importFrom DT datatable
-#'@noRd
-rd_datatable <- function(df, width="100%", ...) {
-  wrap_widget(datatable(df, width=width, ...))
+#' @importFrom DT datatable
+#' @noRd
+rd_datatable <- function(df, width = "100%", ...) {
+  wrap_widget(datatable(df, width = width, ...))
 }
 
-#'@importFrom stringi stri_subset_regex
-#'@importFrom htmlwidgets saveWidget
-#'@noRd
+#' @importFrom stringi stri_subset_regex
+#' @importFrom htmlwidgets saveWidget
+#' @noRd
 wrap_widget <- function(widget) {
-  tmp <- tempfile(fileext=".html")
-  saveWidget(widget, tmp)
-  widg <- paste(stringi::stri_subset_regex(readLines(tmp), "^</?(!DOCTYPE|meta|body|html|head|title)",negate=TRUE), collapse="\n")
-  paste('\\out{', escape_rd(widg), '}\n', sep="\n")
+  tmp <- tempfile(fileext = ".html")
+  htmlwidgets::saveWidget(widget, tmp)
+  widg <- paste(
+    stringi::stri_subset_regex(readLines(tmp),
+                               "^</?(!DOCTYPE|meta|body|html|head|title)",
+                               negate = TRUE),
+    collapse = "\n")
+  paste("\\out{", escape_rd(widg), "}\n", sep = "\n")
 }
 
-#'@importFrom stringi stri_replace_all_fixed
-#'@noRd
+#' @importFrom stringi stri_replace_all_fixed
+#' @noRd
 escape_rd <- function(x) {
   stri_replace_all_fixed(
     stri_replace_all_fixed(
       stri_replace_all_fixed(
         stri_replace_all_fixed(x, "\\", "\\\\"),
-        "%", "\\%"),
-      "{", "\\{"),
-    "}", "\\}")
+        "%", "\\%"
+      ),
+      "{", "\\{"
+    ),
+    "}", "\\}"
+  )
 }

@@ -150,9 +150,13 @@ desc_2013 <- data_frame(
   filter(code != "")
 # Manually add the last entry of the 2013 descriptions table that's missed by
 # the extract_tables() call above
-desc_2013 <- rbind(desc_2013,
-                   c("2013", "description",
-                     "WPR", "Wood product (including furniture, rainsticks)"))
+desc_2013 <- rbind(
+  desc_2013,
+  c(
+    "2013", "description",
+    "WPR", "Wood product (including furniture, rainsticks)"
+  )
+)
 
 # dput(locate_areas(cf2013, pages=1))
 port_2013_1 <- list(structure(c(

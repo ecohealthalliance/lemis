@@ -9,7 +9,7 @@ library(fst)
 
 h <- here::here
 
-#==============================================================================
+# ==============================================================================
 
 
 # Load and compress cleaned LEMIS data
@@ -28,7 +28,8 @@ lemis_for_compression <- read_csv(
     Wild = col_integer(),
     Live = col_integer(),
     NonAq = col_integer()
-  )) %>%
+  )
+) %>%
   select(
     control_number, species_code, taxa, genus,
     species, subspecies, specific_name, generic_name,
