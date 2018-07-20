@@ -30,7 +30,7 @@ Original as-published PDFs of codes from pre- and post-2013 can be found in this
     if(in_pkgdown) {
       mytext <- c('In RStudio, this help file includes a searchable table of values.')
     } else {
-      mytext <- lemis:::rd_datatable(lemis:::lemis_codes())
+      mytext <- lemis:::rd_datatable(lemis::lemis_codes())
     }
     mytext
   }

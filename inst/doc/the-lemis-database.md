@@ -1,7 +1,7 @@
 ---
 title: "The LEMIS Database"
-author: "Noam Ross, Allison White, Carlos Zambrana-Torrelio"
-date: "2018-03-06"
+author: "Noam Ross, Allison White, Carlos Zambrana-Torrelio, Evan Eskew"
+date: "2018-07-20"
 output:
   html_document:
     toc: true
@@ -151,7 +151,9 @@ Here we show some examples of questions that can be answered with this data.
 
 ```r
 library(lemis)
-library(tidyverse)
+library(dplyr)
+library(ggplot2)
+library(forcats)
 library(stringi)
 theme_set(theme_minimal())
 ```

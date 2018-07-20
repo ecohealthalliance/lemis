@@ -3,18 +3,18 @@ jobs:
   build:
     working_directory: ~/main
     docker:
-      - image: rocker/verse:3.4.0
+      - image: rocker/verse:latest
     steps:
       - checkout
       - restore_cache:
           keys:
-            - deps1-{{ .Branch }}-{{ checksum "DESCRIPTION" }}-{{ checksum ".circleci/config.yml" }}
-            - deps1-{{ .Branch }}
-            - deps1-
+            - deps1-$R_VERSION-{{ .Branch }}-{{ checksum "DESCRIPTION" }}-{{ checksum ".circleci/config.yml" }}
+            - deps1-$R_VERSION-{{ .Branch }}
+            - deps1-$R_VERSION
       - run:
           command: |
-            R -e "devtools::install_deps(dependencies = TRUE)"
-            R -e "devtools::install_github('MangoTheCat/goodpractice')"
+            R -e "devtools::install_deps(dependencies=TRUE)"
+            R -e "devtools::install_cran('goodpractice')"
       - run:
           command: |
             R -e 'devtools::check()'

@@ -21,7 +21,7 @@
 #'   use a different path).
 #'
 #' @export
-lemis_data <- function(version=NULL, path=NULL) {
+lemis_data <- function(version = NULL, path = NULL) {
   datastorr::github_release_get(lemis_info(path), version)
 }
 
@@ -35,19 +35,19 @@ lemis_data <- function(version=NULL, path=NULL) {
 #'   for the most recent github version.
 #'
 #' @importFrom datastorr github_release_versions
-lemis_versions <- function(local=TRUE, path=NULL) {
+lemis_versions <- function(local = TRUE, path = NULL) {
   datastorr::github_release_versions(lemis_info(path), local)
 }
 
 #' @export
 #' @rdname lemis_data
-lemis_version_current <- function(local=TRUE, path=NULL) {
+lemis_version_current <- function(local = TRUE, path = NULL) {
   datastorr::github_release_version_current(lemis_info(path), local)
 }
 
 #' @export
 #' @rdname lemis_data
-lemis_del <- function(version, path=NULL) {
+lemis_del <- function(version, path = NULL) {
   datastorr::github_release_del(lemis_info(path), version)
 }
 
@@ -70,6 +70,6 @@ lemis_info <- function(path) {
 #' @title Make a data release.
 #' @param ... Parameters passed through to \code{\link{github_release_create}}
 #' @param path Path to the data (see \code{\link{lemis}}).
-lemis_release <- function(..., path=NULL) {
+lemis_release <- function(..., path = NULL) {
   datastorr::github_release_create(lemis_info(path), ...)
 }

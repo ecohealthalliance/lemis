@@ -5,61 +5,63 @@ knitr::opts_chunk$set(
 )
 
 ## ----install_me, eval = FALSE--------------------------------------------
-#  source("https://install-github.me/ecohealthalliance/lemis")
+## source("https://install-github.me/ecohealthalliance/lemis")
 
 ## ----table1, echo=FALSE, message=FALSE, fig.cap="Table 1. LEMIS database field names"----
 knitr::kable(lemis::lemis_metadata(), format = "markdown")
 
 ## ----tutorial, eval = FALSE----------------------------------------------
-#  library(lemis)
-#  library(dplyr)
-#  
-#  # Load LEMIS data first time (downloads ~160MB file), returns remote
-#  # dplyr source to database
-#  l <- lemis_data()
-#  
-#  rm(l)
-#  # Load again (will NOT download data, it's already on your machine)
-#  l <- lemis_data()
-#  
-#  # Load data into memory (~Will take up 1GB RAM)
-#  ll <- collect(l)
-#  ll
-#  rm(ll)
-#  
-#  # Filter on-disk and load into memory (smaller!)
-#  
-#  l_filtered <- l %>%
-#    filter(import_export == "I", port = "SS") %>%
-#    select(-taxa)
-#  l_filtered
-#  ll_filtered %>% collect()
-#  ll_filtered
-#  rm(ll_filtered)
-#  
-#  # Get data dictionary and codes
-#  lemis_metadata()
-#  lemis_codes()
-#  
-#  # View interactive searchable data dictionary
-#  ?lemis_metadata
-#  ?lemis_codes
-#  
-#  # List versions of LEMIS data on your machine
-#  lemis_versions()
-#  lemis_version_current()
-#  
-#  # Remove a downloaded version
-#  lemis_del(lemis_version_current())
-#  
-#  # Now list local versions again
-#  lemis_versions()
-#  # List versions of LEMIS data available remotely
-#  lemis_versions(local=FALSE)
+## library(lemis)
+## library(dplyr)
+## 
+## # Load LEMIS data first time (downloads ~160MB file), returns remote
+## # dplyr source to database
+## l <- lemis_data()
+## 
+## rm(l)
+## # Load again (will NOT download data, it's already on your machine)
+## l <- lemis_data()
+## 
+## # Load data into memory (~Will take up 1GB RAM)
+## ll <- collect(l)
+## ll
+## rm(ll)
+## 
+## # Filter on-disk and load into memory (smaller!)
+## 
+## l_filtered <- l %>%
+##   filter(import_export == "I", port = "SS") %>%
+##   select(-taxa)
+## l_filtered
+## ll_filtered %>% collect()
+## ll_filtered
+## rm(ll_filtered)
+## 
+## # Get data dictionary and codes
+## lemis_metadata()
+## lemis_codes()
+## 
+## # View interactive searchable data dictionary
+## ?lemis_metadata
+## ?lemis_codes
+## 
+## # List versions of LEMIS data on your machine
+## lemis_versions()
+## lemis_version_current()
+## 
+## # Remove a downloaded version
+## lemis_del(lemis_version_current())
+## 
+## # Now list local versions again
+## lemis_versions()
+## # List versions of LEMIS data available remotely
+## lemis_versions(local=FALSE)
 
 ## ----setup2, message=FALSE, warning=FALSE, results='hide'----------------
 library(lemis)
-library(tidyverse)
+library(dplyr)
+library(ggplot2)
+library(forcats)
 library(stringi)
 theme_set(theme_minimal())
 
