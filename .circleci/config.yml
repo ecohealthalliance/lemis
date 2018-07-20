@@ -3,14 +3,14 @@ jobs:
   build:
     working_directory: ~/main
     docker:
-      - image: rocker/verse:3.5.1
+      - image: rocker/verse:latest
     steps:
       - checkout
       - restore_cache:
           keys:
-            - deps1-{{ .Branch }}-{{ checksum "DESCRIPTION" }}-{{ checksum ".circleci/config.yml" }}
-            - deps1-{{ .Branch }}
-            - deps1-
+            - deps1-$R_VERSION-{{ .Branch }}-{{ checksum "DESCRIPTION" }}-{{ checksum ".circleci/config.yml" }}
+            - deps1-$R_VERSION-{{ .Branch }}
+            - deps1-$R_VERSION
       - run:
           command: |
             R -e "devtools::install_deps()"
