@@ -168,8 +168,8 @@ valid.country.codes <- read_csv("inst/extdata/iso_2_country_codes.csv") %>%
 # Add on other valid codes
 valid.country.codes <- c(valid.country.codes,
                          "BL", "BQ", "CW", "GG", "IM", "JE",
-                         "ME", "MF", "RS", "SX", "TL", "VS",
-                         "XX", "ZZ")
+                         "ME", "MF", "PS", "RS", "SX", "TL",
+                         "VS", "XX", "ZZ")
 
 # Relevel X to XX
 lemis$country_origin_iso2c <- plyr::revalue(lemis$country_origin_iso2c, c(X = "XX"))

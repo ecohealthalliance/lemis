@@ -148,6 +148,11 @@ desc_2013 <- data_frame(
   value = c(desc_2013_raw[[1]][, c(2, 4, 6)])
 ) %>%
   filter(code != "")
+# Manually add the last entry of the 2013 descriptions table that's missed by
+# the extract_tables() call above
+desc_2013 <- rbind(desc_2013,
+                   c("2013", "description",
+                     "WPR", "Wood product (including furniture, rainsticks)"))
 
 # dput(locate_areas(cf2013, pages=1))
 port_2013_1 <- list(structure(c(
@@ -175,8 +180,8 @@ unit_2013_raw <- list(structure(c(
 unit_2013 <- data_frame(
   year = "2013",
   field = "unit",
-  code = c(unit_2013_raw[[1]][-1, c(1, 3, 5, 7)]),
-  value = c(unit_2013_raw[[1]][-1, c(2, 4, 6, 8)])
+  code = c(unit_2013_raw[[1]][, c(1, 3, 5, 7)]),
+  value = c(unit_2013_raw[[1]][, c(2, 4, 6, 8)])
 )
 
 # dput(extract_areas(cf2013, pages=1))
@@ -191,8 +196,8 @@ purpose_2013_raw <- list(structure(c(
 purpose_2013 <- data_frame(
   year = "2013",
   field = "purpose",
-  code = c(purpose_2013_raw[[1]][-1, c(1, 3, 5)]),
-  value = c(purpose_2013_raw[[1]][-1, c(2, 4, 6)])
+  code = c(purpose_2013_raw[[1]][, c(1, 3, 5)]),
+  value = c(purpose_2013_raw[[1]][, c(2, 4, 6)])
 )
 
 # dput(extract_areas(cf2013, pages=1))
@@ -207,8 +212,8 @@ source_2013_raw <- list(structure(c(
 source_2013 <- data_frame(
   year = "2013",
   field = "source",
-  code = c(source_2013_raw[[1]][-1, c(1, 3, 5)]),
-  value = c(source_2013_raw[[1]][-1, c(2, 4, 6)])
+  code = c(source_2013_raw[[1]][, c(1, 3, 5)]),
+  value = c(source_2013_raw[[1]][, c(2, 4, 6)])
 )
 
 # dput(extract_areas(cf2013, pages=1))
