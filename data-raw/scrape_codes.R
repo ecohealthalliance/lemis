@@ -2,7 +2,7 @@
 # inst/extdata directory), harmonize and save as package data
 
 library(tabulizer)
-library(tidyverse)
+library(dplyr)
 library(stringi)
 h <- here::here
 cf2009 <- h("inst", "extdata", "Import_Export_General_Keys_Nov_2009.pdf")

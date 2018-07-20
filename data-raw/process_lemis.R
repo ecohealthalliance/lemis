@@ -5,6 +5,7 @@
 # Load packages
 library(tidyverse)
 library(stringi)
+library(readr)
 library(fst)
 
 h <- here::here

@@ -1,6 +1,6 @@
 ---
 title: "The LEMIS Database"
-author: "Noam Ross, Allison White, Carlos Zambrana-Torrelio"
+author: "Noam Ross, Allison White, Carlos Zambrana-Torrelio, Evan Eskew"
 date: "`r Sys.Date()`"
 output:
   html_document:
@@ -129,7 +129,9 @@ Here we show some examples of questions that can be answered with this data.
 
 ```{r setup2, message=FALSE, warning=FALSE, results='hide'}
 library(lemis)
-library(tidyverse)
+library(dplyr)
+library(ggplot2)
+library(forcats)
 library(stringi)
 theme_set(theme_minimal())
 ```

@@ -38,5 +38,6 @@ Suggests:
     testthat,
     lintr,
     taxize,
-    tidyverse
+    dplyr,
+    readr
 VignetteBuilder: knitr
