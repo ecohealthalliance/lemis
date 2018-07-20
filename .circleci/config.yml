@@ -13,7 +13,7 @@ jobs:
             - deps1-$R_VERSION
       - run:
           command: |
-            R -e "devtools::install_deps()"
+            R -e "devtools::install_deps(dependencies=TRUE)"
             R -e "devtools::install_cran('goodpractice')"
       - run:
           command: |
