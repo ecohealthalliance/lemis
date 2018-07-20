@@ -24,7 +24,7 @@ Imports:
   htmlwidgets,
   stringi
 Remotes:
-  ropenscilabs/datastorr@i14-private-repos,
+  ropenscilabs/datastorr,
   krlmlr/fstplyr
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 6.0.1
