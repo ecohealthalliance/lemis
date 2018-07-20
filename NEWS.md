@@ -11,6 +11,11 @@ This is the first major update to the **lemis** package. Changes include:
 
 * Browsable tables in HTML should now work under systems with all pandoc versions.
 
+## Minor changes
+
+* Reduced dependencies by removing tidyverse package
+* Updated test infrastructure to R 3.5.1
+
 # lemis 1.0.0
 
 * Initial release
