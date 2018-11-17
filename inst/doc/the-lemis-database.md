@@ -67,7 +67,7 @@ products.  Here are the field descriptions, which can be found in `lemis_metadat
 |field_name       |description                                                                 |
 |:----------------|:---------------------------------------------------------------------------|
 |control_number   |unique ID                                                                   |
-|species_code     |A USFWS code for teh species                                                |
+|species_code     |A USFWS code for the species                                                |
 |taxa             |an EHA-derived broad taxonomic categorization                               |
 |genus            |genus of the wildlife product                                               |
 |species          |species of the wildlife product                                             |
