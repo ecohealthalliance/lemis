@@ -119,7 +119,7 @@ country_2009 <- data_frame(
   field = "country",
   code = c(country_2009_raw[[2]][-1, c(2, 3, 4, 5, 6)])
 ) %>%
-  separate(code, into = c("code", "value"), sep = "-", extra = "merge", fill = "right") %>%
+  tidyr::separate(code, into = c("code", "value"), sep = "-", extra = "merge", fill = "right") %>%
   filter(!is.na(value))
 
 codes_2009 <- bind_rows(
@@ -170,7 +170,7 @@ port_2013 <- data_frame(
   code = c(port_2013_raw[[1]][-1, -1])
 ) %>%
   filter(code != "") %>%
-  separate(code, into = c("code", "value"), sep = "-", extra = "merge", fill = "right") %>%
+  tidyr::separate(code, into = c("code", "value"), sep = "-", extra = "merge", fill = "right") %>%
   mutate(code = stri_replace_all_regex(code, "^0(\\d)$", "$1"))
 
 
@@ -250,7 +250,7 @@ country_2013 <- data_frame(
   code = c(country_2013_raw[[1]])
 ) %>%
   filter(code != "") %>%
-  separate(code, into = c("code", "value"), sep = "-", extra = "merge", fill = "right")
+  tidyr::separate(code, into = c("code", "value"), sep = "-", extra = "merge", fill = "right")
 
 codes_2013 <- bind_rows(
   desc_2013,
@@ -271,6 +271,7 @@ lemis_codes_ <- full_join(
   mutate_all(stri_trim_both) %>%
   filter(value.x != "Ivory Coast") %>%
   filter(!(code == "GB" & !(value.x == "United Kingdom" & value.y == "United Kingdom"))) %>%
+  filter(!(code == "ES" & !(value.x == "Spain" & value.y == "Spain"))) %>%
   filter(!(code == "AN" & value.x == "Curacao")) %>%
   mutate(value = ifelse(is.na(value.y), value.x, value.y)) %>%
   mutate(value = ifelse(value == "Saint Helena, Ascension, and Tristan da", "Saint Helena, Ascension, and Tristan da Cunha", value)) %>%
