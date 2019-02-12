@@ -25,7 +25,8 @@ Imports:
   stringi
 Remotes:
   ropenscilabs/datastorr,
-  krlmlr/fstplyr
+  krlmlr/fstplyr,
+  mattflor/chorddiag
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 6.0.1
 Suggests: 
@@ -45,6 +46,4 @@ Suggests:
     shiny,
     countrycode,
     htmlwidgets
-Remotes:
-    mattflor/chorddiag
 VignetteBuilder: knitr
