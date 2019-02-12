@@ -39,5 +39,10 @@ Suggests:
     lintr,
     taxize,
     dplyr,
-    readr
+    readr,
+    lubridate,
+    chorddiag,
+    shiny,
+    countrycode,
+    htmlwidgets
 VignetteBuilder: knitr
