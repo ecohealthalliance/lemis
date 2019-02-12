@@ -17,7 +17,7 @@ year_max <- max(as.numeric(names(trade_matrices)))
 # Define server logic required to draw a histogram
 shinyServer(function(input, output) {
 
-    output$chordplot <- renderChorddiag({
+    output$chordplot <- chorddiag::renderChorddiag({
         yr <- as.character(input$yr)
         chorddiag(trade_matrices[[yr]], type = "bipartite")
     },
