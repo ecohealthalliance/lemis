@@ -35,7 +35,7 @@ jobs:
       - deploy:
           name: "Deploy Shiny App"
           command: |
-            Rscript ./root/main/inst/shiny/preprocess.R
+            Rscript /root/main/inst/shiny/preprocess.R
             scp -r -P 22022 /root/main/inst/shiny noamross@aegypti.ecohealthalliance.org:~/ShinyApps/lemis-app
 
 
