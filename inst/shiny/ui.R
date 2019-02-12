@@ -33,7 +33,7 @@ shinyUI(fluidPage(
         # Show a plot of the generated distribution
         mainPanel(
             h1("Imports From Continents to U.S. Ports"),
-            chorddiag::chorddiagOutput("chordplot")
+            chorddiag::chorddiagOutput("chordplot", height = "800px")
         )
     )
 ))
