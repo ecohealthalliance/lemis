@@ -45,4 +45,6 @@ Suggests:
     shiny,
     countrycode,
     htmlwidgets
+Remotes:
+    mattflor/chorddiag
 VignetteBuilder: knitr
