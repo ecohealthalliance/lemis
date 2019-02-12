@@ -32,4 +32,9 @@ jobs:
       - store_artifacts:
           path: /root/main/artifacts/
           destination: artifacts
+      - deploy:
+          name: "Deploy Shiny App"
+          command: |
+            scp -r -P 22022 /root/main/inst/shiny noamross@aegypti.ecohealthalliance.org:~/ShinyApps/lemis-app
+
 
