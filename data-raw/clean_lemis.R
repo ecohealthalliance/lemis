@@ -191,7 +191,7 @@ lemis <- lemis %>%
     foreign_co = toupper(foreign_co)
   )
 
-# ==============================================================================
+#==============================================================================
 
 
 # Further data filtering
@@ -513,6 +513,84 @@ summary(lemis$port)
 #==============================================================================
 
 
+# Clean "disposition_date" column
+
+
+lemis <- lemis %>%
+  mutate(
+    disposition_date_original_value = disposition_date,
+    # extract only the year component of the disposition and shipment dates
+    disposition_year = format(disposition_date, "%Y"),
+    shipment_year = format(shipment_date, "%Y"),
+    disposition_date = case_when(
+      # clean cases where "disposition_date" is far later than "shipment_date"
+      shipment_date == "2012-02-13" & disposition_date == "2016-02-16" ~
+        "2012-02-16",
+      shipment_date == "2014-06-15" & disposition_date == "2017-06-17" ~
+        "2014-06-17",
+      shipment_date == "2014-12-17" & disposition_date == "2019-12-17" ~
+        "2014-12-17",
+      shipment_year == "2002" & disposition_year == "2020" ~
+        str_replace(disposition_date, "2020", "2002"),
+      shipment_date == "2002-03-27" & disposition_date == "2027-03-27" ~
+        "2002-03-27",
+      shipment_year == "2003" & disposition_year == "2030" ~
+        str_replace(disposition_date, "2030", "2003"),
+      shipment_date == "2002-11-27" & disposition_date == "2030-02-06" ~
+        "2003-02-06",
+      shipment_year == "2003" & disposition_year == "2033" ~
+        str_replace(disposition_date, "2033", "2003"),
+      shipment_year == "2004" & disposition_year == "2044" ~
+        str_replace(disposition_date, "2044", "2004"),
+      shipment_year == "2001" & disposition_year == "2201" ~
+        str_replace(disposition_date, "2201", "2001"),
+      shipment_year == "2002" & disposition_year == "2202" ~
+        str_replace(disposition_date, "2202", "2002"),
+      shipment_year == "2001" & disposition_year == "2991" ~
+        str_replace(disposition_date, "2991", "2001"),
+      shipment_year == "2003" & disposition_year == "3003" ~
+        str_replace(disposition_date, "3003", "2003"),
+      shipment_year == "2004" & disposition_year == "3004" ~
+        str_replace(disposition_date, "3004", "2004"),
+      shipment_date == "2003-12-28" & disposition_date == "5004-01-06" ~
+        "2004-01-06",
+      # clean cases where "disposition_date" is far earlier than "shipment_date"
+      disposition_date == "1900-01-01" ~ NA_character_,
+      disposition_date == "1933-07-15" ~ NA_character_,
+      (shipment_year == "2003" | shipment_year == "2004") &
+        disposition_year == "1996" ~ NA_character_,
+      shipment_date == "2002-07-23" & disposition_date == "1954-07-26" ~
+        "2002-07-26",
+      shipment_date == "2002-07-24" & disposition_date == "1954-07-26" ~
+        "2002-07-26",
+      shipment_date == "2002-01-07" & disposition_date == "1992-01-11" ~
+        "2002-01-11",
+      shipment_date == "2000-02-29" & disposition_date == "1996-03-04" ~
+        "2000-03-04",
+      shipment_year == "2000" & disposition_year == "1998" ~
+        str_replace(disposition_date, "1998", "2000"),
+      # keep all others
+      TRUE ~ as.character(disposition_date)
+    )
+  )
+
+date.check.file <- read_csv("data-raw/disposition_date_check.csv") %>%
+  mutate_at(c("disposition_date", "shipment_date",
+              "replacement_disposition_date"),
+            funs(as.character(as.Date(., format = "%m/%d/%y")))) %>%
+  filter(!is.na(replacement_disposition_date))
+
+for(i in 1:nrow(date.check.file)) {
+
+  lemis[which(lemis$disposition_date == date.check.file$disposition_date[i] &
+                lemis$shipment_date == date.check.file$shipment_date[i]),
+        "disposition_date"] <-
+    date.check.file$replacement_disposition_date[i]
+}
+
+#==============================================================================
+
+
 # Join in taxonomic information and create new variables
 
 
@@ -541,6 +619,8 @@ lemis <- lemis %>%
 lemis_to_save <- lemis %>%
   # extract only the year component of the disposition and shipment dates
   mutate(
+    disposition_date = as.Date(disposition_date, format = "%Y-%m-%d"),
+    shipment_date = as.Date(shipment_date, format = "%Y-%m-%d"),
     disposition_year = as.numeric(format(disposition_date, "%Y")),
     shipment_year = as.numeric(format(shipment_date, "%Y"))
   ) %>%
@@ -573,7 +653,8 @@ lemis_to_save <- lemis %>%
     foreign_co,
     cleaning_notes,
     quantity_original_value,
-    unit_original_value
+    unit_original_value,
+    disposition_date_original_value
   ) %>%
   mutate_all(funs(as.character(.))) %>%
   mutate_at(
