@@ -278,7 +278,8 @@ lemis_codes_ <- full_join(
   mutate(value = ifelse(value == "Saint Vincent & The", "Saint Vincent & The Grenadines", value)) %>%
   mutate(value = ifelse(code == "AN", "Curacao / Netherlands Antilles", value)) %>%
   mutate(post_feb_2013 = !(is.na(value.y) | value.y == "")) %>%
-  select(-value.x, -value.y)
+  select(-value.x, -value.y) %>%
+  arrange(field, code)
 
 
 lemis_metadata_ <- dplyr::tribble(
