@@ -18,6 +18,7 @@ source(h("data-raw", "R", "lemis_cleaning_functions.R"))
 # Merge all LEMIS data
 
 
+# Merge yearly LEMIS CSV files into one dataframe
 lemis.cols <- c(
   "control_number",
   "species_code",
@@ -41,17 +42,12 @@ lemis.cols <- c(
   "import_export",
   "port",
   "us_co",
-  "foreign_co"
+  "foreign_co",
+  "file_num"
 )
 
 yearly.files <- dir(path = h("data-raw", "csv_by_year"), full.names = TRUE)
 lemis_raw <- data.frame()
-
-# Merge yearly LEMIS CSV files into one dataframe
-periods <- sapply(1:10, function(x) paste0(rep(".", x), collapse = ""))
-asterisks <- sapply(1:100, function(x) paste0(rep("*", x), collapse = ""))
-dashes <- sapply(1:10, function(x) paste0(rep("-", x), collapse = ""))
-slashes <- sapply(1:10, function(x) paste0(rep("/", x), collapse = ""))
 
 for (file in yearly.files) {
 
@@ -64,18 +60,30 @@ for (file in yearly.files) {
                col_names = lemis.cols,
                skip = 1,
                col_types = cols(.default = col_character()),
-               na = c(
-                 periods, asterisks, dashes, slashes,
-                 "", " ", "na", "NA", "N/A", "NULL",
-                 "*8", "*****8",
-                 "`*", "*`", "**`", "******`"
-               )
+               na = character()
       )
     )
 }
 
+# Generate NA values
+periods <- sapply(1:10, function(x) paste0(rep(".", x), collapse = ""))
+asterisks <- sapply(1:100, function(x) paste0(rep("*", x), collapse = ""))
+dashes <- sapply(1:10, function(x) paste0(rep("-", x), collapse = ""))
+slashes <- sapply(1:10, function(x) paste0(rep("/", x), collapse = ""))
+
+na.characters <- c(
+  periods, asterisks, dashes, slashes,
+  "", " ", "NA", "N/A", "NULL",
+  "*8", "*****8", "`*", "*`", "**`", "******`"
+)
+
+lemis <- lemis_raw %>%
+  mutate_all(
+    funs(if_else(. %in% na.characters, NA_character_, .))
+  )
+
 # Eliminate rows of all NA values
-lemis <- lemis_raw[apply(lemis_raw, 1, function(x) any(!is.na(x))), ]
+lemis <- lemis[apply(select(lemis, -file_num), 1, function(x) any(!is.na(x))), ]
 
 #==============================================================================
 
@@ -132,7 +140,9 @@ hidden.rows <- hidden.rows %>%
   mutate_at(
     vars(colnames(.)),
     funs(ifelse(. == "" | . == " ", NA_character_, .))
-  )
+  ) %>%
+  # And indicate "file_num" is 1 for these records
+  mutate(file_num = "1")
 
 # Bind on the previously hidden rows
 lemis <- bind_rows(lemis, hidden.rows)
@@ -199,21 +209,24 @@ assert_that(sum(lemis$import_export == "I") == nrow(lemis))
 # 2)
 # Identify problematic records that have NA values for "value" and are
 # otherwise exact duplicates of other records
-grouping.vars <- colnames(lemis)[-11]
+grouping.vars <- colnames(lemis)[-c(11, 24)]
 
 problem.row.set <- lemis %>%
   group_by_(.dots = grouping.vars) %>%
   summarize(
-    distinct_value_values = paste(unique(value), collapse = ", "),
+    row.count = n(),
     NA.count = sum(is.na(value)),
-    row.count = n()
+    distinct_value_values = paste(unique(value), collapse = ", "),
+    distinct_file_num_values = paste(unique(file_num), collapse = ", ")
   ) %>%
   filter(row.count > 1) %>%
   ungroup()
 
 dups <- problem.row.set %>%
-  filter(str_detect(distinct_value_values, "NA,")) %>%
-  mutate(value = NA_real_)
+  filter(NA.count > 0,
+         str_detect(distinct_value_values, ",")) %>%
+  mutate(value = NA_real_,
+         file_num = str_extract(distinct_file_num_values, "."))
 
 dup.years <- dups %>%
   pull(shipment_date) %>%
@@ -231,8 +244,28 @@ assert_that(nrow(lemis) == (lemis.row.count - dups.NA.count))
 
 
 # 3)
-# Remove any exact duplicate shipment records
-lemis <- distinct(lemis)
+# Address potential exact duplicate records
+grouping.vars2 <- colnames(lemis)[-24]
+
+problem.row.set2 <- lemis %>%
+  group_by_(.dots = grouping.vars2) %>%
+  summarize(
+    row.count = n(),
+    distinct_file_num_values = paste(unique(file_num), collapse = ", ")
+  ) %>%
+  filter(row.count > 1) %>%
+  ungroup()
+
+# How many of these "duplicate" records are in fact from the same original
+# data file, indicating they are probably not errors generated from
+# collating together multiple data sheets within years
+from.same.file.count <-
+  sum(!str_detect(problem.row.set2$distinct_file_num_values, ","))
+
+assert_that(from.same.file.count == nrow(problem.row.set2))
+# Since duplicate records of a given record all come from the same
+# original data file, it's probably best to keep them and treat them
+# as intentionally duplicated
 
 
 # Issue of US to US importation shipments. Looking at the country of origin
@@ -327,10 +360,7 @@ summary(lemis$description)
 sort(unique(lemis$unit))
 
 valid.unit.codes <-
-  c(
-    "C2", "C3", "CM", "GM", "KG", "LT",
-    "M2", "M3", "MG", "ML", "MT", "NO"
-  )
+  c("C2", "C3", "CM", "GM", "KG", "LT", "M2", "M3", "MG", "ML", "MT", "NO")
 
 # Which values are not in the valid codes?
 index.invalid.codes <- !(unique(lemis$unit) %in% valid.unit.codes)
@@ -687,17 +717,18 @@ for(i in 1:nrow(date.check.file)) {
 taxa_code <- read.csv("inst/extdata/Taxalist_reviewed.csv",
                       na.strings = c(" ", "")
 ) %>%
-  select(species_code_taxa = SPEC_CODE, taxa = Taxa) %>%
+  select(
+    species_code_taxa = SPEC_CODE,
+    taxa = Taxa) %>%
   mutate(
     species_code_taxa = toupper(species_code_taxa),
-    taxa = as.factor(tolower(taxa))
+    taxa = tolower(taxa)
   ) %>%
   distinct()
 
 # Join this table with the LEMIS data
 lemis <- lemis %>%
-  left_join(taxa_code, by = c("species_code" = "species_code_taxa")) %>%
-  mutate(species_code = as.factor(species_code))
+  left_join(taxa_code, by = c("species_code" = "species_code_taxa"))
 
 #==============================================================================
 
@@ -742,10 +773,7 @@ lemis_to_save <- lemis %>%
     port,
     us_co,
     foreign_co,
-    cleaning_notes,
-    quantity_original_value,
-    unit_original_value,
-    disposition_date_original_value
+    cleaning_notes
   ) %>%
   # change column types
   mutate_all(funs(as.character(.))) %>%
@@ -754,8 +782,7 @@ lemis_to_save <- lemis %>%
       "quantity",
       "value",
       "disposition_year",
-      "shipment_year",
-      "quantity_original_value"),
+      "shipment_year"),
     funs(as.integer(.))
   ) %>%
   # clean remaining values that should be NA characters

@@ -188,6 +188,9 @@ for (i in seq_along(df_for_looping$year)) {
       ))
     }
 
+    # Create a file number variable for error checking during data cleaning
+    file_df$file_num <- file_number
+
     # Combine the Excel file-level data with other data from the same year
     year_df <- rbind(year_df, file_df)
   }
