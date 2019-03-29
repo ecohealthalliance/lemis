@@ -18,7 +18,7 @@ source(h("data-raw", "R", "lemis_cleaning_functions.R"))
 # Merge all LEMIS data
 
 
-# Merge yearly LEMIS CSV files into one dataframe
+# Merge yearly LEMIS CSV files into one data frame
 lemis.cols <- c(
   "control_number",
   "species_code",
@@ -65,7 +65,7 @@ for (file in yearly.files) {
     )
 }
 
-# Generate NA values
+# Generate values for NA checking
 periods <- sapply(1:10, function(x) paste0(rep(".", x), collapse = ""))
 asterisks <- sapply(1:100, function(x) paste0(rep("*", x), collapse = ""))
 dashes <- sapply(1:10, function(x) paste0(rep("-", x), collapse = ""))
@@ -77,6 +77,7 @@ na.characters <- c(
   "*8", "*****8", "`*", "*`", "**`", "******`"
 )
 
+# Convert NA values
 lemis <- lemis_raw %>%
   mutate_all(
     funs(if_else(. %in% na.characters, NA_character_, .))
@@ -84,6 +85,7 @@ lemis <- lemis_raw %>%
 
 # Eliminate rows of all NA values
 lemis <- lemis[apply(select(lemis, -file_num), 1, function(x) any(!is.na(x))), ]
+# (should eliminate 28 rows with all missing data)
 
 #==============================================================================
 
@@ -198,6 +200,9 @@ lemis <- lemis %>%
 
 
 # 1)
+# What proportion of the data does not have a value of "I" in the
+# import_export column?
+nrow(lemis[lemis$import_export != "I", ])/nrow(lemis)
 # Remove any "E", "T", and NA records from the import_export column,
 # leaving only importation data
 lemis <- lemis %>%
@@ -258,7 +263,7 @@ problem.row.set2 <- lemis %>%
 
 # How many of these "duplicate" records are in fact from the same original
 # data file, indicating they are probably not errors generated from
-# collating together multiple data sheets within years
+# collating together multiple data sheets within years?
 from.same.file.count <-
   sum(!str_detect(problem.row.set2$distinct_file_num_values, ","))
 
@@ -268,11 +273,14 @@ assert_that(from.same.file.count == nrow(problem.row.set2))
 # as intentionally duplicated
 
 
+# 4)
 # Issue of US to US importation shipments. Looking at the country of origin
 # information in the database shows that the US is among the top 10 countries
 # importing to the US!
 count(lemis, country_origin, sort = TRUE)
 # Currently, this data is still included in the LEMIS database, so be careful
+
+#==============================================================================
 
 
 # Generate a cleaning notes column to hold automatically generated notes
@@ -635,6 +643,13 @@ summary(lemis$port)
 # Clean "disposition_date" column
 
 
+# Verify that the vast majority of disposition dates occur on or after the
+# shipment date
+filter(lemis, !is.na(shipment_date) & !is.na(disposition_date)) %>%
+  mutate(date_test = (disposition_date - shipment_date) >= 0) %>%
+  summarize(sum(date_test)/n())
+
+# Clean disposition dates
 lemis <- lemis %>%
   mutate(
     disposition_date_original_value = disposition_date,
@@ -807,7 +822,6 @@ write_csv(
 
 # Directory cleanup
 
-# At this point it should be safe to delete subdirectories holding
-# intermediate LEMIS files
-unlink(h("data-raw", "by_year"), recursive = TRUE)
-unlink(h("data-raw", "csv_by_year"), recursive = TRUE)
+# Delete subdirectories containing intermediate LEMIS files, if desired
+# unlink(h("data-raw", "by_year"), recursive = TRUE)
+# unlink(h("data-raw", "csv_by_year"), recursive = TRUE)
