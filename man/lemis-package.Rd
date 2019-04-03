@@ -6,13 +6,15 @@
 \alias{lemis-package}
 \title{lemis: The LEMIS Wildlife Trade Database}
 \description{
-Provides cleaned data and metadata from the US Fish and Wildlife
-Service's data on wildlife and wildlife product imports and exports.
+Provides cleaned data and metadata for the US Fish and Wildlife
+    Service's Law Enforcement Management Information System (LEMIS) data on 
+    wildlife and wildlife product imports.
 }
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://github.com/ecohealthalliance/lemis#readme}
+  \item \url{Package README: https://github.com/ecohealthalliance/lemis#readme}
+  \item \url{Developer README: https://github.com/ecohealthalliance/lemis/tree/master/data-raw#readme}
   \item Report bugs at \url{https://github.com/ecohealthalliance/lemis/issues}
 }
 

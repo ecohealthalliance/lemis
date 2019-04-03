@@ -8,9 +8,10 @@ Authors@R: c(
     person("Carlos", "Zambrana-Torrelio", , "zambrana@ecohealthalliance.org", role = c("aut")),
     person("Evan", "Eskew", , "eskew@ecohealthalliance.org", role = c("aut")),
     person("EcoHealth Alliance", role="cph"))
-Description: Provides cleaned data and metadata from the US Fish and Wildlife
-    Service's data on wildlife and wildlife product imports and exports.
-URL: https://github.com/ecohealthalliance/lemis#readme
+Description: Provides cleaned data and metadata for the US Fish and Wildlife
+    Service's Law Enforcement Management Information System (LEMIS) data on 
+    wildlife and wildlife product imports.
+URL: Package README: https://github.com/ecohealthalliance/lemis#readme, Developer README: https://github.com/ecohealthalliance/lemis/tree/master/data-raw#readme 
 BugReports: https://github.com/ecohealthalliance/lemis/issues
 License: MIT + file LICENSE
 Encoding: UTF-8
@@ -28,7 +29,7 @@ Remotes:
   krlmlr/fstplyr,
   mattflor/chorddiag
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 6.0.1
+RoxygenNote: 6.1.1
 Suggests: 
     knitr,
     rmarkdown,
