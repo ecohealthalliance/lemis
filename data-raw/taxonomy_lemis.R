@@ -69,6 +69,7 @@ lemis_taxa_added <- lemis_taxa_added %>%
       genus == "afrilaxus" & species == "pygmecus" ~ "afrixalus",
       genus == "afrilaxus" & species == "dorsalis" ~ "afrixalus",
       genus == "tompterna" & generic_name == "BULLFROG" ~ "tomopterna",
+      genus == "campylorhamphis" & generic_name == "SCYTHEBILL" ~ "campylorhamphus",
       genus == "bufo(rhinella)" ~ "bufo",
       genus == "insecta" & str_detect(species, "era$") ~ species,
       genus == "unk" & species == "unk" ~ "unknown",

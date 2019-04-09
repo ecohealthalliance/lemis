@@ -27,7 +27,8 @@ Imports:
 Remotes:
   ropenscilabs/datastorr,
   krlmlr/fstplyr,
-  mattflor/chorddiag
+  mattflor/chorddiag,
+  cboettig/taxadb
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 6.1.1
 Suggests: 
