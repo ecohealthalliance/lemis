@@ -8,3 +8,4 @@
 ^/home/noamross/\.local/share/datastorr/httr-oath$
 ^\.circleci$
 ^\.lintr$
+^\.httr-oauth$

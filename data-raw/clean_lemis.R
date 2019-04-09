@@ -160,17 +160,19 @@ lemis <- lemis %>%
     control_number = as.numeric(control_number),
     species_code = toupper(species_code),
     genus = tolower(genus),
+    # get rid of end of line period characters
+    genus = str_replace(genus, "\\.$", ""),
     species = tolower(species),
-    # convert relevant values in the species column to "spp."
+    # convert relevant values in the species column to "sp."
     species = case_when(
-      species %in% c("?", "species", "sp", "sp.") ~ "spp.",
-      !is.na(genus) & is.na(species) ~ "spp.",
+      species %in% c("?", "species", "sp", "spp", "spp.") ~ "sp.",
+      !is.na(genus) & is.na(species) ~ "sp.",
       TRUE ~ species
     ),
     subspecies = tolower(subspecies),
-    # convert relevant values in the subspecies column to "spp."
+    # convert relevant values in the subspecies column to "sp."
     subspecies = case_when(
-      subspecies == "ssp." ~ "spp.",
+      subspecies == "ssp." ~ "sp.",
       TRUE ~ subspecies
     ),
     specific_name = toupper(specific_name),
@@ -725,34 +727,11 @@ for(i in 1:nrow(date.check.file)) {
 #==============================================================================
 
 
-# Join in taxonomic information and create new variables
-
-
-# Generate a table of taxa information
-taxa_code <- read.csv("inst/extdata/Taxalist_reviewed.csv",
-                      na.strings = c(" ", "")
-) %>%
-  select(
-    species_code_taxa = SPEC_CODE,
-    taxa = Taxa) %>%
-  mutate(
-    species_code_taxa = toupper(species_code_taxa),
-    taxa = tolower(taxa)
-  ) %>%
-  distinct()
-
-# Join this table with the LEMIS data
-lemis <- lemis %>%
-  left_join(taxa_code, by = c("species_code" = "species_code_taxa"))
-
-#==============================================================================
-
-
 # Data saving
 
 na.characters <- c("na", "?", ".", "/", "`", "=", "-")
 
-lemis_to_save <- lemis %>%
+lemis_intermediate <- lemis %>%
   # extract only the year component of the disposition and shipment dates
   mutate(
     disposition_date = as.Date(disposition_date, format = "%Y-%m-%d"),
@@ -760,10 +739,9 @@ lemis_to_save <- lemis %>%
     disposition_year = as.numeric(format(disposition_date, "%Y")),
     shipment_year = as.numeric(format(shipment_date, "%Y"))
   ) %>%
-  # select final columns to keep
+  # select columns to keep
   select(
     control_number,
-    taxa,
     species_code,
     genus,
     species,
@@ -807,14 +785,10 @@ lemis_to_save <- lemis %>%
   ) %>%
   arrange(shipment_date, control_number)
 
-# Write a cleaned CSV file of all LEMIS data
+# Write a cleaned CSV file of intermediate LEMIS data
 write_csv(
-  lemis_to_save,
-  h("data-raw",
-    paste0("lemis_",
-           min(lemis_to_save$shipment_year, na.rm = TRUE), "_",
-           max(lemis_to_save$shipment_year, na.rm = TRUE), "_cleaned.csv")
-  )
+  lemis_intermediate,
+  h("data-raw", "lemis_intermediate.csv")
 )
 
 #==============================================================================

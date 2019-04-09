@@ -10,3 +10,4 @@ data-raw/*
 !data-raw/data*
 /home/noamross/.local/share/datastorr/httr-oath
 *.DS_Store
+.httr-oauth

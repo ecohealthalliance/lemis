@@ -11,7 +11,7 @@ Authors@R: c(
 Description: Provides cleaned data and metadata for the US Fish and Wildlife
     Service's Law Enforcement Management Information System (LEMIS) data on 
     wildlife and wildlife product imports.
-URL: Package README: https://github.com/ecohealthalliance/lemis#readme, Developer README: https://github.com/ecohealthalliance/lemis/tree/master/data-raw#readme 
+URL: https://github.com/ecohealthalliance/lemis#readme, https://github.com/ecohealthalliance/lemis/tree/master/data-raw#readme 
 BugReports: https://github.com/ecohealthalliance/lemis/issues
 License: MIT + file LICENSE
 Encoding: UTF-8
@@ -31,20 +31,21 @@ Remotes:
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 6.1.1
 Suggests: 
-    knitr,
-    rmarkdown,
-    purrr,
-    ggplot2,
-    here,
-    desc,
-    testthat,
-    lintr,
-    taxize,
-    dplyr,
-    readr,
-    lubridate,
     chorddiag,
-    shiny,
     countrycode,
-    htmlwidgets
+    desc,
+    dplyr,
+    ggplot2,
+    googlesheets,
+    here,
+    knitr,
+    lintr,
+    lubridate,
+    purrr,
+    readr,
+    rmarkdown,
+    shiny,
+    taxadb,
+    taxize,
+    testthat,
 VignetteBuilder: knitr
