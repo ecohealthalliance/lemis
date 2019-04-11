@@ -160,27 +160,8 @@ lemis <- lemis %>%
     control_number = as.numeric(control_number),
     species_code = toupper(species_code),
     genus = tolower(genus),
-    # get rid of end of line period characters
-    genus = str_replace(genus, "\\.$", ""),
     species = tolower(species),
-    species = case_when(
-      genus == "tropical fish" & species == "(marine fish spp.)" ~ "(marine spp.)",
-      genus == "tropical fish" & species == "marine spp" ~ "(marine spp.)",
-      TRUE ~ species
-    ),
-    # convert relevant values in the species column to "sp."
-    species = case_when(
-      species %in% c("?", "species", "sp", "spp", "spp.") ~ "sp.",
-      !is.na(genus) & is.na(species) ~ "sp.",
-      TRUE ~ species
-    ),
-    species = str_replace_all(species, fixed(" spp."), " sp."),
     subspecies = tolower(subspecies),
-    # convert relevant values in the subspecies column to "sp."
-    subspecies = case_when(
-      subspecies == "ssp." ~ "sp.",
-      TRUE ~ subspecies
-    ),
     specific_name = toupper(specific_name),
     generic_name = toupper(generic_name),
     description = toupper(wildlife_description), # uppercase codes
