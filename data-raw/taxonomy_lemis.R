@@ -56,15 +56,9 @@ lemis_taxa_added <- lemis_intermediate %>%
 #==============================================================================
 
 
-# Import taxonomic corrections
-taxonomic_corrections <-
-  read_csv(
-    h("data-raw", "data", "taxonomic_corrections.csv"),
-    col_types = cols(.default = col_character())
-  ) %>%
-  mutate_all(funs(str_replace_all(., "\\s", " ")))
-
 # Initial cleanup of taxonomic data fields
+
+# Manual formatting/stylistic changes
 lemis_taxa_added <- lemis_taxa_added %>%
   mutate(
     # get rid of end of line period characters in the genus field
@@ -80,13 +74,20 @@ lemis_taxa_added <- lemis_taxa_added %>%
     subspecies = case_when(
       subspecies == "ssp." ~ "sp.",
       TRUE ~ subspecies
-    ),
-    species = case_when(
-      genus == "tropical fish" & species == "(marine fish sp.)" ~ "(marine sp.)",
-      genus == "tropical fish" & species == "marine sp" ~ "(marine sp.)",
-      TRUE ~ species
     )
   )
+
+# Import taxonomic corrections
+taxonomic_corrections <-
+  read_csv(
+    h("data-raw", "data", "taxonomic_corrections.csv"),
+    col_types = cols(.default = col_character())
+  ) %>%
+  mutate_all(funs(str_replace_all(., "\\s", " "))) %>%
+  mutate(
+    cleaning_notes = NA_character_
+  ) %>%
+  get_taxonomic_cleaning_notes()
 
 # Correct data entry errors for taxonomic data
 # Note, these corrections also contain some cosmetic formatting changes
@@ -106,6 +107,20 @@ lemis_taxa_added <- lemis_taxa_added %>%
       ifelse(!is.na(new_genus), new_specific_name, specific_name),
     generic_name =
       ifelse(!is.na(new_genus), new_generic_name, generic_name)
+  ) %>%
+  mutate(
+    cleaning_notes.y =
+      ifelse(!is.na(cleaning_notes.x),
+             str_replace(cleaning_notes.y, "Original value in", ","),
+             cleaning_notes.y
+      ),
+    cleaning_notes = case_when(
+      !is.na(cleaning_notes.x) & !is.na(cleaning_notes.y) ~
+        paste0(cleaning_notes.x, cleaning_notes.y),
+      is.na(cleaning_notes.x) & !is.na(cleaning_notes.y) ~
+        cleaning_notes.y,
+      TRUE ~ cleaning_notes.x
+    )
   )
 
 #==============================================================================
@@ -189,11 +204,16 @@ taxatbl2 <- taxatbl1 %>%
 #==============================================================================
 
 
+# Further automatic taxonomic classification using genus-level information
+
+# Gather the names of genera for which species have not been automatically
+# classified
 genera_to_resolve <- taxatbl2 %>%
   filter(is.na(class)) %>%
   pull(genus) %>%
   unique(.)
 
+# Gather genera-level class information from COL database
 genera_taxa_info <- taxa_tbl("col") %>%
   distinct(class, genus) %>%
   arrange(genus, class) %>%
@@ -204,6 +224,8 @@ genera_taxa_info <- taxa_tbl("col") %>%
     class != "Not assigned"
   )
 
+# Remove any genera for which there are multiple potential class
+# affiliations to ensure our eventual taxonomic calls are unambiguous
 ambiguous_genera <- genera_taxa_info %>%
   group_by(genus) %>%
   summarize(n = n_distinct(class)) %>%
@@ -214,6 +236,8 @@ unambiguous_genera_taxa_info <- genera_taxa_info %>%
   filter(!(genus %in% ambiguous_genera)) %>%
   mutate(genus = tolower(genus))
 
+# Join this newly generated genera-level taxonomic information onto the
+# previous data
 taxatbl3 <- taxatbl2 %>%
   left_join(., unambiguous_genera_taxa_info, by = c("genus")) %>%
   mutate(class = ifelse(!is.na(class.x), class.x, class.y)) %>%
@@ -221,6 +245,8 @@ taxatbl3 <- taxatbl2 %>%
 
 #==============================================================================
 
+
+# Add automatically-generated taxonomic information onto the LEMIS data
 
 lemis_taxa_added <- lemis_taxa_added %>%
   left_join(., taxatbl3, by = c("genus", "species")) %>%
@@ -304,7 +330,7 @@ lemis_taxa_added <- lemis_taxa_added %>%
       TRUE ~ class
     )
   ) %>%
-  # Extra error checking needed to correct some erroneous automatic calls
+  # extra error checking needed to correct some erroneous automatic calls
   mutate(
     class = case_when(
       genus == "ampullaria" & generic_name == "SNAIL" ~ "Gastropoda",
@@ -313,15 +339,15 @@ lemis_taxa_added <- lemis_taxa_added %>%
     )
   )
 
+#==============================================================================
+
+
 unclassified <- lemis_taxa_added %>%
   filter(is.na(class)) %>%
   distinct(genus, species, subspecies, specific_name, generic_name, taxa) %>%
   arrange(taxa, genus, species)
 
 write_csv(unclassified, h("data-raw", "lemis_taxa_unclassified.csv"))
-
-#==============================================================================
-
 
 gs_title("LEMIS manual taxonomy harmonization") %>%
   gs_read(., col_types = cols(.default = col_character())) %>%

@@ -1,15 +1,21 @@
 genus,species,subspecies,specific_name,generic_name,new_genus,new_species,new_subspecies,new_specific_name,new_generic_name
 acanthurria,geniculata,,,,acanthoscurria,geniculata,,,
+acmea,tretupinaria,,,,acmaea,sp.,,,
 adenomera,andrae,,,,adenomera,andreae,,,
+aedea,scapularis,,,,aedes,scapularis,,,
+aegagrus,hircus,kod capra,,,capra,aegagrus,hircus,,
 aeolicus,strigatus,,ZEBRA,SHRIMP,aeoliscus,strigatus,,ZEBRA,SHRIMPFISH
 aequipectin,opercularis,,QUEEN,SCALLOP,aequipecten,opercularis,,QUEEN,SCALLOP
 aequipectin,opercularis,,,,aequipecten,opercularis,,,
 aequipectin,sp.,,,SCALLOP,aequipecten,sp.,,,SCALLOP
+aequora,sp.,,,JELLYFISH,aequorea,sp.,,,JELLYFISH
 afrilaxus,dorsalis,,,,afrixalus,dorsalis,,,
 afrilaxus,fornasini,,SILVER-BAND BANANA,FROG,afrixalus,fornasini,,SILVER-BAND BANANA,FROG
 afrilaxus,fulvovittatus,,BANDED BANANA,FROG,afrixalus,fulvovittatus,,BANDED BANANA,FROG
 afrilaxus,pygmecus,,,,afrixalus,pygmaeus,,,
 afrilaxus,sp.,,BANANA,FROG,afrixalus,sp.,,BANANA,FROG
+agestreta,orichalcea,,GREEN ROSE CHAFER,BEETLE,agestrata,orichalca,,GREEN ROSE CHAFER,BEETLE
+agrionis,microptera,,GREY-BELLIED,SHRIKE-TYRANT,agriornis,microptera,,GREY-BELLIED,SHRIKE-TYRANT
 agropecten,purpuratus,,,SHELL,argopecten,purpuratus,,,SHELL
 all live trop. fsh,(incl. goldfish),,,,all live tropical fish,(including goldfish),,,
 allolumpenus,hydrochromus,,,,allolumpenus,hypochromus,,,
@@ -18,7 +24,10 @@ anarrhichas,minor,,SPOTTED,WOLFFISH,anarhichas,minor,,SPOTTED,WOLFFISH
 anarrhichas,sp.,,,WOLFFISH,anarhichas,sp.,,,WOLFFISH
 ancy,anser cygnoides,,,,anser,cygnoides,,SWAN,GOOSE
 ancyclostoma,sp.,,,ROUNDWORM,ancylostoma,sp.,,,ROUNDWORM
+anthocidaris,crassipina,,,,anthocidaris,crassispina,,,
+anthocidaris,crassispiana,,,,anthocidaris,crassispina,,,
 apisturus,sp.,,,SHARK,apristurus,sp.,,,SHARK
+asaphilis,violasceus,,,,asaphis,violascens,,,
 ascidiacea,n ielsen,,,,ascidiacea,nielsen,,,
 asperidetes,nigricans,,BLACK SOFT-SHELL,TURTLE,aspideretes,nigricans,,BLACK SOFT-SHELL,TURTLE
 asperidetes,sp.,,SOFT-SHELL,TURTLE,aspideretes,sp.,,SOFT-SHELL,TURTLE
@@ -37,7 +46,11 @@ conchelepes,conchelepes,,,SHELL,concholepas,concholepas,,,SHELL
 crassotrea,gigas,,JAPONESE,OYSTER,crassostrea,gigas,,JAPANESE,OYSTER
 crassotrea,sp.,,,OYSTER,crassostrea,sp.,,,OYSTER
 dalatius,licha,,DARKIE,CHARLIE,dalatias,licha,,DARKIE,CHARLIE
+dendrosophus,sp.,,,,dendropsophus,sp.,,,
+deroptryus,accipitrinus,,,,deroptyus,accipitrinus,,,
 dryas,julia,,,BUTTERFLY,dryas,iulia,,,BUTTERFLY
+dumetilla,carolinensis,,,,dumetella,carolinensis,,,
+duplicana,terebra,,,,terebra,duplicata,,,
 enophryx,bison,,,FISH,enophrys,bison,,,FISH
 eublepharus,angramainyu,,IRAQUI EYELID,GECKO,eublepharis,angramainyu,,IRAQI EYELID,GECKO
 eublepharus,hardwickii,,HARDWICKE'S,GECKO,eublepharis,hardwickii,,HARDWICKE'S,GECKO
@@ -80,6 +93,7 @@ melithea,sp.,,,CORAL,melithaea,sp.,,,CORAL
 melithea,sp.,,,SEA FAN,melithaea,sp.,,,SEA FAN
 microbrachium,sp.,,,MACRURAN,macrobrachium,sp.,,,MACRURAN
 microbrachium,sp.,,,SHRIMP,macrobrachium,sp.,,,SHRIMP
+monocentrophus,balfouri,,,,monocentropus,balfouri,,,
 montastrea,annularis,,BOULDER STAR,CORAL,montastraea,annularis,,BOULDER STAR,CORAL
 montastrea,annularis,,BRAIN,CORAL,montastraea,annularis,,BRAIN,CORAL
 montastrea,annuligera,,BRAIN,CORAL,montastraea,annuligera,,BRAIN,CORAL
@@ -90,8 +104,13 @@ montastrea,faveolata,,MOUNTAINOUS STAR,CORAL,montastraea,faveolata,,MOUNTAINOUS 
 montastrea,franksi,,BOULDER STAR,CORAL,montastraea,franksi,,BOULDER STAR,CORAL
 montastrea,sp.,,BRAIN,CORAL,montastraea,sp.,,BRAIN,CORAL
 montastrea,valenciennesii,,BRAIN,CORAL,montastraea,valenciennesii,,BRAIN,CORAL
+montetaria,annulus,,,,monetaria,annulus,,,
 morowe,sp.,,STRIPED,BASS,morone,sp.,,STRIPED,BASS
+mulloidichthyes,vanicolensis,,,,mulloidichthys,vanicolensis,,,
 myiophonus,sp.,,WHISTLING,THRUSH,myophonus,sp.,,WHISTLING,THRUSH
+myliobatoidei,unknown,,,,myliobatoidei,sp.,,,
+myoxoxcephalus,polyacanthocephalu,,,,myoxocephalus,polyacanthocephalus,,,
+mytilopsis,leucophaeta,,CONRAD'S FALSE,MUSSEL,mytilopsis,leucophaeata,,CONRAD'S FALSE,MUSSEL
 opisthognathus,rosenblatti,,,,opistognathus,rosenblatti,,,
 opisthognathus,sp.,,,JAWFISH,opistognathus,sp.,,,JAWFISH
 opisthognathus,whitehursti,,,,opistognathus,whitehursti,,,
@@ -107,11 +126,19 @@ pristomantis,muscosus,,,FROG,pristimantis,muscosus,,,FROG
 pristomantis,sp.,,,FROG,pristimantis,sp.,,,FROG
 procnis,nudicollis,,,,procnias,nudicollis,,,
 procnis,nudicollius,,,,procnias,nudicollis,,,
+prothotaca,sp.,,,CLAM,protothaca,sp.,,,CLAM
+pseudoanodonta,complanta,,,MUSSEL,pseudanodonta,complanata,,,MUSSEL
+pseudoanodonta,maxima,,,MUSSEL,pseudanodonta,maxima,,,MUSSEL
+pseudoanodonta,sp.,,,MUSSEL,pseudanodonta,sp.,,,MUSSEL
 pseudocris,regilla,,,,pseudacris,regilla,,,
+pseudoplatysoma,fasciatum,,,,pseudoplatystoma,fasciatum,,,
+pseudoptero,gorgia,,,,pseudopterogorgia,sp.,,,
 pseudoscaphirhynch,hermanni,,SMALL AMU-DAR,SHOVELNOSE,pseudoscaphirhynchus,hermanni,,SMALL AMU-DAR,SHOVELNOSE
 pseudoscaphirhynch,kaufmanni,,LARGE AMU-DAR,SHOVELNOSE,pseudoscaphirhynchus,kaufmanni,,LARGE AMU-DAR,SHOVELNOSE
 pseudothecadactylu,lindneri,,GIANT CAVE,GECKO,pseudothecadactylus,lindneri,,GIANT CAVE,GECKO
 pseudothecadactylu,sp.,,,GECKO,pseudothecadactylus,sp.,,,GECKO
+pseudotolithustypu,sp.,,,,pseudotolithus,typus,,,
+psuedoteragorgia,americana,,,,pseudopterogorgia,americana,,,
 pteriidae,maxima,,,,pinctada,maxima,,,
 pterolebius,sp.,,,LONGFIN,pterolebias,sp.,,,LONGFIN
 rhacophorus,helenea,,,,rhacophorus,helenae,,,
@@ -122,11 +149,15 @@ rhotropus,boultoni,,BOULTON'S SLENDER,GECKO,rhoptropus,boultoni,,BOULTON'S SLEND
 rhotropus,bradfieldi,,NAMIB SLENDER,GECKO,rhoptropus,bradfieldi,,NAMIB SLENDER,GECKO
 rhotropus,sp.,,SLENDER,GECKO,rhoptropus,sp.,,SLENDER,GECKO
 roccus,saxatilus,,STRIPED,BASS,roccus,saxatilis,,STRIPED,BASS
+rodent,unknown,,,,rodentia,sp.,,,
+rosia,macrosoma,,,,rossia,macrosoma,,,
+salaminus,brasiliensis,,,,salminus,brasiliensis,,,
 saxicola,sp.,,WASHINGTON,CLAM,saxidomus,sp.,,WASHINGTON,CLAM
 serarma,bidens,,MARSH,CRAB,sesarma,bidens,,MARSH,CRAB
 sialis,currucoides,,MOUNTAIN,BLUEBIRD,sialia,currucoides,,MOUNTAIN,BLUEBIRD
 sialis,mexicana,,WESTERN,BLUEBIRD,sialia,mexicana,,WESTERN,BLUEBIRD
 sialis,sialis,,EASTERN,BLUEBIRD,sialia,sialis,,EASTERN,BLUEBIRD
+somele,sp.,,,CLAM,semele,sp.,,,CLAM
 stenadus,leuchichthys,,,,stenodus,leucichthys,,,
 stugmatura,budytoides,,,,stigmatura,budytoides,,,
 substrato,scleractinia,,,,scleractinia,sp.,,,
@@ -142,6 +173,10 @@ tompterna,cryptotis,,CATEQUERO,BULLFROG,tomopterna,cryptotis,,CATEQUERO,BULLFROG
 tompterna,marmorata,,MARBLED,BULLFROG,tomopterna,marmorata,,MARBLED,BULLFROG
 tompterna,sp.,,,BULLFROG,tomopterna,sp.,,,BULLFROG
 tregallasia,leucops,,,,tregellasia,leucops,,,
+triforis,sp.,,,SNAIL,triphora,sp.,,,SNAIL
+triphoris,sp.,,,SNAIL,triphora,sp.,,,SNAIL
+tropical fish,(marine fish sp.),,,,tropical fish,(marine sp.),,,
+tropical fish,marine sp,,,,tropical fish,(marine sp.),,,
 tropicalotes,tropolineatus,,,,tropiocolotes,tripolitanus,,,
 tropidonophus,doriae,,,,tropidonophis,doriae,,,
 trosidos,semitorta,,,,trisidos,semitorta,,,
@@ -149,6 +184,7 @@ tytius,metuendus,,,,tityus,metuendus,,,
 unk,unk,,,,unknown,unknown,,,
 urotheuthis,chinensis,,,,uroteuthis,chinensis,,,
 vejovis,sp.,,,SCORPION,vaejovis,sp.,,,SCORPION
+vespertillo,sp.,,,SHELL,timbellus,vespertilio,,,SHELL
 vicungna,pacos,,,,vicugna,pacos,,,
 xenethis,immanis,,,,xenesthis,immanis,,,
 zamensis,sp.,,,SNAKE,zamenis,sp.,,,SNAKE
