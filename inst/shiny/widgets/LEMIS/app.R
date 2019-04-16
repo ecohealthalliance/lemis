@@ -1,9 +1,11 @@
 library(shiny)
 library(tidyverse)
 library(plotly)
+library(cartogram)
+library(sf)
+
 
 dat <- read_csv(here::here("inst/shiny/widgets/lemis_dat_format.csv")) %>% filter(!is.na(taxa))
-
 mdat <- read_rds(here::here("inst/shiny/widgets/lemis_dat_sf.rds"))
 
 # Define UI for application that draws a histogram
@@ -23,7 +25,7 @@ ui <- fluidPage(
         ),
         mainPanel(
             tabsetPanel(
-                tabPanel("Bubble",
+                tabPanel("Map",
                          fluidRow(
                              column(12, plotlyOutput("map") )
                          )
@@ -55,9 +57,7 @@ server <- function(input, output) {
             ) %>%
             plot_geo() %>%
             add_markers(
-                #x = ~jitter(as.numeric(as.factor(centroid_lon))),
                 x = ~centroid_lon,
-                #y = ~jitter(as.numeric(as.factor(centroid_lat))),
                 y = ~centroid_lat,
                 hoverinfo="text",
                 text =  ~paste0(country_name, '\n', field),
@@ -75,17 +75,53 @@ server <- function(input, output) {
 
         w <- mdat %>%
             filter(taxa == input$taxa,
-                   year == "2011")
-        w_dor <- cartogram_dorling(w, "n_by_country_taxa")
+                   year == "2011") %>%
+            mutate(field = !!sym(get()$field))
+
+        w_dor <- cartogram_dorling(w, get()$field)
+        w_dor_cenr <- w_dor %>%
+            st_centroid() %>%
+            st_coordinates() %>%
+            as_tibble() %>%
+            mutate(country_name = w_dor$country_name,
+                   field = w_dor$field) %>%
+            arrange(-field) %>%
+            slice(1:15)
+
+        # w <- mdat %>%
+        #     filter(taxa == "Fish",
+        #            year == "2011") %>%
+        #     mutate(field = n_by_country_taxa)
+        #
+        # w_dor <- cartogram_dorling(w, "n_by_country_taxa")
+        # w_dor_cenr <- w_dor %>%
+        #     st_centroid() %>%
+        #     st_coordinates() %>%
+        #     as_tibble() %>%
+        #     mutate(country_name = w_dor$country_name,
+        #            field = w_dor$field) %>%
+        #     arrange(-field) %>%
+        #     slice(1:20)
 
         plot_ly(stroke = I("black"), span = I(1)) %>%
             add_sf(
                 data = w_dor,
-                color = ~n_by_country_taxa,
+                color = ~field,
                 split = ~country_name,
                 text = ~paste(country_name),
                 hoverinfo = "text",
                 hoveron = "fills"
+            ) %>%
+            add_annotations(
+                data = w_dor_cenr,
+                x = ~X, y = ~Y,
+                text = ~country_name,
+                textposition = 'middle right',
+                textfont =  list(
+                    family = "sans serif",
+                    size = 14,
+                    color = toRGB("black")),
+                showarrow = FALSE
             ) %>%
             layout(showlegend = FALSE)
     })
