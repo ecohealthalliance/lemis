@@ -86,14 +86,13 @@ server <- function(input, output) {
     output$mapd <- renderPlotly({
 
         w <- mdat %>%
-            filter(year == 2011,
-                   taxa = ) %>%
-            distinct() %>%
-            mutate(field = n_by_country
-                   # !!sym(get()$field)
+            filter(year == input$year,
+                   taxa == input$taxa
+                   ) %>%
+            mutate(field =  !!sym(get()$field)
             )
 
-        w_dor <- cartogram_dorling(w, "n_by_country") #get()$field)
+        w_dor <- cartogram_dorling(w, get()$field)
         w_dor_cenr <- w_dor %>%
             st_centroid() %>%
             st_coordinates() %>%
@@ -103,25 +102,10 @@ server <- function(input, output) {
                    field = w_dor$field) %>%
             filter(field >= quantile(field, 0.90))
 
-        # w <- mdat %>%
-        #     filter(taxa == "Fish",
-        #            year == "2011") %>%
-        #     mutate(field = n_by_country_taxa)
-        #
-        # w_dor <- cartogram_dorling(w, "n_by_country_taxa")
-        # w_dor_cenr <- w_dor %>%
-        #     st_centroid() %>%
-        #     st_coordinates() %>%
-        #     as_tibble() %>%
-        #     mutate(country_name = w_dor$country_name,
-        #            field = w_dor$field) %>%
-        #     arrange(-field) %>%
-        #     slice(1:20)
-
         plot_ly(stroke = I("black"), span = I(1)) %>%
             add_sf(
                 data = w_dor,
-                color = ~continent,
+                color = ~field,
                 #color = ~continent,
                 split = ~country_name,
                 text = ~paste0(country_name, "\n", get()$field,  ": ", round(field, 0)),
@@ -184,7 +168,6 @@ server <- function(input, output) {
     })
 
     output$tree <- renderPlot({
-
 
         dat %>%
             filter(year == input$year, taxa == input$taxa) %>%
