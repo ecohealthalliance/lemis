@@ -3,6 +3,7 @@ library(tidyverse)
 library(plotly)
 library(cartogram)
 library(sf)
+library(treemap)
 
 
 dat <- read_csv(here::here("inst/shiny/widgets/lemis_dat_format.csv")) %>% filter(!is.na(taxa))
@@ -39,6 +40,11 @@ ui <- fluidPage(
                 tabPanel("Dorling 2",
                          fluidRow(
                              column(12, plotlyOutput("mapd2"))
+                         )
+                ),
+                tabPanel("Tree Map",
+                         fluidRow(
+                             column(12, plotOutput("tree"))
                          )
                 )
             )
@@ -84,8 +90,8 @@ server <- function(input, output) {
                    taxa = ) %>%
             distinct() %>%
             mutate(field = n_by_country
-                      # !!sym(get()$field)
-                   )
+                   # !!sym(get()$field)
+            )
 
         w_dor <- cartogram_dorling(w, "n_by_country") #get()$field)
         w_dor_cenr <- w_dor %>%
@@ -140,10 +146,10 @@ server <- function(input, output) {
 
         w <- mdat2 %>%
             filter(
-                   year == input$year
-                   ) %>%
+                year == input$year
+            ) %>%
             mutate(field = n_by_country#!!sym(get()$field)
-                   )
+            )
 
         w_dor <- cartogram_dorling(w, "field")
         w_dor_cenr <- w_dor %>%
@@ -175,6 +181,19 @@ server <- function(input, output) {
                     color = toRGB("black")),
                 showarrow = FALSE
             )
+    })
+
+    output$tree <- renderPlot({
+
+
+        dat %>%
+            filter(year == input$year, taxa == input$taxa) %>%
+            treemap(.,
+                    index=c("continent","country_name"),
+                    vSize="n_by_country_taxa",
+                    type="index"
+            )
+
     })
 
 }
