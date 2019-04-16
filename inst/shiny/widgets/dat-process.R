@@ -59,7 +59,7 @@ sdat <- dat %>%
   mutate(taxa = paste0(toupper(substr(taxa, 1, 1)), tolower(substring(taxa, 2))))
 
 tdat <- sdat %>%
-  select(country_name, iso3c, taxa, year, n_by_country_taxa, val_by_country_taxa, centroid_lon, centroid_lat) %>%
+  select(continent, country_name, iso3c, taxa, year, n_by_country_taxa, val_by_country_taxa, n_by_country, val_by_country, centroid_lon, centroid_lat) %>%
   distinct()
 
 write_csv(tdat, "inst/shiny/widgets/lemis_dat_format.csv")
@@ -69,15 +69,36 @@ library(cartogram)
 library(plotly)
 library(sf)
 
+udat <- tdat %>%
+  select(-n_by_country, -val_by_country, -centroid_lon, -centroid_lat)
+
 w <- maps::map('world', plot = FALSE, fill = TRUE) %>%
   st_as_sf() %>%
   mutate(iso3c  = countrycode(sourcevar = ID,
                               origin = "country.name",
                               destination = "iso3c")) %>%
-  left_join(tdat) %>%
+  left_join(udat) %>%
   filter(!is.na(n_by_country_taxa))
 
-write_rds(w, "inst/shiny/widgets/lemis_dat_sf.rds")
+write_rds(w, "inst/shiny/widgets/lemis_dat_by_taxa_sf.rds")
+
+vdat <- tdat %>%
+  group_by(continent, country_name, iso3c, year) %>%
+  filter(n_by_country_taxa==max(n_by_country_taxa, na.rm=TRUE)) %>%
+  mutate(most_common_taxa = taxa) %>%
+  ungroup() %>%
+  select(-n_by_country_taxa, -val_by_country_taxa, -taxa, -centroid_lon, -centroid_lat) %>%
+  distinct()
+
+w2 <- maps::map('world', plot = FALSE, fill = TRUE) %>%
+  st_as_sf() %>%
+  mutate(iso3c  = countrycode(sourcevar = ID,
+                              origin = "country.name",
+                              destination = "iso3c")) %>%
+  left_join(vdat)%>%
+  filter(!is.na(n_by_country))
+
+write_rds(w2, "inst/shiny/widgets/lemis_dat_by_country_sf.rds")
 
 # w_dor <- cartogram_dorling(w, "n_by_country_taxa")
 #
