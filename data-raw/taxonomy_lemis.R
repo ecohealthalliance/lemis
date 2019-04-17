@@ -347,14 +347,12 @@ unclassified <- lemis_taxa_added %>%
   distinct(genus, species, subspecies, specific_name, generic_name, taxa) %>%
   arrange(taxa, genus, species)
 
-write_csv(unclassified, h("data-raw", "lemis_taxa_unclassified.csv"))
-
-gs_title("LEMIS manual taxonomy harmonization") %>%
+gs_title("LEMIS manual taxonomic harmonization") %>%
   gs_read(., col_types = cols(.default = col_character())) %>%
-  write_csv(., h("data-raw", "lemis_manual_taxonomy_harmonization.csv"))
+  write_csv(., h("data-raw", "manual_taxonomic_harmonization.csv"))
 
 manual_tax <- read_csv(
-  h("data-raw", "lemis_manual_taxonomy_harmonization.csv"),
+  h("data-raw", "manual_taxonomic_harmonization.csv"),
   col_types = cols(.default = col_character())
 )
 
@@ -383,7 +381,7 @@ error_checking <- lemis_taxa_added %>%
 
 lemis_to_save <- lemis_taxa_added %>%
   mutate(
-    genus = stringi::stri_trans_totitle(genus)
+    genus = str_to_sentence(genus)
   ) %>%
   # select final columns to keep
   select(

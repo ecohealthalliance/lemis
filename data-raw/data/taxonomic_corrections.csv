@@ -26,6 +26,7 @@ ancy,anser cygnoides,,,,anser,cygnoides,,SWAN,GOOSE
 ancyclostoma,sp.,,,ROUNDWORM,ancylostoma,sp.,,,ROUNDWORM
 anthocidaris,crassipina,,,,anthocidaris,crassispina,,,
 anthocidaris,crassispiana,,,,anthocidaris,crassispina,,,
+antogonia,capros,,,,antigonia,capros,,,
 apisturus,sp.,,,SHARK,apristurus,sp.,,,SHARK
 asaphilis,violasceus,,,,asaphis,violascens,,,
 ascidiacea,n ielsen,,,,ascidiacea,nielsen,,,
@@ -39,8 +40,18 @@ cama,pacos,alpaca,,,lama,pacos,,,ALPACA
 campylorhamphis,pusillus,,BROWN-BILLED,SCYTHEBILL,campylorhamphus,pusillus,,BROWN-BILLED,SCYTHEBILL
 campylorhamphis,sp.,,,SCYTHEBILL,campylorhamphus,sp.,,,SCYTHEBILL
 chiroptera,order,,,,chiroptera,sp.,,,
+chloromytilus,edulis,,,,mytilus,edulis,,,
+chlorophis,haplogaster,,AFRICAN GREEN,SNAKE,chlorophis,hoplogaster,,AFRICAN GREEN,SNAKE
+chlorospingus opth,common bush tanage,,,,chlorospingus,ophthalmicus,,COMMON BUSH,TANAGER
 chriomantis,sp.,,,,chiromantis,sp.,,,
+chrionius,fuscus,,,,chironius,fuscus,,,
+ciclocolaptes,leucophrus,,,,cichlocolaptes,leucophrus,,,
+cinirostrum,cinereum,,,,conirostrum,cinereum,,,
 cirrepedia,sp.,,,,cirripedia,sp.,,,
+citharichthy,gilberti,flatfish,,,citharichthys,gilberti,,,FLATFISH
+class,holothuroidea,,,,holothuroidea,sp.,,,
+clypeasterophilis,sp.,,,,clypeasterophilus,sp.,,,
+coenobita clipeatu,coenobita clipeatu,,,,coenobita,clypeatus,,,
 conchelepes,conchelepes,,,CRUSTACEAN,concholepas,concholepas,,,CRUSTACEAN
 conchelepes,conchelepes,,,SHELL,concholepas,concholepas,,,SHELL
 crassotrea,gigas,,JAPONESE,OYSTER,crassostrea,gigas,,JAPANESE,OYSTER
@@ -48,14 +59,43 @@ crassotrea,sp.,,,OYSTER,crassostrea,sp.,,,OYSTER
 dalatius,licha,,DARKIE,CHARLIE,dalatias,licha,,DARKIE,CHARLIE
 dendrosophus,sp.,,,,dendropsophus,sp.,,,
 deroptryus,accipitrinus,,,,deroptyus,accipitrinus,,,
+desypeltis,scabra,,,,dasypeltis,scabra,,,
+dimidochromis,kiwinge,,,,dimidiochromis,kiwinge,,,
+donocobius,atricapilla,,,,donacobius,atricapilla,,,
 dryas,julia,,,BUTTERFLY,dryas,iulia,,,BUTTERFLY
+drymobius rhombife,blotched racer,,,,drymobius,rhombifer,,BLOTCHED,RACER
 dumetilla,carolinensis,,,,dumetella,carolinensis,,,
 duplicana,terebra,,,,terebra,duplicata,,,
+eagles,sp.,,BALD AND GOLDEN,EAGLES,accipitridae,sp.,,BALD AND GOLDEN,EAGLES
+echinotrix,calamaris,,BANDED SEA,URCHIN,echinothrix,calamaris,,BANDED SEA,URCHIN
+echinotrix,sp.,,SEA,URCHIN,echinothrix,sp.,,SEA,URCHIN
+eglantini,cowrie,,,,mauritia,eglantina,,,
+elacatinos,puncticulatus,,,,elacatinus,puncticulatus,,,
+elaphidae,sp.,,,,elapidae,sp.,,,
 enophryx,bison,,,FISH,enophrys,bison,,,FISH
 eublepharus,angramainyu,,IRAQUI EYELID,GECKO,eublepharis,angramainyu,,IRAQI EYELID,GECKO
 eublepharus,hardwickii,,HARDWICKE'S,GECKO,eublepharis,hardwickii,,HARDWICKE'S,GECKO
 eublepharus,macularius,,PANTHER,GECKO,eublepharis,macularius,,PANTHER,GECKO
 eublepharus,sp.,,EYELID,GECKO,eublepharis,sp.,,EYELID,GECKO
+flexipecten,glaber,,,SHELL,flexopecten,glaber,,,SHELL
+gallus,domesticus,,DOMESTIC,CHICKEN,gallus,gallus,domesticus,DOMESTIC,CHICKEN
+gasteracantha sp,gasteracantha,,,,gasteracantha,sp.,,,
+gazelli,grantii,,,,gazella,granti,,,
+geopahgus,gymnogenys,,,,geophagus,gymnogenys,,,
+geothylpis,trichas,,,,geothlypis,trichas,,,
+geotrogon,chrysia,,,,geotrygon,chrysia,,,
+gercacinus,ruricola,,,,gecarcinus,ruricola,,,
+gloriamari,chemnitz,,,,conus,gloriamari,,,
+glossinia,austeni,,,,glossina,austeni,,,
+glossinia,brevipalpis,,,,glossina,brevipalpis,,,
+glyphis,carcharhinidae,,,,glyphis,sp.,,,
+glyphorhynchus,spirurus,,WEDGE-BILLED,WOODCREEPER,glyphorynchus,spirurus,,WEDGE-BILLED,WOODCREEPER
+glyphorhynchus,spirurus,,,,glyphorynchus,spirurus,,,
+glyphorhynchus,sprurus,,,,glyphorynchus,spirurus,,,
+gofingia,sp.,,,,golfingia,sp.,,,
+goniplectrus,hispanus,,,,gonioplectrus,hispanus,,,
+gradus,mortua,,,,gadus,morhua,,,
+gymnophagus,balzani,,,,gymnogeophagus,balzanii,,,
 helicopsis,sp.,,,BUTTERFLY,helicopis,sp.,,,BUTTERFLY
 hydrocinus,sp.,,,FISH,hydrocynus,sp.,,,FISH
 hydrocinus,vittatus,,,TIGERFISH,hydrocynus,vittatus,,,TIGERFISH
@@ -69,9 +109,14 @@ insecta,hymenoptera,,,,hymenoptera,sp.,,,
 insecta,neuroptera,,,,neuroptera,sp.,,,
 insecta,odonata,,,,odonata,sp.,,,
 insecta,orthoptera,,,,orthoptera,sp.,,,
+irsinia,fasciculata,,,,ircinia,fasciculata,,,
+isisdidae,lepidisis,,,,isididae,sp.,,,
+isisidae,sp.,,,,isididae,sp.,,,
+jabonilleria,danjoui,,,,jabouilleia,danjoui,,,
 jennesia,lineata,,,,jenynsia,lineata,,,
 jennesia,orca,,,,jenynsia,onca,,,
 jenysia,sp.,,,,jenynsia,sp.,,,
+limalima,vulgaris,,,,lima,vulgaris,,,
 liophus,cobella,,S. AMERICAN GROUND,SNAKE,liophis,cobella,,S. AMERICAN GROUND,SNAKE
 liophus,frenata,,COMMON GROUND,SNAKE,liophis,frenata,,COMMON GROUND,SNAKE
 liophus,juliae,,,,liophis,juliae,,,
@@ -117,6 +162,7 @@ necrex,erythrops,,,,neocrex,erythrops,,,
 nerhrurus,levis,,,,nephrurus,levis,,,
 niritoides,littorina,,,,littorina,neritoides,,,
 niviventes,cremoriventer,,,,niviventer,cremoriventer,,,
+northarcus,macrorhynchos,,,,notharchus,macrorhynchos,,,
 opisthognathus,rosenblatti,,,,opistognathus,rosenblatti,,,
 opisthognathus,sp.,,,JAWFISH,opistognathus,sp.,,,JAWFISH
 opisthognathus,whitehursti,,,,opistognathus,whitehursti,,,
@@ -154,7 +200,13 @@ pseudothecadactylu,sp.,,,GECKO,pseudothecadactylus,sp.,,,GECKO
 pseudotolithustypu,sp.,,,,pseudotolithus,typus,,,
 psuedoteragorgia,americana,,,,pseudopterogorgia,americana,,,
 pteriidae,maxima,,,,pinctada,maxima,,,
+pterinichulus,murinus,,,,pterinochilus,murinus,,,
 pterolebius,sp.,,,LONGFIN,pterolebias,sp.,,,LONGFIN
+pterydactolus,hesselquisti,,,,ptyodactylus,hasselquistii,,,
+puntias,sp.,,SPOTTED,BARB,puntius,sp.,,SPOTTED,BARB
+pusiostoma,mandicaria,,,,pusiostoma,mendicaria,,,
+pyrogasta,trifurus,,,,triturus,pyrrhogaster,,,
+pytchozoon,kuhii,,,,ptychozoon,kuhli,,,
 retilus,edulis,,,,mytilus,edulis,,,
 rhacophorus,helenea,,,,rhacophorus,helenae,,,
 rhamphotyphlops,braminus,,,,ramphotyphlops,braminus,,,
@@ -199,6 +251,11 @@ sialis,sialis,,EASTERN,BLUEBIRD,sialia,sialis,,EASTERN,BLUEBIRD
 siclalis,sp.,,,,sicalis,sp.,,,
 somele,sp.,,,CLAM,semele,sp.,,,CLAM
 sore,bendirii,,,,sorex,bendirii,,,
+spaenorphy,lacteus,,,,sphaenorhynchus,lacteus,,,
+spereo,superb,superb,,,spreo,superbus,,,
+spermestes,cucullatus,,,,spermestes,cucullata,,,
+sphaedrabathria,hoffmanni,,,,sphaerobothria,hoffmanni,,,
+sphaeognathus,feisthameli,,,,sphaenognathus,feisthameli,,,
 sphenisus,magellanus,,,,spheniscus,magellanicus,,,
 staerias,amurensis,,,,asterias,amurensis,,,
 stenadus,leuchichthys,,,,stenodus,leucichthys,,,
