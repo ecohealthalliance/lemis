@@ -27,18 +27,57 @@ ancyclostoma,sp.,,,ROUNDWORM,ancylostoma,sp.,,,ROUNDWORM
 anthocidaris,crassipina,,,,anthocidaris,crassispina,,,
 anthocidaris,crassispiana,,,,anthocidaris,crassispina,,,
 antogonia,capros,,,,antigonia,capros,,,
+apistopromo,sp.,,,,apistogramma,sp.,,,
 apisturus,sp.,,,SHARK,apristurus,sp.,,,SHARK
 asaphilis,violasceus,,,,asaphis,violascens,,,
 ascidiacea,n ielsen,,,,ascidiacea,nielsen,,,
 asperidetes,nigricans,,BLACK SOFT-SHELL,TURTLE,aspideretes,nigricans,,BLACK SOFT-SHELL,TURTLE
 asperidetes,sp.,,SOFT-SHELL,TURTLE,aspideretes,sp.,,SOFT-SHELL,TURTLE
+asselus,aquaticus,,,,asellus,aquaticus,,,
+astriclyperus,manni,,,,astriclypeus,manni,,,
+astrium,calcar,,,,astralium,calcar,,,
+atlpatetes,schistaceus,,,,atlapetes,schistaceus,,,
 atypsis,moluccensis,,,,atyopsis,moluccensis,,,
+augasoma,centaurus,,,,augosoma,centaurus,,,
+aulacidae,subterminalis,,,,aulacidea,subterminalis,,,
+austropepla,sp.,,,SNAIL,austropeplea,sp.,,,SNAIL
+autonocara,sp.,,PEACOCK,CICHLID,aulonocara,sp.,,PEACOCK,CICHLID
+axinissa,sp.,,,SPONGE,axinyssa,sp.,,,SPONGE
+babalonia,spirata,,,,babylonia,spirata,,,
+basiluterus,signatus,,,,basileuterus,signatus,,,
+boiqa,dendrophila,,,,boiga,dendrophila,,,
+boophlius,microplus,,,,rhipicephalus,microplus,,,
+brachionus,plicatillis,,,,brachionus,plicatilis,,,
+bratechlamys,vexillum,,,,bractechlamys,vexillum,,,
+brochistosternus,ehrenbergi,,,,brachistosternus,ehrenbergii,,,
+bronchocoela,smaragdina,,,,bronchocela,smaragdina,,,
+bryconamericas,sp.,,,,bryconamericus,sp.,,,
+buarremon brunnein,chestnut capped br,,,,buarremon,brunneinuchus,,CHESTNUT-CAP BRUSH,FINCH
 bufo(rhinella),lescurei,,,,bufo,lescurei,,,
 butetrflies,sp.,,,,butterflies,sp.,,,
 butterlies,sp.,,,,butterflies,sp.,,,
 cama,pacos,alpaca,,,lama,pacos,,,ALPACA
+camprimulgus,sp.,,,,caprimulgus,sp.,,,
+campylomormyrops,rhyncophorus,,,,campylomormyrus,rhynchophorus,,,
 campylorhamphis,pusillus,,BROWN-BILLED,SCYTHEBILL,campylorhamphus,pusillus,,BROWN-BILLED,SCYTHEBILL
 campylorhamphis,sp.,,,SCYTHEBILL,campylorhamphus,sp.,,,SCYTHEBILL
+canthicaster,valentini,,,,canthigaster,valentini,,,
+carchahrinus,obscurus,,,,carcharhinus,obscurus,,,
+carduelus,magellanica,,,,carduelis,magellanica,,,
+carioderma,cor,,,,cardioderma,cor,,,
+catherina,tunicata,,,,katharina,tunicata,,,
+cavernularis,sp.,,,SEA PEN,cavernularia,sp.,,,SEA PEN
+celosterna,pollinosa,,,,cerosterna,pollinosa,,,
+cephalapoda,sp.,,,,cephalopoda,sp.,,,
+ceratoisis,flexibilis,,BAMBOO,CORAL,keratoisis,flexibilis,,BAMBOO,CORAL
+chaerophon,pumilus,,,,chaerephon,pumilus,,,
+chaetorhyunchus,papuensis,,,,chaetorhynchus,papuensis,,,
+chaetostoma,sp.,l 148,,,chaetostoma,sp.,,,CATFISH
+chaetstoma,sp 4,l 200,,,chaetostoma,sp.,,,CATFISH
+chalcidoidea,parasitic wasps,,,,chalcidoidea,sp.,,PARASITIC,WASP
+chalcites,sp.,,GOLDEN TWINSPOT,MOTH,chrysodeixis,chalcites,,GOLDEN TWINSPOT,MOTH
+chimaera sp,fulva,,,,chimaera,fulva,,,
+chirodiscidae,testiculatus,,,,schizocarpus,testiculatus,,,
 chiroptera,order,,,,chiroptera,sp.,,,
 chloromytilus,edulis,,,,mytilus,edulis,,,
 chlorophis,haplogaster,,AFRICAN GREEN,SNAKE,chlorophis,hoplogaster,,AFRICAN GREEN,SNAKE
@@ -97,8 +136,18 @@ goniplectrus,hispanus,,,,gonioplectrus,hispanus,,,
 gradus,mortua,,,,gadus,morhua,,,
 gymnophagus,balzani,,,,gymnogeophagus,balzanii,,,
 helicopsis,sp.,,,BUTTERFLY,helicopis,sp.,,,BUTTERFLY
+hottentata,spec,,,,hottentotta,sp.,,,
+hybsiboas,heilprini,,,,hypsiboas,heilprini,,,
+hydantina,physis,,,,hydatina,physis,,,
+hydriopsis,schlegeli,,,,hyriopsis,schlegeli,,,
 hydrocinus,sp.,,,FISH,hydrocynus,sp.,,,FISH
 hydrocinus,vittatus,,,TIGERFISH,hydrocynus,vittatus,,,TIGERFISH
+hydrocyon,sp.,,,,hydrocynus,sp.,,,
+hydrolagus sp,affinis,,,,hydrolagus,affinis,,,
+hylaemys,megacephalus,,,,hylaeamys,megacephalus,,,
+hyleamys,yunganus,,,,hylaeamys,yunganus,,,
+hyloscutis,palmeri,,,,hyloscirtus,palmeri,,,
+hymenoptera,formicidae,,,,formicidae,sp.,,,
 hypolymnas,bolina,,COMMON,EGGFLY,hypolimnas,bolina,,COMMON,EGGFLY
 hypolymnas,dexithea,,,BUTTERFLY,hypolimnas,dexithea,,,BUTTERFLY
 hypolymnas,mysippus,,,BUTTERFLY,hypolimnas,mysippus,,,BUTTERFLY
@@ -116,6 +165,17 @@ jabonilleria,danjoui,,,,jabouilleia,danjoui,,,
 jennesia,lineata,,,,jenynsia,lineata,,,
 jennesia,orca,,,,jenynsia,onca,,,
 jenysia,sp.,,,,jenynsia,sp.,,,
+lamellibranch,sp.,,,,bivalvia,sp.,,,
+lamellidus,corrianus,,,,lamellidens,corrianus,,,
+lampropela,rothschildi,,,,lampropelma,rothschildi,,,
+lavigeria,mollusc,,,,lavigeria,sp.,,,
+lebbius,grandimanus,,,,lebbeus,grandimanus,,,
+lebruna,danae,,,,lebrunia,danae,,,
+leirurus,jordanensis,,,,leiurus,jordanensis,,,
+leirurus,quinquestriatus,,,,leiurus,quinquestriatus,,,
+lemnallia,sp.,,TREE,CORAL,lemnalia,sp.,,TREE,CORAL
+lepidocephalichthy,hasselti,,,LOACH,lepidocephalichthys,hasselti,,,LOACH
+lepidocephalichthy,sp.,,,LOACH,lepidocephalichthys,sp.,,,LOACH
 limalima,vulgaris,,,,lima,vulgaris,,,
 liophus,cobella,,S. AMERICAN GROUND,SNAKE,liophis,cobella,,S. AMERICAN GROUND,SNAKE
 liophus,frenata,,COMMON GROUND,SNAKE,liophis,frenata,,COMMON GROUND,SNAKE
@@ -258,6 +318,7 @@ sphaedrabathria,hoffmanni,,,,sphaerobothria,hoffmanni,,,
 sphaeognathus,feisthameli,,,,sphaenognathus,feisthameli,,,
 sphenisus,magellanus,,,,spheniscus,magellanicus,,,
 staerias,amurensis,,,,asterias,amurensis,,,
+stathmonotas,stahlii,,,,stathmonotus,stahli,,,
 stenadus,leuchichthys,,,,stenodus,leucichthys,,,
 stugmatura,budytoides,,,,stigmatura,budytoides,,,
 substrato,scleractinia,,,,scleractinia,sp.,,,
@@ -274,6 +335,7 @@ thereupoda,sp.,,,CENTIPEDE,thereuopoda,sp.,,,CENTIPEDE
 therididae,sp.,,,,theridiidae,sp.,,,
 thilappia,niloticus,,,,oreochromis,niloticus,,,
 thracardium,muricatum,,,,trachycardium,muricatum,,,
+thripidectes,scrutator,,,,thripadectes,scrutator,,,
 thryithorus,sp.,,,,thryothorus,sp.,,,
 todirhamphus,chloris,,COLLARED,KINGFISHER,todiramphus,chloris,,COLLARED,KINGFISHER
 todirhamphus,sp.,,,KINGFISHER,todiramphus,sp.,,,KINGFISHER
@@ -295,6 +357,7 @@ trosidos,semitorta,,,,trisidos,semitorta,,,
 tytius,metuendus,,,,tityus,metuendus,,,
 undaria pinnatifid,harvey suringar,,,,undaria,pinnatifida,,,
 unk,unk,,,,unknown,unknown,,,
+uralisamietophryus,garmani,,,,amietophrynus,garmani,,,
 uroplatus firmbria,glant leaf tail,,,,uroplatus,fimbriatus,,COMMON FLAT-TAIL,GECKO
 urotheuthis,chinensis,,,,uroteuthis,chinensis,,,
 vejovis,sp.,,,SCORPION,vaejovis,sp.,,,SCORPION

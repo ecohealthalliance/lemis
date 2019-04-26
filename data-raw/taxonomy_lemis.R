@@ -10,6 +10,8 @@ library(stringr)
 library(taxadb)
 
 h <- here::here
+source(h("data-raw", "R", "lemis_cleaning_functions.R"))
+
 td_create("col")
 td_create("itis")
 
