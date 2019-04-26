@@ -28,19 +28,15 @@ cref <- CoordinateCleaner::countryref %>%
 ### Process data
 sdat <- dat %>%
   mutate(year = as.numeric(format(shipment_date,"%Y"))) %>%
-  select(country_imp_exp, year, taxa, purpose, value) %>%
+  select(country_imp_exp, year, taxa, purpose) %>%
   group_by(country_imp_exp, year, taxa, purpose) %>%
-  mutate(n_by_country_taxa_purpose = n(),
-         val_by_country_taxa_purpose =  sum(value, na.rm = TRUE)) %>%
+  mutate(n_by_country_taxa_purpose = n()) %>%
   group_by(country_imp_exp, year, purpose) %>%
-  mutate(n_by_country_purpose = n(),
-         val_by_country_purpose =  sum(value, na.rm = TRUE)) %>%
+  mutate(n_by_country_purpose = n()) %>%
   group_by(country_imp_exp, year, taxa) %>%
-  mutate(n_by_country_taxa = n(),
-         val_by_country_taxa =  sum(value, na.rm = TRUE)) %>%
+  mutate(n_by_country_taxa = n()) %>%
   group_by(country_imp_exp, year) %>%
-  mutate(n_by_country = n(),
-         val_by_country =  sum(value, na.rm = TRUE)) %>%
+  mutate(n_by_country = n()) %>%
   ungroup() %>%
   distinct() %>%
   mutate(country_name  = countrycode(sourcevar = country_imp_exp,
@@ -59,18 +55,17 @@ sdat <- dat %>%
   mutate(taxa = paste0(toupper(substr(taxa, 1, 1)), tolower(substring(taxa, 2))))
 
 tdat <- sdat %>%
-  select(continent, country_name, iso3c, taxa, year, n_by_country_taxa, val_by_country_taxa, n_by_country, val_by_country, centroid_lon, centroid_lat) %>%
+  select(continent, country_name, iso3c, taxa, year, n_by_country_taxa, n_by_country, centroid_lon, centroid_lat) %>%
   distinct()
 
 write_csv(tdat, "inst/shiny/widgets/lemis_dat_format.csv")
-
 
 library(cartogram)
 library(plotly)
 library(sf)
 
 udat <- tdat %>%
-  select(-n_by_country, -val_by_country, -centroid_lon, -centroid_lat)
+  select(-n_by_country, -centroid_lon, -centroid_lat)
 
 w <- maps::map('world', plot = FALSE, fill = TRUE) %>%
   st_as_sf() %>%
@@ -87,7 +82,7 @@ vdat <- tdat %>%
   filter(n_by_country_taxa==max(n_by_country_taxa, na.rm=TRUE)) %>%
   mutate(most_common_taxa = taxa) %>%
   ungroup() %>%
-  select(-n_by_country_taxa, -val_by_country_taxa, -taxa, -centroid_lon, -centroid_lat) %>%
+  select(-n_by_country_taxa, -taxa, -centroid_lon, -centroid_lat) %>%
   distinct()
 
 w2 <- maps::map('world', plot = FALSE, fill = TRUE) %>%

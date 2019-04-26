@@ -4,7 +4,8 @@ library(plotly)
 library(cartogram)
 library(sf)
 library(treemap)
-
+library(d3treeR)
+#devtools::install_github("annegretepeek/d3treeR")
 
 dat <- read_csv(here::here("inst/shiny/widgets/lemis_dat_format.csv")) %>% filter(!is.na(taxa))
 mdat <- read_rds(here::here("inst/shiny/widgets/lemis_dat_by_taxa_sf.rds"))
@@ -19,32 +20,26 @@ ui <- fluidPage(
                                  "Year",
                                  min = min(dat$year, na.rm = TRUE),
                                  max = max(dat$year, na.rm = TRUE),
-                                 value = 2013,
+                                 value = 2014,
                                  sep = ""),
-                     selectInput("taxa", "", choices = unique(dat$taxa)),
-                     radioButtons("size", "", choices = c("Imports (n)", "Value ($)")
-                     )
+                     selectInput("taxa", "", choices = unique(dat$taxa))
+
         ),
         mainPanel(
             tabsetPanel(
-                tabPanel("Map",
-                         fluidRow(
-                             column(12, plotlyOutput("map") )
-                         )
-                ),
                 tabPanel("Dorling",
                          fluidRow(
                              column(12, plotlyOutput("mapd"))
                          )
                 ),
-                tabPanel("Dorling 2",
-                         fluidRow(
-                             column(12, plotlyOutput("mapd2"))
-                         )
-                ),
+                # tabPanel("Dorling 2",
+                #          fluidRow(
+                #              column(12, plotlyOutput("mapd2"))
+                #          )
+                # ),
                 tabPanel("Tree Map",
                          fluidRow(
-                             column(12, plotOutput("tree"))
+                             column(12, d3tree2Output("tree"))
                          )
                 )
             )
@@ -54,68 +49,39 @@ ui <- fluidPage(
 
 server <- function(input, output) {
 
-    get <- reactive({
-        field <- ifelse(input$size == "Imports (n)", "n_by_country_taxa", "val_by_country_taxa")
-        list(field = field)
-    })
-
-    output$map <- renderPlotly({
-        dat %>%
-            mutate(field = !!sym(get()$field)) %>%
-            filter(
-                #year == input$year,
-                taxa == input$taxa,
-                field >= quantile(field, .5)
-            ) %>%
-            plot_geo() %>%
-            add_markers(
-                x = ~centroid_lon,
-                y = ~centroid_lat,
-                hoverinfo="text",
-                text =  ~paste0(country_name, '\n', field),
-                #mode = 'markers',
-                size = ~field,
-                frame = ~year,
-                marker=list(sizeref = 0.25, sizemode="area")
-            ) %>%
-            animation_opts(
-                1000, easing = "elastic", redraw = FALSE
-            )
-    })
-
     output$mapd <- renderPlotly({
 
         w <- mdat %>%
             filter(year == input$year,
                    taxa == input$taxa
                    ) %>%
-            mutate(field =  !!sym(get()$field)
-            )
+            mutate(field =  n_by_country_taxa)
 
-        w_dor <- cartogram_dorling(w, get()$field)
+        w_dor <- cartogram_dorling(w, "field")
         w_dor_cenr <- w_dor %>%
             st_centroid() %>%
             st_coordinates() %>%
             as_tibble() %>%
             mutate(country_name = w_dor$country_name,
                    continent = w_dor$continent,
+                   iso3c = w_dor$iso3c,
                    field = w_dor$field) %>%
             filter(field >= quantile(field, 0.90))
 
         plot_ly(stroke = I("black"), span = I(1)) %>%
             add_sf(
                 data = w_dor,
-                color = ~field,
-                #color = ~continent,
-                split = ~country_name,
-                text = ~paste0(country_name, "\n", get()$field,  ": ", round(field, 0)),
+                #color = ~field,
+                color = ~continent,
+                split = ~iso3c,
+                text = ~paste0(country_name, "\nN = ", round(field, 0)),
                 hoverinfo = "text",
                 hoveron = "fills"
             ) %>%
             add_annotations(
                 data = w_dor_cenr,
                 x = ~X, y = ~Y,
-                text = ~country_name,
+                text = ~iso3c,
                 #textposition = 'middle right',
                 textfont =  list(
                     family = "sans serif",
@@ -126,56 +92,19 @@ server <- function(input, output) {
             layout(showlegend = FALSE)
     })
 
-    output$mapd2 <- renderPlotly({
+    output$tree <- renderD3tree2({
 
-        w <- mdat2 %>%
-            filter(
-                year == input$year
-            ) %>%
-            mutate(field = n_by_country#!!sym(get()$field)
-            )
+        tree_dat <- dat %>%
+            filter(year == 2014,#input$year,
+                   taxa == "Mammal"#input$taxa
+                   )
 
-        w_dor <- cartogram_dorling(w, "field")
-        w_dor_cenr <- w_dor %>%
-            st_centroid() %>%
-            st_coordinates() %>%
-            as_tibble() %>%
-            mutate(country_name = w_dor$country_name,
-                   most_common_taxa = w_dor$most_common_taxa,
-                   field = w_dor$field) %>%
-            filter(field >= quantile(field, 0.90))
-
-        plot_ly(stroke = I("black"), span = I(1)) %>%
-            add_sf(
-                data = w_dor,
-                color = ~most_common_taxa,
-                #split = ~country_name,
-                text = ~paste0(country_name, "\n",  "n_by_country: ", round(field, 0)),
-                hoverinfo = "text",
-                hoveron = "fills"
-            ) %>%
-            add_annotations(
-                data = w_dor_cenr,
-                x = ~X, y = ~Y,
-                text = ~country_name,
-                #textposition = 'middle right',
-                textfont =  list(
-                    family = "sans serif",
-                    size = 14,
-                    color = toRGB("black")),
-                showarrow = FALSE
-            )
-    })
-
-    output$tree <- renderPlot({
-
-        dat %>%
-            filter(year == input$year, taxa == input$taxa) %>%
-            treemap(.,
-                    index=c("continent","country_name"),
+        tree_map <- treemap(tree_dat,
+                    index=c("continent", "iso3c"),
                     vSize="n_by_country_taxa",
                     type="index"
             )
+        d3tree2(data = tree_map, rootname = "World", tooltip = "index")
 
     })
 
