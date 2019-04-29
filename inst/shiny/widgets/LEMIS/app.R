@@ -3,8 +3,8 @@ library(tidyverse)
 library(plotly)
 library(cartogram)
 library(sf)
-library(treemap)
-library(d3treeR)
+library(highcharter)
+library(RColorBrewer)
 #devtools::install_github("annegretepeek/d3treeR")
 
 dat <- read_csv(here::here("inst/shiny/widgets/lemis_dat_format.csv")) %>% filter(!is.na(taxa))
@@ -39,7 +39,7 @@ ui <- fluidPage(
                 # ),
                 tabPanel("Tree Map",
                          fluidRow(
-                             column(12, d3tree2Output("tree"))
+                             column(12, highchartOutput("tree"))
                          )
                 )
             )
@@ -54,10 +54,10 @@ server <- function(input, output) {
         w <- mdat %>%
             filter(year == input$year,
                    taxa == input$taxa
-                   ) %>%
+            ) %>%
             mutate(field =  n_by_country_taxa)
 
-        w_dor <- cartogram_dorling(w, "field")
+        w_dor <- cartogram_dorling(w, "field", k=1)
         w_dor_cenr <- w_dor %>%
             st_centroid() %>%
             st_coordinates() %>%
@@ -68,44 +68,52 @@ server <- function(input, output) {
                    field = w_dor$field) %>%
             filter(field >= quantile(field, 0.90))
 
-        plot_ly(stroke = I("black"), span = I(1)) %>%
+        plot_geo(map_data("world")) %>%
             add_sf(
                 data = w_dor,
                 #color = ~field,
                 color = ~continent,
                 split = ~iso3c,
                 text = ~paste0(country_name, "\nN = ", round(field, 0)),
-                hoverinfo = "text",
-                hoveron = "fills"
+                hoverinfo = "text"
             ) %>%
-            add_annotations(
-                data = w_dor_cenr,
-                x = ~X, y = ~Y,
-                text = ~iso3c,
-                #textposition = 'middle right',
-                textfont =  list(
-                    family = "sans serif",
-                    size = 14,
-                    color = toRGB("black")),
-                showarrow = FALSE
-            ) %>%
-            layout(showlegend = FALSE)
+            # add_annotations(
+            #     data = w_dor_cenr,
+            #     x = ~X, y = ~Y,
+            #     text = ~iso3c,
+            #     #textposition = 'middle right',
+            #     textfont =  list(
+            #         family = "sans serif",
+            #         size = 14,
+            #         color = toRGB("black")),
+            #     showarrow = FALSE
+            # ) %>%
+        layout(showlegend = FALSE)
     })
 
-    output$tree <- renderD3tree2({
+    output$tree <- renderHighchart({
 
-        tree_dat <- dat %>%
-            filter(year == 2014,#input$year,
-                   taxa == "Mammal"#input$taxa
-                   )
-
-        tree_map <- treemap(tree_dat,
-                    index=c("continent", "iso3c"),
-                    vSize="n_by_country_taxa",
-                    type="index"
-            )
-        d3tree2(data = tree_map, rootname = "World", tooltip = "index")
-
+        dat %>%
+            mutate(continent_int = as.numeric(as.factor(continent))) %>%
+            filter(year == input$year,
+                   taxa == input$taxa
+            )%>%
+            hctreemap2(
+                group_vars = c("continent", "country_name"),
+                size_var = "n_by_country_taxa",
+                color_var = "continent_int",
+                layoutAlgorithm = "squarified",
+                levelIsConstant = FALSE,
+                levels = list(
+                    list(level = 1, dataLabels = list(enabled = TRUE)),
+                    list(level = 2, dataLabels = list(enabled = TRUE))
+                )
+            ) %>%
+            hc_colorAxis(dataClasses = color_classes(seq(1:7))) %>%
+            hc_legend(enabled = F) %>%
+            hc_add_theme(hc_theme_ggplot2()) %>%
+            hc_tooltip(pointFormat = "<b>{point.name}</b>:<br>
+             N = {point.value}")
     })
 
 }
