@@ -95,16 +95,18 @@ w2 <- maps::map('world', plot = FALSE, fill = TRUE) %>%
 
 write_rds(w2, "inst/shiny/widgets/lemis_dat_by_country_sf.rds")
 
-# w_dor <- cartogram_dorling(w, "n_by_country_taxa")
-#
-# plot_ly(stroke = I("black"), span = I(1)) %>%
-#   add_sf(
-#     data = w_dor,
-#     color = ~n_by_country_taxa,
-#     split = ~country_name,
-#     text = ~paste(country_name),
-#     hoverinfo = "text",
-#     hoveron = "fills"
-#   ) %>%
-#   layout(showlegend = FALSE)
-#
+# dorling data prep
+
+w_cross <-tdat %>%
+  dplyr::select(taxa, year) %>%
+  distinct()
+
+w_dor <-  map2(w_cross$taxa, w_cross$year, function(x, y){
+      cartogram_dorling(w %>%
+                          filter(taxa == x, year == y),
+                        "n_by_country_taxa", k=1)
+    })
+names(w_dor) <- paste(w_cross$taxa, w_cross$year, sep = "_")
+
+write_rds(w_dor, "inst/shiny/widgets/lemis_dat_by_country_dor.rds")
+

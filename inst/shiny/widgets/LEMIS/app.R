@@ -9,7 +9,8 @@ library(RColorBrewer)
 
 dat <- read_csv(here::here("inst/shiny/widgets/lemis_dat_format.csv")) %>% filter(!is.na(taxa))
 mdat <- read_rds(here::here("inst/shiny/widgets/lemis_dat_by_taxa_sf.rds"))
-mdat2 <- read_rds(here::here("inst/shiny/widgets/lemis_dat_by_country_sf.rds"))
+#mdat2 <- read_rds(here::here("inst/shiny/widgets/lemis_dat_by_country_sf.rds"))
+mdat_d <- read_rds(here::here("inst/shiny/widgets/lemis_dat_by_country_dor.rds"))
 
 # Define UI for application that draws a histogram
 ui <- fluidPage(
@@ -49,46 +50,63 @@ ui <- fluidPage(
 
 server <- function(input, output) {
 
+    # get_dor <- reactive({
+    #
+    #     w <- mdat %>%
+    #         filter(year == input$year,
+    #                taxa == input$taxa
+    #         ) %>%
+    #         mutate(field =  n_by_country_taxa)
+    #
+    #     w_dor <- cartogram_dorling(w, "field", k=1)
+    #
+    #     list(w_dor = w_dor)
+    # })
+
     output$mapd <- renderPlotly({
 
-        w <- mdat %>%
-            filter(year == input$year,
-                   taxa == input$taxa
-            ) %>%
-            mutate(field =  n_by_country_taxa)
+        get_plt <- paste(input$taxa, input$year, sep = "_")
 
-        w_dor <- cartogram_dorling(w, "field", k=1)
-        w_dor_cenr <- w_dor %>%
-            st_centroid() %>%
-            st_coordinates() %>%
-            as_tibble() %>%
-            mutate(country_name = w_dor$country_name,
-                   continent = w_dor$continent,
-                   iso3c = w_dor$iso3c,
-                   field = w_dor$field) %>%
-            filter(field >= quantile(field, 0.90))
+        geo <- list(
+            showland = TRUE,
+            landcolor = toRGB("gray95")
+        )
 
-        plot_geo(map_data("world")) %>%
-            add_sf(
-                data = w_dor,
-                #color = ~field,
+        plot_ly(data = mdat_d[[get_plt]],
+                type = "scattergeo",
                 color = ~continent,
                 split = ~iso3c,
-                text = ~paste0(country_name, "\nN = ", round(field, 0)),
-                hoverinfo = "text"
-            ) %>%
-            # add_annotations(
-            #     data = w_dor_cenr,
-            #     x = ~X, y = ~Y,
-            #     text = ~iso3c,
-            #     #textposition = 'middle right',
-            #     textfont =  list(
-            #         family = "sans serif",
-            #         size = 14,
-            #         color = toRGB("black")),
-            #     showarrow = FALSE
+                text = ~paste0(country_name, "\nN = ", round(n_by_country_taxa, 0)),
+                hoverinfo = "text") %>%
+            # add_sf(
+            #     data = get_dor()$w_dor,
+            #     #color = ~field,
+            #     color = ~continent,
+            #     split = ~iso3c,
+            #     text = ~paste0(country_name, "\nN = ", round(field, 0)),
+            #     hoverinfo = "text"
             # ) %>%
-        layout(showlegend = FALSE)
+            layout(geo = geo, showlegend = FALSE)
+    })
+
+    observeEvent(input$year, {
+
+        get_plt <- paste0("Bird_", input$year)
+
+        plotlyProxy("mapd") %>%
+            plotlyProxyInvoke("addTraces",
+                              list(
+                                  data = mdat_d[[get_plt]],
+                                  type = "scattergeo",
+                                  color = ~continent,
+                                  split = ~iso3c,
+                                  text = ~paste0(country_name, "\nN = ", round(n_by_country_taxa, 0)),
+                                  hoverinfo = "text"
+                              )
+            )
+        plotlyProxy("mapd") %>%
+            plotlyProxyInvoke("deleteTraces", list(as.integer(0)))
+
     })
 
     output$tree <- renderHighchart({
