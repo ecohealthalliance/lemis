@@ -12,6 +12,12 @@ mdat <- read_rds(here::here("inst/shiny/widgets/lemis_dat_by_taxa_sf.rds"))
 #mdat2 <- read_rds(here::here("inst/shiny/widgets/lemis_dat_by_country_sf.rds"))
 mdat_d <- read_rds(here::here("inst/shiny/widgets/lemis_dat_by_country_dor.rds"))
 
+# notes
+# add_trace does not work with sf data - used internal plotly function to transform input data (dat-process.R)
+# plotlyProxyInvoke("addTraces"...) doesn't behave the same as add_traces().
+#    a) need to specify type = "scattergeo"  (which is not needed when 2nd add_trace is used in plot_ly or plot_geo call)
+#    b) it is rendering behind exisiting plot
+
 # Define UI for application that draws a histogram
 ui <- fluidPage(
 
@@ -33,11 +39,6 @@ ui <- fluidPage(
                              column(12, plotlyOutput("mapd"))
                          )
                 ),
-                # tabPanel("Dorling 2",
-                #          fluidRow(
-                #              column(12, plotlyOutput("mapd2"))
-                #          )
-                # ),
                 tabPanel("Tree Map",
                          fluidRow(
                              column(12, highchartOutput("tree"))
@@ -50,19 +51,6 @@ ui <- fluidPage(
 
 server <- function(input, output) {
 
-    # get_dor <- reactive({
-    #
-    #     w <- mdat %>%
-    #         filter(year == input$year,
-    #                taxa == input$taxa
-    #         ) %>%
-    #         mutate(field =  n_by_country_taxa)
-    #
-    #     w_dor <- cartogram_dorling(w, "field", k=1)
-    #
-    #     list(w_dor = w_dor)
-    # })
-
     output$mapd <- renderPlotly({
 
         #get_plt <- paste(input$taxa, input$year, sep = "_")
@@ -72,85 +60,31 @@ server <- function(input, output) {
             landcolor = toRGB("gray95")
         )
 
-        # works
-        # plot_geo( map_data("world")) %>%
-        #     add_sf(data = mdat_d[["Shell_2014"]],
-        #            color = ~continent,
-        #            type = "scattergeo",
-        #            split = ~iso3c,
-        #            text = ~paste0(country_name, "\nN = ", round(n_by_country_taxa, 0)),
-        #            hoverinfo = "text") %>%
-        #     layout(geo = geo, showlegend = FALSE)
-
-        # works
-        # plot_ly(data = mdat_d[["Shell_2014"]],
-        #         color = ~continent,
-        #         type = "scattergeo",
-        #         split = ~iso3c,
-        #         text = ~paste0(country_name, "\nN = ", round(n_by_country_taxa, 0)),
-        #         hoverinfo = "text") %>%
-        #     layout(geo = geo, showlegend = FALSE)
-
-        # works but not with dorling
-        # test <- mdat_d[["Shell_2014"]] %>%
-        #     st_centroid() %>%
-        #     st_coordinates() %>%
-        #     as_tibble() %>%
-        #     mutate(country_name = mdat_d[["Shell_2014"]]$country_name,
-        #            continent = mdat_d[["Shell_2014"]]$continent,
-        #            iso3c = mdat_d[["Shell_2014"]]$iso3c,
-        #            n_by_country_taxa = mdat_d[["Shell_2014"]]$n_by_country_taxa)
-        #
-        # plot_geo() %>%
-        #     add_trace(data = test,#mdat_d[["Shell_2014"]],
-        #               x = ~X, y = ~Y,
-        #               size = ~n_by_country_taxa,
-        #               color = ~continent,
-        #               # mode = "marker",
-        #               split = ~iso3c,
-        #               text = ~paste0(country_name, "\nN = ", round(n_by_country_taxa, 0)),
-        #               hoverinfo = "text",
-        #               marker=list(sizeref = .1, sizemode="area")) %>%
-        #     layout(geo = geo, showlegend = FALSE)
-
-        plot_geo() %>%
-            add_trace(
-                data = mdat_d[["Shell_2014"]],
-                x = ~x,
-                y = ~y,
-                color = ~continent,
-                fill = "toself",
-                mode = "lines",
-                split = ~iso3c,
-                text = ~paste0(country_name, "\nN = ", round(n_by_country_taxa, 0)),
-                hoverinfo = "text"
-            ) %>%
+        plot_ly(
+            data = mdat_d[["Shell_2014"]],
+            x = ~x,
+            y = ~y,
+            color = ~continent,
+            type = "scattergeo",
+            fill = "toself",
+            mode = "lines",
+            split = ~iso3c,
+            text = ~paste0(country_name, "\nN = ", round(n_by_country_taxa, 0)),
+            hoverinfo = "text"
+        ) %>%
             # add_trace(
             #     data = mdat_d[["Bird_2014"]],
             #     x = ~x,
             #     y = ~y,
             #     color = ~continent,
+            #     type = "scattergeo",
             #     fill = "toself",
             #     mode = "lines",
             #     split = ~iso3c,
             #     text = ~paste0(country_name, "\nN = ", round(n_by_country_taxa, 0)),
             #     hoverinfo = "text"
-            # ) %>%
-            layout(geo = geo, showlegend = FALSE)
-
-        # doesn't work (b/c sf object)
-        # plot_geo() %>%
-        # add_trace(
-        #    # add_sf(
-        #        data = mdat_d[["Shell_2014"]],
-        #        color = ~continent,
-        #        type = "scattergeo",
-        #        # mode = "marker",
-        #        #split = ~iso3c,
-        #        text = ~paste0(country_name, "\nN = ", round(n_by_country_taxa, 0)),
-        #        hoverinfo = "text"
-        #        ) %>%
-        # layout(geo = geo, showlegend = FALSE)
+        # ) %>%
+        layout(geo = geo, showlegend = FALSE)
 
     })
 
@@ -158,17 +92,16 @@ server <- function(input, output) {
         input$taxa
         input$year}, {
 
-        get_plt <- paste(input$taxa, input$year, sep = "_")
+            get_plt <- paste(input$taxa, input$year, sep = "_")
 
-        # plotlyProxy("mapd") %>%
-        #     plotlyProxyInvoke("deleteTraces", as.list(1:100))
+            # plotlyProxy("mapd") %>%
+            #     plotlyProxyInvoke("deleteTraces", as.list(1:100))
 
-        print("hi?")
-
-        plotlyProxy("mapd") %>%
-            plotlyProxyInvoke("addTraces",
-                              list(
-                                      data = mdat_d[["get_plt"]],
+            plotlyProxy("mapd") %>%
+                plotlyProxyInvoke("addTraces",
+                                  list(
+                                      data = mdat_d[[get_plt]],
+                                      #inherit = FALSE,
                                       x = ~x,
                                       y = ~y,
                                       color = ~continent,
@@ -177,12 +110,10 @@ server <- function(input, output) {
                                       mode = "lines",
                                       split = ~iso3c,
                                       text = ~paste0(country_name, "\nN = ", round(n_by_country_taxa, 0)),
-                                      hoverinfo = "text"
+                                      hoverinfo = "text")
+                )
 
-                              )
-            )
-
-    })
+        })
 
     output$tree <- renderHighchart({
 
