@@ -120,12 +120,22 @@ server <- function(input, output) {
                 y = ~y,
                 color = ~continent,
                 fill = "toself",
-                type = "scattergeo",
                 mode = "lines",
                 split = ~iso3c,
                 text = ~paste0(country_name, "\nN = ", round(n_by_country_taxa, 0)),
                 hoverinfo = "text"
             ) %>%
+            # add_trace(
+            #     data = mdat_d[["Bird_2014"]],
+            #     x = ~x,
+            #     y = ~y,
+            #     color = ~continent,
+            #     fill = "toself",
+            #     mode = "lines",
+            #     split = ~iso3c,
+            #     text = ~paste0(country_name, "\nN = ", round(n_by_country_taxa, 0)),
+            #     hoverinfo = "text"
+            # ) %>%
             layout(geo = geo, showlegend = FALSE)
 
         # doesn't work (b/c sf object)
@@ -150,23 +160,25 @@ server <- function(input, output) {
 
         get_plt <- paste(input$taxa, input$year, sep = "_")
 
-        plotlyProxy("mapd") %>%
-            plotlyProxyInvoke("deleteTraces", list(as.integer(0:20)))
+        # plotlyProxy("mapd") %>%
+        #     plotlyProxyInvoke("deleteTraces", as.list(1:100))
 
+        print("hi?")
 
         plotlyProxy("mapd") %>%
             plotlyProxyInvoke("addTraces",
                               list(
-                                  data = mdat_d[[get_plt]],
-                                  x = ~x,
-                                  y = ~y
-                                  # color = ~continent,
-                                  # fill = "toself",
-                                  # type = "scattergeo",
-                                  # mode = "lines",
-                                  # split = ~iso3c,
-                                  # text = ~paste0(country_name, "\nN = ", round(n_by_country_taxa, 0)),
-                                  # hoverinfo = "text"
+                                      data = mdat_d[["get_plt"]],
+                                      x = ~x,
+                                      y = ~y,
+                                      color = ~continent,
+                                      #type = "scattergeo",
+                                      fill = "toself",
+                                      mode = "lines",
+                                      split = ~iso3c,
+                                      text = ~paste0(country_name, "\nN = ", round(n_by_country_taxa, 0)),
+                                      hoverinfo = "text"
+
                               )
             )
 
