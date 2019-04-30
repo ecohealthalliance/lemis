@@ -102,10 +102,13 @@ w_cross <-tdat %>%
   distinct()
 
 w_dor <-  map2(w_cross$taxa, w_cross$year, function(x, y){
-      cartogram_dorling(w %>%
-                          filter(taxa == x, year == y),
-                        "n_by_country_taxa", k=1)
-    })
+  cartogram_dorling(w %>% filter(taxa == x, year == y),
+                    "n_by_country_taxa",
+                    k=1) %>%
+    as_tibble() %>%
+    plotly:::to_basic.GeomSf()
+
+})
 names(w_dor) <- paste(w_cross$taxa, w_cross$year, sep = "_")
 
 write_rds(w_dor, "inst/shiny/widgets/lemis_dat_by_country_dor.rds")

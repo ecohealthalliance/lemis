@@ -65,47 +65,110 @@ server <- function(input, output) {
 
     output$mapd <- renderPlotly({
 
-        get_plt <- paste(input$taxa, input$year, sep = "_")
+        #get_plt <- paste(input$taxa, input$year, sep = "_")
 
         geo <- list(
             showland = TRUE,
             landcolor = toRGB("gray95")
         )
 
-        plot_ly(data = mdat_d[[get_plt]],
-                type = "scattergeo",
+        # works
+        # plot_geo( map_data("world")) %>%
+        #     add_sf(data = mdat_d[["Shell_2014"]],
+        #            color = ~continent,
+        #            type = "scattergeo",
+        #            split = ~iso3c,
+        #            text = ~paste0(country_name, "\nN = ", round(n_by_country_taxa, 0)),
+        #            hoverinfo = "text") %>%
+        #     layout(geo = geo, showlegend = FALSE)
+
+        # works
+        # plot_ly(data = mdat_d[["Shell_2014"]],
+        #         color = ~continent,
+        #         type = "scattergeo",
+        #         split = ~iso3c,
+        #         text = ~paste0(country_name, "\nN = ", round(n_by_country_taxa, 0)),
+        #         hoverinfo = "text") %>%
+        #     layout(geo = geo, showlegend = FALSE)
+
+        # works but not with dorling
+        # test <- mdat_d[["Shell_2014"]] %>%
+        #     st_centroid() %>%
+        #     st_coordinates() %>%
+        #     as_tibble() %>%
+        #     mutate(country_name = mdat_d[["Shell_2014"]]$country_name,
+        #            continent = mdat_d[["Shell_2014"]]$continent,
+        #            iso3c = mdat_d[["Shell_2014"]]$iso3c,
+        #            n_by_country_taxa = mdat_d[["Shell_2014"]]$n_by_country_taxa)
+        #
+        # plot_geo() %>%
+        #     add_trace(data = test,#mdat_d[["Shell_2014"]],
+        #               x = ~X, y = ~Y,
+        #               size = ~n_by_country_taxa,
+        #               color = ~continent,
+        #               # mode = "marker",
+        #               split = ~iso3c,
+        #               text = ~paste0(country_name, "\nN = ", round(n_by_country_taxa, 0)),
+        #               hoverinfo = "text",
+        #               marker=list(sizeref = .1, sizemode="area")) %>%
+        #     layout(geo = geo, showlegend = FALSE)
+
+        plot_geo() %>%
+            add_trace(
+                data = mdat_d[["Shell_2014"]],
+                x = ~x,
+                y = ~y,
                 color = ~continent,
+                fill = "toself",
+                type = "scattergeo",
+                mode = "lines",
                 split = ~iso3c,
                 text = ~paste0(country_name, "\nN = ", round(n_by_country_taxa, 0)),
-                hoverinfo = "text") %>%
-            # add_sf(
-            #     data = get_dor()$w_dor,
-            #     #color = ~field,
-            #     color = ~continent,
-            #     split = ~iso3c,
-            #     text = ~paste0(country_name, "\nN = ", round(field, 0)),
-            #     hoverinfo = "text"
-            # ) %>%
+                hoverinfo = "text"
+            ) %>%
             layout(geo = geo, showlegend = FALSE)
+
+        # doesn't work (b/c sf object)
+        # plot_geo() %>%
+        # add_trace(
+        #    # add_sf(
+        #        data = mdat_d[["Shell_2014"]],
+        #        color = ~continent,
+        #        type = "scattergeo",
+        #        # mode = "marker",
+        #        #split = ~iso3c,
+        #        text = ~paste0(country_name, "\nN = ", round(n_by_country_taxa, 0)),
+        #        hoverinfo = "text"
+        #        ) %>%
+        # layout(geo = geo, showlegend = FALSE)
+
     })
 
-    observeEvent(input$year, {
+    observeEvent({
+        input$taxa
+        input$year}, {
 
-        get_plt <- paste0("Bird_", input$year)
+        get_plt <- paste(input$taxa, input$year, sep = "_")
+
+        plotlyProxy("mapd") %>%
+            plotlyProxyInvoke("deleteTraces", list(as.integer(0:20)))
+
 
         plotlyProxy("mapd") %>%
             plotlyProxyInvoke("addTraces",
                               list(
                                   data = mdat_d[[get_plt]],
-                                  type = "scattergeo",
-                                  color = ~continent,
-                                  split = ~iso3c,
-                                  text = ~paste0(country_name, "\nN = ", round(n_by_country_taxa, 0)),
-                                  hoverinfo = "text"
+                                  x = ~x,
+                                  y = ~y
+                                  # color = ~continent,
+                                  # fill = "toself",
+                                  # type = "scattergeo",
+                                  # mode = "lines",
+                                  # split = ~iso3c,
+                                  # text = ~paste0(country_name, "\nN = ", round(n_by_country_taxa, 0)),
+                                  # hoverinfo = "text"
                               )
             )
-        plotlyProxy("mapd") %>%
-            plotlyProxyInvoke("deleteTraces", list(as.integer(0)))
 
     })
 
