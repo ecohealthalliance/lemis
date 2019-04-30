@@ -1,25 +1,33 @@
 library(shiny)
 library(tidyverse)
 library(plotly)
-library(cartogram)
 library(sf)
 library(highcharter)
+library(echarts4r)
 library(RColorBrewer)
+library(leaflet)
+library(leaflet.extras)
 #devtools::install_github("annegretepeek/d3treeR")
 
 dat <- read_csv(here::here("inst/shiny/widgets/lemis_dat_format.csv")) %>% filter(!is.na(taxa))
 #mdat <- read_rds(here::here("inst/shiny/widgets/lemis_dat_by_taxa_sf.rds"))
 
 mdat_d <- read_rds(here::here("inst/shiny/widgets/lemis_dat_by_country_dor.rds"))
-mdat_sf <- read_rds(here::here("inst/shiny/widgets/lemis_dat_by_country_sf.rds"))
+#mdat_sf <- read_rds(here::here("inst/shiny/widgets/lemis_dat_by_country_sf.rds"))
+mdat_lf <- read_rds(here::here("inst/shiny/widgets/lemis_dat_by_country_lef.rds"))
 
-timestamp <- file.info("inst/shiny/widgets/lemis_dat_by_country_sf.rds")$ctime
+#timestamp <- file.info("inst/shiny/widgets/lemis_dat_by_country_sf.rds")$ctime
 
 # notes
+# plotly
 # add_trace does not work with sf data - used internal plotly function to transform input data (dat-process.R)
 # plotlyProxyInvoke("addTraces"...) doesn't behave the same as add_traces().
 #    a) need to specify type = "scattergeo"  (which is not needed when 2nd add_trace is used in plot_ly or plot_geo call)
 #    b) it is rendering behind exisiting plot
+
+# echarts4r
+# proxy does not seems to be designed to fully redraw the plot: https://echarts4r.john-coene.com/articles/shiny.html
+# but goes fast when dispose = TRUE
 
 ui <- fluidPage(
 
@@ -41,15 +49,19 @@ ui <- fluidPage(
                              column(12, plotlyOutput("mapd"))
                          )
                 ),
-                tabPanel("Dorling - ggplot",
+                tabPanel("Dorling - leaflet",
                          fluidRow(
-                             column(12, plotOutput("mapd2", hover = "plot_hover"),
-                                    uiOutput("dynamic"))
+                             column(12, leafletOutput("mapd2"))
                          )
                 ),
                 tabPanel("Tree Map - highcharter",
                          fluidRow(
                              column(12, highchartOutput("tree"))
+                         )
+                ),
+                tabPanel("Tree Map - echarts4r",
+                         fluidRow(
+                             column(12, echarts4rOutput("tree2"))
                          )
                 )
             )
@@ -125,41 +137,38 @@ server <- function(input, output) {
 
         })
 
-    # ggplot cached dorling
-    output$mapd2 <- renderCachedPlot({
+    output$mapd2 <- renderLeaflet({
 
         get_plt <- paste(input$taxa, input$year, sep = "_")
+        dat <-mdat_lf[[get_plt]]
 
-        ggplot(mdat_sf[[get_plt]], aes(color = continent, fill = continent)) +
-            geom_sf()
+        pal <- colorFactor(
+            palette = 'Dark2',
+            domain = dat$continent
+        )
 
+        leaflet(dat) %>%
+            addTiles() %>%
+            addCircles(lng = ~X, lat = ~Y, weight = 1,
+                       color = ~pal(continent),
+                       radius = ~radius,
+                       label = ~paste0(country_name, "\nN = ", round(n_by_country_taxa, 0))) %>%
+            addResetMapButton() %>%
+            fitBounds( lng1 = -80,
+                       lng2 = 80,
+                       lat1 = -40,
+                       lat2 = 65 )
 
-    }, cacheKeyExpr = {
-        list(input$taxa, input$year, "dorling", timestamp) },
-    cache = "session" # session or app
-    )
-
-    output$dynamic <- renderUI({
-        req(input$plot_hover)
-        verbatimTextOutput("vals")
     })
 
-    output$vals <- renderPrint({
-        hover <- input$plot_hover
-        # print(str(hover)) # list
-        # y <- nearPoints(iris, input$plot_hover)[input$var_y]
-        # req(nrow(y) != 0)
-        # y
-        "test"
-    })
-
+    # Highcharter treemap -  not proxy compatable but fast
     output$tree <- renderHighchart({
 
         dat %>%
             mutate(continent_int = as.numeric(as.factor(continent))) %>%
             filter(year == input$year,
                    taxa == input$taxa
-            )%>%
+            ) %>%
             hctreemap2(
                 group_vars = c("continent", "country_name"),
                 size_var = "n_by_country_taxa",
@@ -178,6 +187,28 @@ server <- function(input, output) {
             hc_tooltip(pointFormat = "<b>{point.name}</b>:<br>
              N = {point.value}")
     })
+
+    # echarts4r treemap
+    output$tree2 <- renderEcharts4r({
+
+        dat %>%
+            filter(year == input$year,
+                   taxa == input$taxa
+            ) %>%
+            e_charts(dispose = TRUE) %>%
+            e_treemap(continent, country_name, n_by_country_taxa) %>%
+            e_tooltip(trigger = "item")
+
+    })
+
+    # Proxy update echarts4r
+
+    # observeEvent({
+    #     input$taxa
+    #     input$year}, {
+    #
+    #          echarts4rProxy("tree2")
+    # })
 
 }
 

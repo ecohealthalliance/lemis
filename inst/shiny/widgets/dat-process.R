@@ -125,3 +125,25 @@ names(w_dor2) <- paste(w_cross$taxa, w_cross$year, sep = "_")
 
 write_rds(w_dor2, "inst/shiny/widgets/lemis_dat_by_country_dor.rds")
 
+# v3
+w_dor3 <-  map2(w_cross$taxa, w_cross$year, function(x, y){
+
+  tmp <- w %>% filter(taxa == x, year == y)
+
+  sf_tmp <- cartogram_dorling(tmp,
+                              "n_by_country_taxa",
+                              k=1)
+  sf_tmp %>%
+    st_centroid() %>%
+    st_coordinates() %>%
+    as_tibble() %>%
+    mutate(country_name = tmp$country_name,
+           continent = tmp$continent,
+           iso3c = tmp$iso3c,
+           n_by_country_taxa = tmp$n_by_country_taxa,
+           radius = sqrt(st_area(sf_tmp)/pi))
+
+})
+names(w_dor3) <- paste(w_cross$taxa, w_cross$year, sep = "_")
+
+write_rds(w_dor3, "inst/shiny/widgets/lemis_dat_by_country_lef.rds")
