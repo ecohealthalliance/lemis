@@ -8,9 +8,12 @@ library(RColorBrewer)
 #devtools::install_github("annegretepeek/d3treeR")
 
 dat <- read_csv(here::here("inst/shiny/widgets/lemis_dat_format.csv")) %>% filter(!is.na(taxa))
-mdat <- read_rds(here::here("inst/shiny/widgets/lemis_dat_by_taxa_sf.rds"))
-#mdat2 <- read_rds(here::here("inst/shiny/widgets/lemis_dat_by_country_sf.rds"))
+#mdat <- read_rds(here::here("inst/shiny/widgets/lemis_dat_by_taxa_sf.rds"))
+
 mdat_d <- read_rds(here::here("inst/shiny/widgets/lemis_dat_by_country_dor.rds"))
+mdat_sf <- read_rds(here::here("inst/shiny/widgets/lemis_dat_by_country_sf.rds"))
+
+timestamp <- file.info("inst/shiny/widgets/lemis_dat_by_country_sf.rds")$ctime
 
 # notes
 # add_trace does not work with sf data - used internal plotly function to transform input data (dat-process.R)
@@ -18,7 +21,6 @@ mdat_d <- read_rds(here::here("inst/shiny/widgets/lemis_dat_by_country_dor.rds")
 #    a) need to specify type = "scattergeo"  (which is not needed when 2nd add_trace is used in plot_ly or plot_geo call)
 #    b) it is rendering behind exisiting plot
 
-# Define UI for application that draws a histogram
 ui <- fluidPage(
 
     sidebarLayout(
@@ -34,12 +36,18 @@ ui <- fluidPage(
         ),
         mainPanel(
             tabsetPanel(
-                tabPanel("Dorling",
+                tabPanel("Dorling - plotly",
                          fluidRow(
                              column(12, plotlyOutput("mapd"))
                          )
                 ),
-                tabPanel("Tree Map",
+                tabPanel("Dorling - ggplot",
+                         fluidRow(
+                             column(12, plotOutput("mapd2", hover = "plot_hover"),
+                                    uiOutput("dynamic"))
+                         )
+                ),
+                tabPanel("Tree Map - highcharter",
                          fluidRow(
                              column(12, highchartOutput("tree"))
                          )
@@ -51,6 +59,7 @@ ui <- fluidPage(
 
 server <- function(input, output) {
 
+    # Plotly Dorling
     output$mapd <- renderPlotly({
 
         #get_plt <- paste(input$taxa, input$year, sep = "_")
@@ -88,6 +97,7 @@ server <- function(input, output) {
 
     })
 
+    # Proxy update Plotly Dorling - not working :(
     observeEvent({
         input$taxa
         input$year}, {
@@ -115,6 +125,34 @@ server <- function(input, output) {
 
         })
 
+    # ggplot cached dorling
+    output$mapd2 <- renderCachedPlot({
+
+        get_plt <- paste(input$taxa, input$year, sep = "_")
+
+        ggplot(mdat_sf[[get_plt]], aes(color = continent, fill = continent)) +
+            geom_sf()
+
+
+    }, cacheKeyExpr = {
+        list(input$taxa, input$year, "dorling", timestamp) },
+    cache = "session" # session or app
+    )
+
+    output$dynamic <- renderUI({
+        req(input$plot_hover)
+        verbatimTextOutput("vals")
+    })
+
+    output$vals <- renderPrint({
+        hover <- input$plot_hover
+        # print(str(hover)) # list
+        # y <- nearPoints(iris, input$plot_hover)[input$var_y]
+        # req(nrow(y) != 0)
+        # y
+        "test"
+    })
+
     output$tree <- renderHighchart({
 
         dat %>%
@@ -128,6 +166,7 @@ server <- function(input, output) {
                 color_var = "continent_int",
                 layoutAlgorithm = "squarified",
                 levelIsConstant = FALSE,
+                animation = TRUE,
                 levels = list(
                     list(level = 1, dataLabels = list(enabled = TRUE)),
                     list(level = 2, dataLabels = list(enabled = TRUE))
