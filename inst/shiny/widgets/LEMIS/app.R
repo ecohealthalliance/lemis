@@ -10,10 +10,8 @@ library(leaflet.extras)
 #devtools::install_github("annegretepeek/d3treeR")
 
 dat <- read_csv(here::here("inst/shiny/widgets/lemis_dat_format.csv")) %>% filter(!is.na(taxa))
-#mdat <- read_rds(here::here("inst/shiny/widgets/lemis_dat_by_taxa_sf.rds"))
 
 mdat_d <- read_rds(here::here("inst/shiny/widgets/lemis_dat_by_country_dor.rds"))
-#mdat_sf <- read_rds(here::here("inst/shiny/widgets/lemis_dat_by_country_sf.rds"))
 mdat_lf <- read_rds(here::here("inst/shiny/widgets/lemis_dat_by_country_lef.rds"))
 
 #timestamp <- file.info("inst/shiny/widgets/lemis_dat_by_country_sf.rds")$ctime
@@ -74,7 +72,7 @@ server <- function(input, output) {
     # Plotly Dorling
     output$mapd <- renderPlotly({
 
-        #get_plt <- paste(input$taxa, input$year, sep = "_")
+        get_plt <- paste(input$taxa, input$year, sep = "_")
 
         geo <- list(
             showland = TRUE,
@@ -82,7 +80,8 @@ server <- function(input, output) {
         )
 
         plot_ly(
-            data = mdat_d[["Shell_2014"]],
+            data = mdat_d[[get_plt]],
+            #data = mdat_d[["Shell_2014"]],
             x = ~x,
             y = ~y,
             color = ~continent,
@@ -119,28 +118,28 @@ server <- function(input, output) {
             # plotlyProxy("mapd") %>%
             #     plotlyProxyInvoke("deleteTraces", as.list(1:100))
 
-            plotlyProxy("mapd") %>%
-                plotlyProxyInvoke("addTraces",
-                                  list(
-                                      data = mdat_d[[get_plt]],
-                                      #inherit = FALSE,
-                                      x = ~x,
-                                      y = ~y,
-                                      color = ~continent,
-                                      #type = "scattergeo",
-                                      fill = "toself",
-                                      mode = "lines",
-                                      split = ~iso3c,
-                                      text = ~paste0(country_name, "\nN = ", round(n_by_country_taxa, 0)),
-                                      hoverinfo = "text")
-                )
+            # plotlyProxy("mapd") %>%
+            #     plotlyProxyInvoke("addTraces",
+            #                       list(
+            #                           data = mdat_d[[get_plt]],
+            #                           #inherit = FALSE,
+            #                           x = ~x,
+            #                           y = ~y,
+            #                           color = ~continent,
+            #                           #type = "scattergeo",
+            #                           fill = "toself",
+            #                           mode = "lines",
+            #                           split = ~iso3c,
+            #                           text = ~paste0(country_name, "\nN = ", round(n_by_country_taxa, 0)),
+            #                           hoverinfo = "text")
+            #     )
 
         })
 
     output$mapd2 <- renderLeaflet({
 
         get_plt <- paste(input$taxa, input$year, sep = "_")
-        dat <-mdat_lf[[get_plt]]
+        dat <-mdat_lf[["Shell_2014"]]
 
         pal <- colorFactor(
             palette = 'Dark2',
@@ -160,6 +159,35 @@ server <- function(input, output) {
                        lat2 = 65 )
 
     })
+
+    # Proxy update Leaflet Dorling
+    observeEvent({
+        input$taxa
+        input$year}, {
+
+            get_plt <- paste(input$taxa, input$year, sep = "_")
+            dat <-mdat_lf[[get_plt]]
+
+            pal <- colorFactor(
+                palette = 'Dark2',
+                domain = dat$continent
+            )
+
+            leafletProxy("mapd2", data = dat) %>%
+                clearShapes() %>%
+                addCircles(lng = ~X, lat = ~Y, weight = 1,
+                           color = ~pal(continent),
+                           radius = ~radius,
+                           label = ~paste0(country_name, "\nN = ", round(n_by_country_taxa, 0))) %>%
+                addResetMapButton() %>%
+                fitBounds( lng1 = -80,
+                           lng2 = 80,
+                           lat1 = -40,
+                           lat2 = 65 )
+
+
+        })
+
 
     # Highcharter treemap -  not proxy compatable but fast
     output$tree <- renderHighchart({

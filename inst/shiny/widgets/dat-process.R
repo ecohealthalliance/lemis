@@ -20,11 +20,6 @@ cref <- CoordinateCleaner::countryref %>%
   distinct(iso2, .keep_all = TRUE) %>%
   select(iso2, centroid.lon, centroid.lat)
 
-# mapd <- map_data("world") %>%
-#   filter(region != "Antarctica") %>%
-#   rename(country_name = region) %>%
-#   select(-subregion)
-
 ### Process data
 sdat <- dat %>%
   mutate(year = as.numeric(format(shipment_date,"%Y"))) %>%
@@ -64,6 +59,7 @@ library(cartogram)
 library(plotly)
 library(sf)
 
+### World map data
 udat <- tdat %>%
   select(-n_by_country, -centroid_lon, -centroid_lat)
 
@@ -75,27 +71,7 @@ w <- maps::map('world', plot = FALSE, fill = TRUE) %>%
   left_join(udat) %>%
   filter(!is.na(n_by_country_taxa))
 
-write_rds(w, "inst/shiny/widgets/lemis_dat_by_taxa_sf.rds")
-
-vdat <- tdat %>%
-  group_by(continent, country_name, iso3c, year) %>%
-  filter(n_by_country_taxa==max(n_by_country_taxa, na.rm=TRUE)) %>%
-  mutate(most_common_taxa = taxa) %>%
-  ungroup() %>%
-  select(-n_by_country_taxa, -taxa, -centroid_lon, -centroid_lat) %>%
-  distinct()
-
-w2 <- maps::map('world', plot = FALSE, fill = TRUE) %>%
-  st_as_sf() %>%
-  mutate(iso3c  = countrycode(sourcevar = ID,
-                              origin = "country.name",
-                              destination = "iso3c")) %>%
-  left_join(vdat)%>%
-  filter(!is.na(n_by_country))
-
-write_rds(w2, "inst/shiny/widgets/lemis_dat_by_country_sf.rds")
-
-# dorling data prep
+# Dorling data prep
 
 w_cross <-tdat %>%
   dplyr::select(taxa, year) %>%
@@ -105,28 +81,17 @@ w_cross <-tdat %>%
 w_dor1 <-  map2(w_cross$taxa, w_cross$year, function(x, y){
   cartogram_dorling(w %>% filter(taxa == x, year == y),
                     "n_by_country_taxa",
-                    k=1)
-
-})
-names(w_dor1) <- paste(w_cross$taxa, w_cross$year, sep = "_")
-
-write_rds(w_dor1, "inst/shiny/widgets/lemis_dat_by_country_sf.rds")
-
-# v2
-w_dor2 <-  map2(w_cross$taxa, w_cross$year, function(x, y){
-  cartogram_dorling(w %>% filter(taxa == x, year == y),
-                    "n_by_country_taxa",
                     k=1) %>%
     as_tibble() %>%
     plotly:::to_basic.GeomSf()
 
 })
-names(w_dor2) <- paste(w_cross$taxa, w_cross$year, sep = "_")
+names(w_dor1) <- paste(w_cross$taxa, w_cross$year, sep = "_")
 
-write_rds(w_dor2, "inst/shiny/widgets/lemis_dat_by_country_dor.rds")
+write_rds(w_dor1, "inst/shiny/widgets/lemis_dat_by_country_dor.rds")
 
-# v3
-w_dor3 <-  map2(w_cross$taxa, w_cross$year, function(x, y){
+# v2
+w_dor2 <-  map2(w_cross$taxa, w_cross$year, function(x, y){
 
   tmp <- w %>% filter(taxa == x, year == y)
 
@@ -144,6 +109,6 @@ w_dor3 <-  map2(w_cross$taxa, w_cross$year, function(x, y){
            radius = sqrt(st_area(sf_tmp)/pi))
 
 })
-names(w_dor3) <- paste(w_cross$taxa, w_cross$year, sep = "_")
+names(w_dor2) <- paste(w_cross$taxa, w_cross$year, sep = "_")
 
-write_rds(w_dor3, "inst/shiny/widgets/lemis_dat_by_country_lef.rds")
+write_rds(w_dor2, "inst/shiny/widgets/lemis_dat_by_country_lef.rds")
