@@ -336,6 +336,7 @@ lemis_taxa_added <- lemis_taxa_added %>%
   mutate(
     class = case_when(
       genus == "ampullaria" & generic_name == "SNAIL" ~ "Gastropoda",
+      genus == "polypus" & str_detect(cleaning_notes, "condietur") ~ "Cephalopoda",
       genus == "riopa" & generic_name == "SKINK" ~ "Reptilia",
       TRUE ~ class
     )

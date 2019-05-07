@@ -91,11 +91,40 @@ citharichthy,gilberti,flatfish,,,citharichthys,gilberti,,,FLATFISH
 class,holothuroidea,,,,holothuroidea,sp.,,,
 clypeasterophilis,sp.,,,,clypeasterophilus,sp.,,,
 coenobita clipeatu,coenobita clipeatu,,,,coenobita,clypeatus,,,
-conchelepes,conchelepes,,,CRUSTACEAN,concholepas,concholepas,,,CRUSTACEAN
-conchelepes,conchelepes,,,SHELL,concholepas,concholepas,,,SHELL
+collubridae,sp.,,,,colubridae,sp.,,,
+colocentrotus,astratus,,,,colobocentrotus,atratus,,,
+concha,ostreae,,,,ostreidae,sp.,,,
+conchornella,albomaculata,,,,cochranella,albomaculata,,,
+concus,biliosus,,,,conus,biliosus,,,
+condietur,loligo,,,,loligo,sp.,,,
+condietur,polypus,,,,polypus,sp.,,,
+condylactus,giganteus,,,,condylactis,gigantea,,,
+copiphora rhinocer,sp.,,,,copiphora,rhinoceros,,,
+corculus,cardissa,,,,corculum,cardissa,,,
+corium,vitulus,,,,bos,taurus,,,
+corvinela,corvina,,,,corvinella,corvina,,,
+corydora,longipinnis,,,,corydoras,longipinnis,,,
+corydora,marmoratus,,,,corydoras,marmoratus,,,
+cossypha n,iveicapilla,,,,cossypha,niveicapilla,,,
 crassotrea,gigas,,JAPONESE,OYSTER,crassostrea,gigas,,JAPANESE,OYSTER
 crassotrea,sp.,,,OYSTER,crassostrea,sp.,,,OYSTER
+crenichila,scotti,,,,crenicichla,scotti,,,
+cribinopsis,crassa,,,,cribrinopsis,crassa,,,
+crossarechus,obscurus,cusimanse,,,crossarchus,obscurus,,,CUSIMANSE
+crosscheilus,siamemsis,,,,crossocheilus,siamemsis,,,
+crustacea,gecarinas,,,,gecarcinus,sp.,,,
+cryptelyrops,albolabris,,,,cryptelytrops,albolabris,,,
+crytodendrum,sp.,,,ANEMONE,cryptodendrum,sp.,,,ANEMONE
+culcita,novaguineae,,,,culcita,novaeguineae,,,
+curculionidae,curculionidae,,,,curculionidae,sp.,,,
+cyanthopharynx,furcifer,,,,cyathopharynx,furcifer,,,
+cyclophala,boreali,,,,cyclocephala,borealis,,,
+cyclosterum,fasciatum,,,,cyclosternum,fasciatus,,,
+cyiagopogus,schiodtei,,,,cyriopagopus,schioedtei,,,
+cypraeidae,cowry,,,,cypraeidae,sp.,,,
+cyprinodontoides,sp.,,,,cyprinodontoidei,sp.,,,
 dalatius,licha,,DARKIE,CHARLIE,dalatias,licha,,DARKIE,CHARLIE
+dayprocta,leporina,,,,dasyprocta,leporina,,,
 dendrosophus,sp.,,,,dendropsophus,sp.,,,
 deroptryus,accipitrinus,,,,deroptyus,accipitrinus,,,
 desypeltis,scabra,,,,dasypeltis,scabra,,,
@@ -112,10 +141,20 @@ eglantini,cowrie,,,,mauritia,eglantina,,,
 elacatinos,puncticulatus,,,,elacatinus,puncticulatus,,,
 elaphidae,sp.,,,,elapidae,sp.,,,
 enophryx,bison,,,FISH,enophrys,bison,,,FISH
+entoshemus,tridentalus,,,,entosphenus,tridentatus,,,
+ephthianura,sp.,,,CHAT,epthianura,sp.,,,CHAT
+ergenia,frerei,,,,egernia,frerei,,,
+erithicus,svecica,,,,erithacus,svecica,,,
+ersinia,sp.,,,,yersinia,sp.,,,
+espondylus,sp.,,,,spondylus,sp.,,,
 eublepharus,angramainyu,,IRAQUI EYELID,GECKO,eublepharis,angramainyu,,IRAQI EYELID,GECKO
 eublepharus,hardwickii,,HARDWICKE'S,GECKO,eublepharis,hardwickii,,HARDWICKE'S,GECKO
 eublepharus,macularius,,PANTHER,GECKO,eublepharis,macularius,,PANTHER,GECKO
 eublepharus,sp.,,EYELID,GECKO,eublepharis,sp.,,EYELID,GECKO
+euophius,bison,,,,enophrys,bison,,,
+euphestia,kuehniella,,MEDITERRANEA FLOUR,MOTH,ephestia,kuehniella,,MEDITERRANEA FLOUR,MOTH
+eurypelime,spinicrus,,,,eurypelma,spinicrus,,,
+euvola raveneli,sp.,,,,euvola,raveneli,,,
 flexipecten,glaber,,,SHELL,flexopecten,glaber,,,SHELL
 gallus,domesticus,,DOMESTIC,CHICKEN,gallus,gallus,domesticus,DOMESTIC,CHICKEN
 gasteracantha sp,gasteracantha,,,,gasteracantha,sp.,,,
@@ -135,7 +174,32 @@ gofingia,sp.,,,,golfingia,sp.,,,
 goniplectrus,hispanus,,,,gonioplectrus,hispanus,,,
 gradus,mortua,,,,gadus,morhua,,,
 gymnophagus,balzani,,,,gymnogeophagus,balzanii,,,
+haliocheres,bivittatus,,,,halichoeres,bivittatus,,,
+halocaridinides,trigopthalama,,,,halocaridinides,trigonophthalma,,,
+halopelma,schmidti,,,,haplopelma,schmidti,,,
+hammicentrosus,pulchenismus,,,,hemicentrotus,pulcherrimus,,,
+hapalochaena,maculosa,,BLUE-RINGED,OCTOPUS,hapalochlaena,maculosa,,BLUE-RINGED,OCTOPUS
+hapalochaena,sp.,,BLUE-RINGED,OCTOPUS,hapalochlaena,sp.,,BLUE-RINGED,OCTOPUS
+harpatrica,pulcheripes,,,,harpactira,pulchripes,,,
+hatocynthia,roretz,,,,halocynthia,roretzi,,,
+helcticopis,modesta,,,,thelcticopis,modesta,,,
+helicarioinidae,sp.,,,,helicarionidae,sp.,,,
 helicopsis,sp.,,,BUTTERFLY,helicopis,sp.,,,BUTTERFLY
+helicostyla,partoloides,,,,helicostyla,partuloides,,,
+heliobolos,lugobris,,,,heliobolus,lugubris,,,
+hemispheariodon,gerrardi,,,,hemisphaeriodon,gerrardii,,,
+heterodactyle,hemprichii,,FLAT,ANEMONE,heterodactyla,hemprichii,,FLAT,ANEMONE
+heterometerus,swammerdami,,,,heterometrus,swammerdami,,,
+hetrometrus,spinifer,,,,heterometrus,spinifer,,,
+hidra,litocallis,brown hydra,,,hydra,littoralis,,,
+hidra,litocallis,,,,hydra,littoralis,,,
+hidrochoeris,hidrochoeris,,,,hydrochoerus,hydrochaeris,,,
+histiostomatidae,muscarum,,,,myianoetus,muscarum,,,
+historus,odius,,STINKY LEAFWING,BUTTERFLY,historis,odius,,STINKY LEAFWING,BUTTERFLY
+historus,sp.,,LEAFWING,BUTTERFLY,historis,sp.,,LEAFWING,BUTTERFLY
+holcanthus,passer,,,,holacanthus,passer,,,
+holocanthus,passer,,,,holacanthus,passer,,,
+holocantus,tricolor,,,,holacanthus,tricolor,,,
 hottentata,spec,,,,hottentotta,sp.,,,
 hybsiboas,heilprini,,,,hypsiboas,heilprini,,,
 hydantina,physis,,,,hydatina,physis,,,
@@ -223,9 +287,18 @@ nerhrurus,levis,,,,nephrurus,levis,,,
 niritoides,littorina,,,,littorina,neritoides,,,
 niviventes,cremoriventer,,,,niviventer,cremoriventer,,,
 northarcus,macrorhynchos,,,,notharchus,macrorhynchos,,,
+ococoileus,hemionus,,,,odocoileus,hemionus,,,
+octopus vulagris,vulagris,,,,octopus,vulagris,,,
+oechophylla,smaragdina,,WEAVER,ANT,oecophylla,smaragdina,,WEAVER,ANT
+olypeaster,oshinensis,,,SEA COOKIE,clypeaster,oshimensis,,,SEA COOKIE
+opheodryas,vernalis,,SMOOTH GREEN,SNAKE,opheodrys,vernalis,,SMOOTH GREEN,SNAKE
+ophiarchnella,gorgonia,,,,ophiarachnella,gorgonia,,,
 opisthognathus,rosenblatti,,,,opistognathus,rosenblatti,,,
 opisthognathus,sp.,,,JAWFISH,opistognathus,sp.,,,JAWFISH
 opisthognathus,whitehursti,,,,opistognathus,whitehursti,,,
+order,teuthida,,,,teuthida,sp.,,,
+oreothylpis,celata,,,,oreothlypis,celata,,,
+oronectes,virillis,,,,orconectes,virillis,,,
 pelamus,platurus,,YELLOW-BELLIED SEA,SNAKE,pelamis,platurus,,YELLOW-BELLIED SEA,SNAKE
 philetarius,socius,,SOCIABLE,WEAVER,philetairus,socius,,SOCIABLE,WEAVER
 phoenicercus,sp.,,,COTINGA,phoenicircus,sp.,,,COTINGA
