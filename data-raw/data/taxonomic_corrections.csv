@@ -48,6 +48,7 @@ basiluterus,signatus,,,,basileuterus,signatus,,,
 boiqa,dendrophila,,,,boiga,dendrophila,,,
 boophlius,microplus,,,,rhipicephalus,microplus,,,
 brachionus,plicatillis,,,,brachionus,plicatilis,,,
+brachypelmides,klaasi,,ACAPULCO LS ORANGE,TARANTULA,brachypelma,klaasi,,ACAPULCO LS ORANGE,TARANTULA
 bratechlamys,vexillum,,,,bractechlamys,vexillum,,,
 brochistosternus,ehrenbergi,,,,brachistosternus,ehrenbergii,,,
 bronchocoela,smaragdina,,,,bronchocela,smaragdina,,,
@@ -180,6 +181,7 @@ halopelma,schmidti,,,,haplopelma,schmidti,,,
 hammicentrosus,pulchenismus,,,,hemicentrotus,pulcherrimus,,,
 hapalochaena,maculosa,,BLUE-RINGED,OCTOPUS,hapalochlaena,maculosa,,BLUE-RINGED,OCTOPUS
 hapalochaena,sp.,,BLUE-RINGED,OCTOPUS,hapalochlaena,sp.,,BLUE-RINGED,OCTOPUS
+haplopelma,albastriatus,,,TARANTULA,cyriopagopus,albostriatus,,,TARANTULA
 harpatrica,pulcheripes,,,,harpactira,pulchripes,,,
 hatocynthia,roretz,,,,halocynthia,roretzi,,,
 helcticopis,modesta,,,,thelcticopis,modesta,,,
@@ -203,7 +205,7 @@ holocantus,tricolor,,,,holacanthus,tricolor,,,
 hottentata,spec,,,,hottentotta,sp.,,,
 hybsiboas,heilprini,,,,hypsiboas,heilprini,,,
 hydantina,physis,,,,hydatina,physis,,,
-hydriopsis,schlegeli,,,,hyriopsis,schlegeli,,,
+hydriopsis,schlegeli,,,,hyriopsis,schlegelii,,,
 hydrocinus,sp.,,,FISH,hydrocynus,sp.,,,FISH
 hydrocinus,vittatus,,,TIGERFISH,hydrocynus,vittatus,,,TIGERFISH
 hydrocyon,sp.,,,,hydrocynus,sp.,,,
@@ -217,6 +219,8 @@ hypolymnas,dexithea,,,BUTTERFLY,hypolimnas,dexithea,,,BUTTERFLY
 hypolymnas,mysippus,,,BUTTERFLY,hypolimnas,mysippus,,,BUTTERFLY
 hypolymnas,sp.,,,BUTTERFLY,hypolimnas,sp.,,,BUTTERFLY
 hypolysmata,grabhami,,,MACRURAN,hippolysmata,grabhami,,,MACRURAN
+hyriopsis,schlegeli,,PEARL,MUSSEL,hyriopsis,schlegelii,,PEARL,MUSSEL
+hyriopsis,schlegeli,,,SHELL,hyriopsis,schlegelii,,,SHELL
 insecta,dermaptera,,,,dermaptera,sp.,,,
 insecta,hymenoptera,,,,hymenoptera,sp.,,,
 insecta,neuroptera,,,,neuroptera,sp.,,,
@@ -229,6 +233,7 @@ jabonilleria,danjoui,,,,jabouilleia,danjoui,,,
 jennesia,lineata,,,,jenynsia,lineata,,,
 jennesia,orca,,,,jenynsia,onca,,,
 jenysia,sp.,,,,jenynsia,sp.,,,
+lambraphi,fulliginonus,,,,lamprophis,fuliginosus,,,
 lamellibranch,sp.,,,,bivalvia,sp.,,,
 lamellidus,corrianus,,,,lamellidens,corrianus,,,
 lampropela,rothschildi,,,,lampropelma,rothschildi,,,
@@ -250,18 +255,43 @@ liophus,sp.,,GROUND,SNAKE,liophis,sp.,,GROUND,SNAKE
 liophus,typhlus,,BLIND GROUND,SNAKE,liophis,typhlus,,BLIND GROUND,SNAKE
 loboparadisaea,sericea,,YELLOW-BREASTED,BIRD OF PARADISE,loboparadisea,sericea,,YELLOW-BREASTED,BIRD OF PARADISE
 loboparadisaea,sericea,,YELLOW-BREASTED,CNEMOPHILUS,loboparadisea,sericea,,YELLOW-BREASTED,CNEMOPHILUS
+lobophyton,sp.,,,,lobophytum,sp.,,,
+loligo duvaucelii,squid,,,,loligo,duvaucelii,,,SQUID
 lophoaetus,occipitalis,,LONG-CRESTED,EAGLE,lophaetus,occipitalis,,LONG-CRESTED,EAGLE
+lopisostaus,tropicus,,,,lepisosteus,tropicus,,,
+luhanas,lucinidae,,,,lucinidae,sp.,,,
+lulus,terrestri,,,,julus,terrestris,,,
+lumbericus,terrestris,,,,lumbricus,terrestris,,,
+lutzomya,longipalpis,,,,lutzomyia,longipalpis,,,
+lynr,rufus,,,,lynx,rufus,,,
+lyropterix,sp.,,,,lyropteryx,sp.,,,
+lytrhypnus,dalli,,,,lythrypnus,dalli,,,
+macophiothrix,sp.,,,,macrophiothrix,sp.,,,
+macrobranchium,tenellum,,,,macrobrachium,tenellum,,,
 macronous,gularis,,STRIPED,TIT-BABBLER,macronus,gularis,,STRIPED,TIT-BABBLER
 macronous,ptilosus,,FLUFFY-BACKED,TIT-BABBLER,macronus,ptilosus,,FLUFFY-BACKED,TIT-BABBLER
 macronous,sp.,,,TIT-BABBLER,macronus,sp.,,,TIT-BABBLER
+magaceras,morpheus,,,,megaceras,morpheus,,,
+mallotis,villosus,,,CAPELIN,mallotus,villosus,,,CAPELIN
+margaropedrix,madagarensis,,,,margaroperdix,madagarensis,,,
+mediodactylys,kotschyi,,,,mediodactylus,kotschyi,,,
+megaphokema,mesomalas,,,,megaphobema,mesomelas,,,
 melagrina,margaritifera,,,OYSTER,meleagrina,margaritifera,,,OYSTER
 melagrina,margaritifera,,,SHELL,meleagrina,margaritifera,,,SHELL
 melagrina,sp.,,,OYSTER,meleagrina,sp.,,,OYSTER
 melagrina,sp.,,,SHELL,meleagrina,sp.,,,SHELL
 melithea,sp.,,,CORAL,melithaea,sp.,,,CORAL
 melithea,sp.,,,SEA FAN,melithaea,sp.,,,SEA FAN
+mespillia,globulus,,,,mespilia,globulus,,,
+michrospatodon,chrysurus,,,,microspathodon,chrysurus,,,
 microbrachium,sp.,,,MACRURAN,macrobrachium,sp.,,,MACRURAN
 microbrachium,sp.,,,SHRIMP,macrobrachium,sp.,,,SHRIMP
+mierophys,sp.,,SPIDER,CRAB,microphrys,sp.,,SPIDER,CRAB
+minoides,xeniades,,,,mimoides,xeniades,,,
+minoides,xynias,,,,mimoides,xynias,,,
+missgurnus,anguurandium,,,,misgurnus,anguillicaudatus,,,
+missqumus,anguurandium,,,,misgurnus,anguillicaudatus,,,
+mitra,rugosum,,,,vexillum,rugosum,,,
 molluscs,pinne vexillum,,,,pinna,vexillum,,,
 molluscs,sp.,,,,mollusca,sp.,,,
 monocentrophus,balfouri,,,,monocentropus,balfouri,,,
@@ -287,10 +317,13 @@ nerhrurus,levis,,,,nephrurus,levis,,,
 niritoides,littorina,,,,littorina,neritoides,,,
 niviventes,cremoriventer,,,,niviventer,cremoriventer,,,
 northarcus,macrorhynchos,,,,notharchus,macrorhynchos,,,
+nylandena,sp.,,,,nylanderia,sp.,,,
 ococoileus,hemionus,,,,odocoileus,hemionus,,,
 octopus vulagris,vulagris,,,,octopus,vulagris,,,
 oechophylla,smaragdina,,WEAVER,ANT,oecophylla,smaragdina,,WEAVER,ANT
 olypeaster,oshinensis,,,SEA COOKIE,clypeaster,oshimensis,,,SEA COOKIE
+ooedozyga,lima,,PADDY,FROG,occidozyga,lima,,PADDY,FROG
+ooedozyga,sp.,,PADDY,FROG,occidozyga,sp.,,PADDY,FROG
 opheodryas,vernalis,,SMOOTH GREEN,SNAKE,opheodrys,vernalis,,SMOOTH GREEN,SNAKE
 ophiarchnella,gorgonia,,,,ophiarachnella,gorgonia,,,
 opisthognathus,rosenblatti,,,,opistognathus,rosenblatti,,,
@@ -299,13 +332,56 @@ opisthognathus,whitehursti,,,,opistognathus,whitehursti,,,
 order,teuthida,,,,teuthida,sp.,,,
 oreothylpis,celata,,,,oreothlypis,celata,,,
 oronectes,virillis,,,,orconectes,virillis,,,
+other live inverts,iinverts,other shipments,,,other live inverts,inverts,other shipments,,
+ovis aires,platura,,,,ovis,aires,platyura,,
+oxymormyrops,boulengeri,,ELEPHANT,FISH,oxymormyrus,boulengeri,,ELEPHANT,FISH
+oxymormyrops,sp.,,ELEPHANT,FISH,oxymormyrus,sp.,,ELEPHANT,FISH
+pachynobius,labiatus,,,,pachytriton,labiatus,,,
+pachyrrhynchus,phaeleratus,,,,pachyrhynchus,phaleratus,,,
+pacyramphus,validus,,,,pachyramphus,validus,,,
+palacmonetes,antenonus,,ROCK,SHRIMP,palaemonetes,antennarius,,,SHRIMP
+pamzoanhus,sp.,,,,parazoanthus,sp.,,,
+paraphysa,pulcherimaklaasi,,,SPIDER,paraphysa,pulcherrimaklaasi,,,SPIDER
+pararenodera,sinen,,,,tenodera,sinensis,,PRAYING,MANTIS
+paraselenia,poehli,,,,parasalenia,poehlii,,,
+paraselinia,gartiosa,,,,parasalenia,gratiosa,,,
+paraselinia,gratiosa,,,,parasalenia,gratiosa,,,
+paratenodera,sinensis,,PRAYING,MANTIS,tenodera,sinensis,,PRAYING,MANTIS
+paratenodera,sp.,,,MANTIS,tenodera,sp.,,,MANTIS
+patagionas,leucocephala,,,,patagioenas,leucocephala,,,
+patella,saccharina,,LIMPET,SHELL,patelloida,saccharina,,LIMPET,SHELL
+pathallus,mollis,,,SEA CUCUMBER,patallus,mollis,,,SEA CUCUMBER
+paveia,superba,,,BEETLE,pavieia,superba,,,BEETLE
+pectinini,amusium,,,,amusium,sp.,,,
 pelamus,platurus,,YELLOW-BELLIED SEA,SNAKE,pelamis,platurus,,YELLOW-BELLIED SEA,SNAKE
+periclimnenes,rathbunae,,,,periclimenes,rathbunae,,,
+periclimnenes,sp.,,,,periclimenes,sp.,,,
+periostracum,cicadae,,,,cicadidae,sp.,,,
+petinobius,muticus,,,,pelinobius,muticus,,,
+phalcellodomus,erythrophthalmus,,,,phacellodomus,erythrophthalmus,,,
+phalcellodomus,ferrugineigula,,,,phacellodomus,ferrugineigula,,,
+phalcrocorax,carbo,,,,phalacrocorax,carbo,,,
 philetarius,socius,,SOCIABLE,WEAVER,philetairus,socius,,SOCIABLE,WEAVER
+philothamnis,heterodermus,,VARIABLE GREEN,SNAKE,philothamnus,heterodermus,,VARIABLE GREEN,SNAKE
 phoenicercus,sp.,,,COTINGA,phoenicircus,sp.,,,COTINGA
+phossenticosus,sp.,,,SHELL,phos,senticosus,,,SHELL
+photololigo,egulis,,,,photololigo,edulis,,,
+phrynohyas,resini fectrix,,,,phrynohyas,resinifictrix,,,
+phrynomerus,bifasciatus,,,FROG,phrynomantis,bifasciatus,,,FROG
+phrynomerus,sp.,,,FROG,phrynomantis,sp.,,,FROG
+phyllacanthus,imperalis,,,,phyllacanthus,imperialis,,,
+phyllididae,sp.,,,,phyllidiidae,sp.,,,
+phyrnobatrachus,natalensis,,NATAL RIVER,FROG,phrynobatrachus,natalensis,,NATAL RIVER,FROG
 pilaster,ochraceus,,,STARFISH,pisaster,ochraceus,,,STARFISH
 pilaster,sp.,,,STARFISH,pisaster,sp.,,,STARFISH
+pinnidae,margaritifera,,,,pinnidae,sp.,,,
+piplorra,clivosa,,,,diploria,clivosa,,,
+pipriadea,melanonotos,,,,pipraeidea,melanonota,,,
+platyrhynchus,coronatus,,,,platyrinchus,coronatus,,,
 pleurogyra,sp.,,FOX,CORAL,plerogyra,sp.,,FOX,CORAL
 pleurogyra,turbida,,FOX,CORAL,plerogyra,turbida,,FOX,CORAL
+pluerogrammus,monopterygius,,,,pleurogrammus,monopterygius,,,
+poecilla,sp.,,,,poecilia,sp.,,,
 pollaehius,sp.,,,,pollachius,sp.,,,
 popilla,japonica,,JAPANESE,BEETLE,popillia,japonica,,JAPANESE,BEETLE
 porcelana,sayana,,,,porcellana,sayana,,,
@@ -338,6 +414,7 @@ pterolebius,sp.,,,LONGFIN,pterolebias,sp.,,,LONGFIN
 pterydactolus,hesselquisti,,,,ptyodactylus,hasselquistii,,,
 puntias,sp.,,SPOTTED,BARB,puntius,sp.,,SPOTTED,BARB
 pusiostoma,mandicaria,,,,pusiostoma,mendicaria,,,
+pylodoce,sp.,,,,phyllodoce,sp.,,,
 pyrogasta,trifurus,,,,triturus,pyrrhogaster,,,
 pytchozoon,kuhii,,,,ptychozoon,kuhli,,,
 retilus,edulis,,,,mytilus,edulis,,,
@@ -345,6 +422,7 @@ rhacophorus,helenea,,,,rhacophorus,helenae,,,
 rhamphotyphlops,braminus,,,,ramphotyphlops,braminus,,,
 rhamphotyphlops,crossi,,,,ramphotyphlops,crossi,,,
 rhamphrophis,oxyrhnchus,,,,rhamphiophis,oxyrhnchus,,,
+rhecosticta,sp.,,,TARANTULA,rhechostica,sp.,,,TARANTULA
 rhizostomae,sp.,,,,rhizostomeae,sp.,,,
 rhizostomeae,rhopilema,,,,rhopilema,sp.,,,
 rhombprrhina,respl,,,,rhomborrhina,resplendens,,,
@@ -392,6 +470,7 @@ sphaeognathus,feisthameli,,,,sphaenognathus,feisthameli,,,
 sphenisus,magellanus,,,,spheniscus,magellanicus,,,
 staerias,amurensis,,,,asterias,amurensis,,,
 stathmonotas,stahlii,,,,stathmonotus,stahli,,,
+stelleta,sp.,,,,stelletta,sp.,,,
 stenadus,leuchichthys,,,,stenodus,leucichthys,,,
 stugmatura,budytoides,,,,stigmatura,budytoides,,,
 substrato,scleractinia,,,,scleractinia,sp.,,,

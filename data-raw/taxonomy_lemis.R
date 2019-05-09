@@ -44,7 +44,8 @@ taxa_code <-
   read.csv("inst/extdata/Taxalist_reviewed.csv", na.strings = c(" ", "")) %>%
   select(
     species_code_taxa = SPEC_CODE,
-    taxa = Taxa) %>%
+    taxa = Taxa
+  ) %>%
   mutate(
     species_code_taxa = toupper(species_code_taxa),
     taxa = tolower(taxa)
@@ -86,9 +87,7 @@ taxonomic_corrections <-
     col_types = cols(.default = col_character())
   ) %>%
   mutate_all(funs(str_replace_all(., "\\s", " "))) %>%
-  mutate(
-    cleaning_notes = NA_character_
-  ) %>%
+  mutate(cleaning_notes = NA_character_) %>%
   get_taxonomic_cleaning_notes()
 
 # Correct data entry errors for taxonomic data
@@ -184,7 +183,10 @@ col_itis_harmonize <- taxatbl1 %>%
   filter(!is.na(class_col), !is.na(class_itis)) %>%
   select(class_col, class_itis) %>%
   distinct() %>%
-  arrange(class_col)
+  arrange(class_col) %>%
+  # Filter out Chondrichthyes since this is the only ITIS class that
+  # does not map unambiguously onto COL taxonomy
+  filter(class_itis != "Chondrichthyes")
 
 assert_that(
   nrow(col_itis_harmonize) ==
@@ -216,32 +218,65 @@ genera_to_resolve <- taxatbl2 %>%
   unique(.)
 
 # Gather genera-level class information from COL database
-genera_taxa_info <- taxa_tbl("col") %>%
+generatbl_col <- taxa_tbl("col") %>%
   distinct(class, genus) %>%
   arrange(genus, class) %>%
-  filter(genus %in% stringi::stri_trans_totitle(genera_to_resolve)) %>%
-  collect() %>%
   filter(
+    genus %in% stringi::stri_trans_totitle(genera_to_resolve),
     !is.na(class),
     class != "Not assigned"
-  )
+  ) %>%
+  collect() %>%
+  rename(class_col = class)
+
+# Gather genera-level class information from ITIS database
+generatbl_itis <- taxa_tbl("itis") %>%
+  distinct(class, genus) %>%
+  arrange(genus, class) %>%
+  filter(
+    genus %in% stringi::stri_trans_totitle(genera_to_resolve),
+    !is.na(class),
+    class != "Not assigned"
+  ) %>%
+  collect() %>%
+  rename(class_itis = class)
 
 # Remove any genera for which there are multiple potential class
 # affiliations to ensure our eventual taxonomic calls are unambiguous
-ambiguous_genera <- genera_taxa_info %>%
+ambiguous_genera_col <- generatbl_col %>%
   group_by(genus) %>%
-  summarize(n = n_distinct(class)) %>%
+  summarize(n = n_distinct(class_col)) %>%
   filter(n > 1) %>%
   pull(genus)
 
-unambiguous_genera_taxa_info <- genera_taxa_info %>%
+ambiguous_genera_itis <- generatbl_itis %>%
+  group_by(genus) %>%
+  summarize(n = n_distinct(class_itis)) %>%
+  filter(n > 1) %>%
+  pull(genus)
+
+ambiguous_genera <- union(ambiguous_genera_col, ambiguous_genera_itis)
+
+generatbl_col <- generatbl_col %>%
   filter(!(genus %in% ambiguous_genera)) %>%
   mutate(genus = tolower(genus))
+
+generatbl_itis <- generatbl_itis %>%
+  filter(!(genus %in% ambiguous_genera)) %>%
+  mutate(genus = tolower(genus))
+
+# Join together genera-level taxonomic information from COL and ITIS
+generatbl <-
+  full_join(generatbl_col, generatbl_itis, by = "genus") %>%
+  select(genus, class_col, class_itis) %>%
+  left_join(., col_itis_harmonize, by = "class_itis") %>%
+  mutate(class = ifelse(!is.na(class_col), class_col, class_itis_harmonize)) %>%
+  select(genus, class)
 
 # Join this newly generated genera-level taxonomic information onto the
 # previous data
 taxatbl3 <- taxatbl2 %>%
-  left_join(., unambiguous_genera_taxa_info, by = c("genus")) %>%
+  left_join(., generatbl, by = c("genus")) %>%
   mutate(class = ifelse(!is.na(class.x), class.x, class.y)) %>%
   select(class, genus, species)
 
@@ -269,13 +304,12 @@ lemis_taxa_added <- lemis_taxa_added %>%
         (
           genus == "noncites entry" |
             genus == "migratory bird" |
-            (genus == "aves" & generic_name == "ALL BIRDS") |
-            (genus == "unknown" & species == "cites bird") |
             str_detect(genus, "formes$|idae$|inae$") |
-            (is.na(genus) & generic_name == "BIRD") |
-            (genus == "unknown" & generic_name == "BIRDS") |
-            (is.na(genus) & generic_name == "BIRDS") |
             (genus == "aves" & generic_name == "ALL BIRDS") |
+            (genus == "unknown" & generic_name == "BIRDS") |
+            (genus == "unknown" & species == "cites bird") |
+            (is.na(genus) & generic_name == "BIRD") |
+            (is.na(genus) & generic_name == "BIRDS") |
             (is.na(genus) & generic_name == "ALL BIRDS") |
             (is.na(genus) & is.na(generic_name))
         )
@@ -294,9 +328,9 @@ lemis_taxa_added <- lemis_taxa_added %>%
       is.na(class) & taxa == "mammal" &
         (
           genus == "noncites entry" |
+            str_detect(genus, "formes$|idae$|inae$") |
             (genus == "mammalia" & generic_name == "ALL MAMMALS") |
             (genus == "unknown" & species == "cites mammal") |
-            str_detect(genus, "formes$|idae$|inae$") |
             (is.na(genus) & generic_name == "MAMMALS") |
             (is.na(genus) & generic_name == "ALL MAMMALS") |
             (is.na(genus) & generic_name == "CANIDS") |
@@ -307,13 +341,13 @@ lemis_taxa_added <- lemis_taxa_added %>%
       is.na(class) & taxa == "reptile" &
         (
           genus == "noncites entry" |
+            str_detect(genus, "formes$|idae$|inae$") |
             (genus == "reptilia" & generic_name == "ALL REPTILES") |
             (genus == "sauria" & generic_name == "LIZARDS") |
             (genus == "serpentes" & generic_name == "SNAKES") |
             (genus == "squamata" & generic_name == "LIZARDS,SNAKES") |
             (genus == "testudinata" & generic_name == "TURTLES,TORTOISES") |
             (genus == "testudines" & generic_name == "TURTLES,TORTOISES") |
-            str_detect(genus, "formes$|idae$|inae$") |
             (is.na(genus) & generic_name == "REPTILES") |
             (is.na(genus) & generic_name == "ALL REPTILES") |
             (is.na(genus) & is.na(generic_name))
