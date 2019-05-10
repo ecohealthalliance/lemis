@@ -46,9 +46,10 @@ axinissa,sp.,,,SPONGE,axinyssa,sp.,,,SPONGE
 babalonia,spirata,,,,babylonia,spirata,,,
 basiluterus,signatus,,,,basileuterus,signatus,,,
 boiqa,dendrophila,,,,boiga,dendrophila,,,
-boophlius,microplus,,,,rhipicephalus,microplus,,,
+boophlius,microplus,,,,boophilus,microplus,,,
 brachionus,plicatillis,,,,brachionus,plicatilis,,,
 brachypelmides,klaasi,,ACAPULCO LS ORANGE,TARANTULA,brachypelma,klaasi,,ACAPULCO LS ORANGE,TARANTULA
+brachyuridae,sp.,,,,brachyura,sp.,,,
 bratechlamys,vexillum,,,,bractechlamys,vexillum,,,
 brochistosternus,ehrenbergi,,,,brachistosternus,ehrenbergii,,,
 bronchocoela,smaragdina,,,,bronchocela,smaragdina,,,
@@ -81,6 +82,7 @@ chimaera sp,fulva,,,,chimaera,fulva,,,
 chirodiscidae,testiculatus,,,,schizocarpus,testiculatus,,,
 chiroptera,order,,,,chiroptera,sp.,,,
 chloromytilus,edulis,,,,mytilus,edulis,,,
+chloromytulis,violac,,,,choromytilus,violac,,,
 chlorophis,haplogaster,,AFRICAN GREEN,SNAKE,chlorophis,hoplogaster,,AFRICAN GREEN,SNAKE
 chlorospingus opth,common bush tanage,,,,chlorospingus,ophthalmicus,,COMMON BUSH,TANAGER
 chriomantis,sp.,,,,chiromantis,sp.,,,
@@ -94,6 +96,7 @@ clypeasterophilis,sp.,,,,clypeasterophilus,sp.,,,
 coenobita clipeatu,coenobita clipeatu,,,,coenobita,clypeatus,,,
 collubridae,sp.,,,,colubridae,sp.,,,
 colocentrotus,astratus,,,,colobocentrotus,atratus,,,
+columbilla,scripta,,,,columbella,scripta,,,
 concha,ostreae,,,,ostreidae,sp.,,,
 conchornella,albomaculata,,,,cochranella,albomaculata,,,
 concus,biliosus,,,,conus,biliosus,,,
@@ -130,6 +133,7 @@ dendrosophus,sp.,,,,dendropsophus,sp.,,,
 deroptryus,accipitrinus,,,,deroptyus,accipitrinus,,,
 desypeltis,scabra,,,,dasypeltis,scabra,,,
 dimidochromis,kiwinge,,,,dimidiochromis,kiwinge,,,
+disambigvation,sp.,,,,unknown,sp.,,,
 donocobius,atricapilla,,,,donacobius,atricapilla,,,
 dryas,julia,,,BUTTERFLY,dryas,iulia,,,BUTTERFLY
 drymobius rhombife,blotched racer,,,,drymobius,rhombifer,,BLOTCHED,RACER
@@ -153,7 +157,7 @@ eublepharus,hardwickii,,HARDWICKE'S,GECKO,eublepharis,hardwickii,,HARDWICKE'S,GE
 eublepharus,macularius,,PANTHER,GECKO,eublepharis,macularius,,PANTHER,GECKO
 eublepharus,sp.,,EYELID,GECKO,eublepharis,sp.,,EYELID,GECKO
 euophius,bison,,,,enophrys,bison,,,
-euphestia,kuehniella,,MEDITERRANEA FLOUR,MOTH,ephestia,kuehniella,,MEDITERRANEA FLOUR,MOTH
+euphestia,kuehniella,,MEDITERRANEA FLOUR,MOTH,ephestia,kuehniella,,MEDITERRANEAN FLOUR,MOTH
 eurypelime,spinicrus,,,,eurypelma,spinicrus,,,
 euvola raveneli,sp.,,,,euvola,raveneli,,,
 flexipecten,glaber,,,SHELL,flexopecten,glaber,,,SHELL
@@ -164,6 +168,7 @@ geopahgus,gymnogenys,,,,geophagus,gymnogenys,,,
 geothylpis,trichas,,,,geothlypis,trichas,,,
 geotrogon,chrysia,,,,geotrygon,chrysia,,,
 gercacinus,ruricola,,,,gecarcinus,ruricola,,,
+gercanus,sp.,,,,gecarcinus,sp.,,,
 gloriamari,chemnitz,,,,conus,gloriamari,,,
 glossinia,austeni,,,,glossina,austeni,,,
 glossinia,brevipalpis,,,,glossina,brevipalpis,,,
@@ -181,7 +186,7 @@ halopelma,schmidti,,,,haplopelma,schmidti,,,
 hammicentrosus,pulchenismus,,,,hemicentrotus,pulcherrimus,,,
 hapalochaena,maculosa,,BLUE-RINGED,OCTOPUS,hapalochlaena,maculosa,,BLUE-RINGED,OCTOPUS
 hapalochaena,sp.,,BLUE-RINGED,OCTOPUS,hapalochlaena,sp.,,BLUE-RINGED,OCTOPUS
-haplopelma,albastriatus,,,TARANTULA,cyriopagopus,albostriatus,,,TARANTULA
+haplopelma,albastriatus,,,TARANTULA,haplopelma,albostriatus,,,TARANTULA
 harpatrica,pulcheripes,,,,harpactira,pulchripes,,,
 hatocynthia,roretz,,,,halocynthia,roretzi,,,
 helcticopis,modesta,,,,thelcticopis,modesta,,,
@@ -227,7 +232,7 @@ insecta,neuroptera,,,,neuroptera,sp.,,,
 insecta,odonata,,,,odonata,sp.,,,
 insecta,orthoptera,,,,orthoptera,sp.,,,
 irsinia,fasciculata,,,,ircinia,fasciculata,,,
-isisdidae,lepidisis,,,,isididae,sp.,,,
+isisdidae,lepidisis,,,,lepidisis,sp.,,,
 isisidae,sp.,,,,isididae,sp.,,,
 jabonilleria,danjoui,,,,jabouilleia,danjoui,,,
 jennesia,lineata,,,,jenynsia,lineata,,,
@@ -245,7 +250,7 @@ leirurus,quinquestriatus,,,,leiurus,quinquestriatus,,,
 lemnallia,sp.,,TREE,CORAL,lemnalia,sp.,,TREE,CORAL
 lepidocephalichthy,hasselti,,,LOACH,lepidocephalichthys,hasselti,,,LOACH
 lepidocephalichthy,sp.,,,LOACH,lepidocephalichthys,sp.,,,LOACH
-limalima,vulgaris,,,,lima,vulgaris,,,
+limalima,vulgaris,,,,lima,lima,vulgaris,,
 liophus,cobella,,S. AMERICAN GROUND,SNAKE,liophis,cobella,,S. AMERICAN GROUND,SNAKE
 liophus,frenata,,COMMON GROUND,SNAKE,liophis,frenata,,COMMON GROUND,SNAKE
 liophus,juliae,,,,liophis,juliae,,,
@@ -291,7 +296,6 @@ minoides,xeniades,,,,mimoides,xeniades,,,
 minoides,xynias,,,,mimoides,xynias,,,
 missgurnus,anguurandium,,,,misgurnus,anguillicaudatus,,,
 missqumus,anguurandium,,,,misgurnus,anguillicaudatus,,,
-mitra,rugosum,,,,vexillum,rugosum,,,
 molluscs,pinne vexillum,,,,pinna,vexillum,,,
 molluscs,sp.,,,,mollusca,sp.,,,
 monocentrophus,balfouri,,,,monocentropus,balfouri,,,
@@ -497,8 +501,6 @@ tompterna,marmorata,,MARBLED,BULLFROG,tomopterna,marmorata,,MARBLED,BULLFROG
 tompterna,sp.,,,BULLFROG,tomopterna,sp.,,,BULLFROG
 tregallasia,leucops,,,,tregellasia,leucops,,,
 trididemnid,solidum,,,,trididemnum,solidum,,,
-triforis,sp.,,,SNAIL,triphora,sp.,,,SNAIL
-triphoris,sp.,,,SNAIL,triphora,sp.,,,SNAIL
 tristichorrochus,formosensis,,,,tristichotrochus,formosensis,,,
 tristichorrodius,formosensis,,,,tristichotrochus,formosensis,,,
 tropical fish,(marine fish sp.),,,,tropical fish,(marine sp.),,,
@@ -508,12 +510,12 @@ tropidonophus,doriae,,,,tropidonophis,doriae,,,
 trosidos,semitorta,,,,trisidos,semitorta,,,
 tytius,metuendus,,,,tityus,metuendus,,,
 undaria pinnatifid,harvey suringar,,,,undaria,pinnatifida,,,
-unk,unk,,,,unknown,unknown,,,
+unk,unk,,,,unknown,sp.,,,
 uralisamietophryus,garmani,,,,amietophrynus,garmani,,,
 uroplatus firmbria,glant leaf tail,,,,uroplatus,fimbriatus,,COMMON FLAT-TAIL,GECKO
 urotheuthis,chinensis,,,,uroteuthis,chinensis,,,
 vejovis,sp.,,,SCORPION,vaejovis,sp.,,,SCORPION
-vespertillo,sp.,,,SHELL,timbellus,vespertilio,,,SHELL
+vespertillo,sp.,,,SHELL,muricoidea,sp.,,,SHELL
 vicungna,pacos,,,,vicugna,pacos,,,
 xenethis,immanis,,,,xenesthis,immanis,,,
 zamensis,sp.,,,SNAKE,zamenis,sp.,,,SNAKE

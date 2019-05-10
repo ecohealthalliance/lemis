@@ -68,7 +68,8 @@ lemis_taxa_added <- lemis_taxa_added %>%
     genus = str_replace(genus, "\\.$", ""),
     # convert relevant values in the species column to "sp."
     species = case_when(
-      species %in% c("?", "species", "sp", "spp", "spp.") ~ "sp.",
+      species %in%
+        c("?", "species", "sp", "spp", "spp.", "unknown") ~ "sp.",
       !is.na(genus) & is.na(species) ~ "sp.",
       TRUE ~ species
     ),
@@ -370,6 +371,7 @@ lemis_taxa_added <- lemis_taxa_added %>%
   mutate(
     class = case_when(
       genus == "ampullaria" & generic_name == "SNAIL" ~ "Gastropoda",
+      genus == "chondrilla" & unit == "ML" ~ "Demospongiae",
       genus == "polypus" & str_detect(cleaning_notes, "condietur") ~ "Cephalopoda",
       genus == "riopa" & generic_name == "SKINK" ~ "Reptilia",
       TRUE ~ class
