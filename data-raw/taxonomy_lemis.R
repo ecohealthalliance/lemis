@@ -69,7 +69,8 @@ lemis_taxa_added <- lemis_taxa_added %>%
     # convert relevant values in the species column to "sp."
     species = case_when(
       species %in%
-        c("?", "species", "sp", "spp", "spp.", "unknown") ~ "sp.",
+        c("?", "species", "sp", "spp", "spp.",
+          "unknown", "(genus)") ~ "sp.",
       !is.na(genus) & is.na(species) ~ "sp.",
       TRUE ~ species
     ),

@@ -13,6 +13,7 @@ jobs:
             - deps1-$R_VERSION
       - run:
           command: |
+            R -e "devtools::install_github('cran/MonetDBLite@0.6.0')"
             R -e "devtools::install_deps(dependencies=TRUE)"
             R -e "devtools::install_cran('goodpractice')"
       - run:
