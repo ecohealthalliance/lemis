@@ -30,7 +30,8 @@ antogonia,capros,,,,antigonia,capros,,,
 apistopromo,sp.,,,,apistogramma,sp.,,,
 apisturus,sp.,,,SHARK,apristurus,sp.,,,SHARK
 asaphilis,violasceus,,,,asaphis,violascens,,,
-ascidiacea,n ielsen,,,,ascidiacea,nielsen,,,
+ascidiacea,n ielsen,,,,ascidiacea,sp.,,,
+ascidiacea,nielsen,,,,ascidiacea,sp.,,,
 asperidetes,nigricans,,BLACK SOFT-SHELL,TURTLE,aspideretes,nigricans,,BLACK SOFT-SHELL,TURTLE
 asperidetes,sp.,,SOFT-SHELL,TURTLE,aspideretes,sp.,,SOFT-SHELL,TURTLE
 asselus,aquaticus,,,,asellus,aquaticus,,,
@@ -49,6 +50,7 @@ boiqa,dendrophila,,,,boiga,dendrophila,,,
 boophlius,microplus,,,,boophilus,microplus,,,
 brachionus,plicatillis,,,,brachionus,plicatilis,,,
 brachypelmides,klaasi,,ACAPULCO LS ORANGE,TARANTULA,brachypelma,klaasi,,ACAPULCO LS ORANGE,TARANTULA
+brachyraphis,rhabdophora,,,FISH,brachyrhaphis,rhabdophora,,,FISH
 brachyuridae,sp.,,,,brachyura,sp.,,,
 bratechlamys,vexillum,,,,bractechlamys,vexillum,,,
 brochistosternus,ehrenbergi,,,,brachistosternus,ehrenbergii,,,
@@ -56,8 +58,9 @@ bronchocoela,smaragdina,,,,bronchocela,smaragdina,,,
 bryconamericas,sp.,,,,bryconamericus,sp.,,,
 buarremon brunnein,chestnut capped br,,,,buarremon,brunneinuchus,,CHESTNUT-CAP BRUSH,FINCH
 bufo(rhinella),lescurei,,,,bufo,lescurei,,,
-butetrflies,sp.,,,,butterflies,sp.,,,
-butterlies,sp.,,,,butterflies,sp.,,,
+butetrflies,sp.,,,,lepidoptera,sp.,,,
+butterflies,sp.,,,,lepidoptera,sp.,,,
+butterlies,sp.,,,,lepidoptera,sp.,,,
 cama,pacos,alpaca,,,lama,pacos,,,ALPACA
 camprimulgus,sp.,,,,caprimulgus,sp.,,,
 campylomormyrops,rhyncophorus,,,,campylomormyrus,rhynchophorus,,,
@@ -94,10 +97,15 @@ citharichthy,gilberti,flatfish,,,citharichthys,gilberti,,,FLATFISH
 class,holothuroidea,,,,holothuroidea,sp.,,,
 clypeasterophilis,sp.,,,,clypeasterophilus,sp.,,,
 coenobita clipeatu,coenobita clipeatu,,,,coenobita,clypeatus,,,
+coleoptera,carabidae,,,,carabidae,sp.,,,
+coleoptera,cicindellidae,,,,cicindelidae,sp.,,,
+coleoptera,staphy,,,,staphylinidae,sp.,,,
 collubridae,sp.,,,,colubridae,sp.,,,
 colocentrotus,astratus,,,,colobocentrotus,atratus,,,
 columbilla,scripta,,,,columbella,scripta,,,
 concha,ostreae,,,,ostreidae,sp.,,,
+conchelepes,conchelepes,,,CRUSTACEAN,conchylepes,conchylepes,,,CRUSTACEAN
+conchelepes,conchelepes,,,SHELL,conchylepes,conchylepes,,,SHELL
 conchornella,albomaculata,,,,cochranella,albomaculata,,,
 concus,biliosus,,,,conus,biliosus,,,
 condietur,loligo,,,,loligo,sp.,,,
@@ -129,6 +137,7 @@ cypraeidae,cowry,,,,cypraeidae,sp.,,,
 cyprinodontoides,sp.,,,,cyprinodontoidei,sp.,,,
 dalatius,licha,,DARKIE,CHARLIE,dalatias,licha,,DARKIE,CHARLIE
 dayprocta,leporina,,,,dasyprocta,leporina,,,
+dendroica,cerulescens,,,,dendroica,caerulescens,,,
 dendrosophus,sp.,,,,dendropsophus,sp.,,,
 deroptryus,accipitrinus,,,,deroptyus,accipitrinus,,,
 desypeltis,scabra,,,,dasypeltis,scabra,,,
@@ -211,6 +220,7 @@ hottentata,spec,,,,hottentotta,sp.,,,
 hybsiboas,heilprini,,,,hypsiboas,heilprini,,,
 hydantina,physis,,,,hydatina,physis,,,
 hydriopsis,schlegeli,,,,hyriopsis,schlegelii,,,
+hydrochaerus,hydrochaerus,,,CAPYBARA,hydrochoerus,hydrochaeris,,,CAPYBARA
 hydrocinus,sp.,,,FISH,hydrocynus,sp.,,,FISH
 hydrocinus,vittatus,,,TIGERFISH,hydrocynus,vittatus,,,TIGERFISH
 hydrocyon,sp.,,,,hydrocynus,sp.,,,
@@ -226,6 +236,7 @@ hypolymnas,sp.,,,BUTTERFLY,hypolimnas,sp.,,,BUTTERFLY
 hypolysmata,grabhami,,,MACRURAN,hippolysmata,grabhami,,,MACRURAN
 hyriopsis,schlegeli,,PEARL,MUSSEL,hyriopsis,schlegelii,,PEARL,MUSSEL
 hyriopsis,schlegeli,,,SHELL,hyriopsis,schlegelii,,,SHELL
+hysiboas,raniceps,,,,hypsiboas,raniceps,,,
 insecta,dermaptera,,,,dermaptera,sp.,,,
 insecta,hymenoptera,,,,hymenoptera,sp.,,,
 insecta,neuroptera,,,,neuroptera,sp.,,,
@@ -262,6 +273,7 @@ loboparadisaea,sericea,,YELLOW-BREASTED,BIRD OF PARADISE,loboparadisea,sericea,,
 loboparadisaea,sericea,,YELLOW-BREASTED,CNEMOPHILUS,loboparadisea,sericea,,YELLOW-BREASTED,CNEMOPHILUS
 lobophyton,sp.,,,,lobophytum,sp.,,,
 loligo duvaucelii,squid,,,,loligo,duvaucelii,,,SQUID
+lonchorina,aurita,,SWORD-NOSED,BAT,lonchorhina,aurita,,SWORD-NOSED,BAT
 lophoaetus,occipitalis,,LONG-CRESTED,EAGLE,lophaetus,occipitalis,,LONG-CRESTED,EAGLE
 lopisostaus,tropicus,,,,lepisosteus,tropicus,,,
 luhanas,lucinidae,,,,lucinidae,sp.,,,
@@ -387,6 +399,7 @@ pleurogyra,turbida,,FOX,CORAL,plerogyra,turbida,,FOX,CORAL
 pluerogrammus,monopterygius,,,,pleurogrammus,monopterygius,,,
 poecilla,sp.,,,,poecilia,sp.,,,
 pollaehius,sp.,,,,pollachius,sp.,,,
+polyonomus,caroli,,BRONZE-TAILED,COMET,polyonymus,caroli,,BRONZE-TAILED,COMET
 popilla,japonica,,JAPANESE,BEETLE,popillia,japonica,,JAPANESE,BEETLE
 porcelana,sayana,,,,porcellana,sayana,,,
 prhygilus,plebejus,,,,phrygilus,plebejus,,,
@@ -405,6 +418,7 @@ pseudoanodonta,maxima,,,MUSSEL,pseudanodonta,maxima,,,MUSSEL
 pseudoanodonta,sp.,,,MUSSEL,pseudanodonta,sp.,,,MUSSEL
 pseudocris,regilla,,,,pseudacris,regilla,,,
 pseudoplatysoma,fasciatum,,,,pseudoplatystoma,fasciatum,,,
+pseudoptergorgia,elisabethae,,,CORAL,pseudopterogorgia,elisabethae,,,CORAL
 pseudoptero,gorgia,,,,pseudopterogorgia,sp.,,,
 pseudoscaphirhynch,hermanni,,SMALL AMU-DAR,SHOVELNOSE,pseudoscaphirhynchus,hermanni,,SMALL AMU-DAR,SHOVELNOSE
 pseudoscaphirhynch,kaufmanni,,LARGE AMU-DAR,SHOVELNOSE,pseudoscaphirhynchus,kaufmanni,,LARGE AMU-DAR,SHOVELNOSE

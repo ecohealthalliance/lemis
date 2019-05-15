@@ -375,6 +375,7 @@ lemis_taxa_added <- lemis_taxa_added %>%
       genus == "chondrilla" & unit == "ML" ~ "Demospongiae",
       genus == "polypus" & str_detect(cleaning_notes, "condietur") ~ "Cephalopoda",
       genus == "riopa" & generic_name == "SKINK" ~ "Reptilia",
+      genus == "undaria" & species == "pinnatifida" ~ "Phaeophyceae",
       TRUE ~ class
     )
   )
@@ -413,6 +414,15 @@ error_checking <- lemis_taxa_added %>%
   group_by(class, taxa) %>%
   count() %>%
   arrange(class)
+
+col.unique.classes <- taxa_tbl("col") %>%
+  pull(class) %>%
+  unique()
+col.unique.classes <- c(col.unique.classes, "Phaeophyceae", "Ulvophyceae")
+
+lemis.unique.classes <- unique(lemis_taxa_added$class)
+
+lemis.unique.classes %in% col.unique.classes
 
 #==============================================================================
 
