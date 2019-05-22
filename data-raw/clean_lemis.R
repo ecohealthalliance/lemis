@@ -697,18 +697,18 @@ lemis <- lemis %>%
     )
   )
 
-date.check.file <- read_csv("data-raw/data/disposition_date_check.csv") %>%
+date.corrections.file <- read_csv("data-raw/data/disposition_date_corrections.csv") %>%
   mutate_at(c("disposition_date", "shipment_date",
-              "replacement_disposition_date"),
+              "new_disposition_date"),
             funs(as.character(as.Date(., format = "%m/%d/%y")))) %>%
-  filter(!is.na(replacement_disposition_date))
+  filter(!is.na(new_disposition_date))
 
-for(i in 1:nrow(date.check.file)) {
+for(i in 1:nrow(date.corrections.file)) {
 
-  lemis[which(lemis$disposition_date == date.check.file$disposition_date[i] &
-                lemis$shipment_date == date.check.file$shipment_date[i]),
+  lemis[which(lemis$disposition_date == date.corrections.file$disposition_date[i] &
+                lemis$shipment_date == date.corrections.file$shipment_date[i]),
         "disposition_date"] <-
-    date.check.file$replacement_disposition_date[i]
+    date.corrections.file$new_disposition_date[i]
 }
 
 #==============================================================================

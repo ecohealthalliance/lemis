@@ -50,7 +50,12 @@ taxa_code <-
     species_code_taxa = toupper(species_code_taxa),
     taxa = tolower(taxa)
   ) %>%
-  distinct()
+  distinct() %>%
+  # Filter out species_code values that lead to erroneous taxa calls
+  filter(
+    !(species_code_taxa %in% c("AGS?", "AMCY", "HSQU",
+                               "HTS?", "MEGM", "PLOM"))
+  )
 
 # Join this table with the LEMIS data
 lemis_taxa_added <- lemis_intermediate %>%
@@ -390,10 +395,10 @@ unclassified <- lemis_taxa_added %>%
 
 gs_title("LEMIS manual taxonomic harmonization") %>%
   gs_read(., col_types = cols(.default = col_character())) %>%
-  write_csv(., h("data-raw", "manual_taxonomic_harmonization.csv"))
+  write_csv(., h("data-raw", "data", "manual_taxonomic_harmonization.csv"))
 
 manual_tax <- read_csv(
-  h("data-raw", "manual_taxonomic_harmonization.csv"),
+  h("data-raw", "data", "manual_taxonomic_harmonization.csv"),
   col_types = cols(.default = col_character())
 )
 
