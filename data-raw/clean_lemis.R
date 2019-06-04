@@ -203,10 +203,24 @@ assert_that(sum(lemis$import_export == "I") == nrow(lemis))
 # 2)
 # Identify problematic records that have NA values for "value" and are
 # otherwise exact duplicates of other records
-grouping.vars <- colnames(lemis)[-c(11, 24)]
+control.numbers.cant.be.dups <-
+  as.numeric(names(which(table(lemis$control_number) == 1)))
+
+control.numbers.w.NA.values <- lemis %>%
+  group_by(control_number) %>%
+  summarize(n_NAs = sum(is.na(value))) %>%
+  filter(n_NAs >= 1) %>%
+  pull(control_number)
+
+grouping.vars <-
+  colnames(lemis)[!(colnames(lemis) %in% c("value", "file_num"))]
 
 problem.row.set <- lemis %>%
-  group_by_(.dots = grouping.vars) %>%
+  filter(
+    !(control_number %in% control.numbers.cant.be.dups),
+    control_number %in% control.numbers.w.NA.values
+  ) %>%
+  group_by_at(grouping.vars) %>%
   summarize(
     row.count = n(),
     NA.count = sum(is.na(value)),
@@ -238,11 +252,135 @@ assert_that(nrow(lemis) == (lemis.row.count - dups.NA.count))
 
 
 # 3)
-# Address potential exact duplicate records
-grouping.vars2 <- colnames(lemis)[-24]
+# Manually remove likely duplicate records
+# Note: most of these are clear duplicates where the product was recorded
+# in year 2013 file 1 and replicated in a later file number with
+# value data present and some other field altered (for example, country_origin
+# or purpose may have changed between the two entries)
+manually.curated.duplicates.for.removal <-
+  read_csv(h("data-raw", "data", "manually_curated_duplicates_for_removal.csv"),
+           col_types = list(
+             subspecies = col_character(),
+             value = col_double(),
+             file_num = col_character()
+           )
+  ) %>%
+  mutate(
+    disposition_date = as.Date(disposition_date, format = "%m/%d/%y"),
+    shipment_date = as.Date(shipment_date, format = "%m/%d/%y"),
+  )
+
+# Remove the manually-curated duplicates from the data
+lemis.row.count <- nrow(lemis)
+dups.count <- nrow(manually.curated.duplicates.for.removal)
+lemis <- anti_join(lemis, manually.curated.duplicates.for.removal, by = lemis.cols)
+assert_that(nrow(lemis) == (lemis.row.count - dups.count))
+# Check that all control_numbers for which duplicates were removed still
+# remain in the data (i.e., we removed some, but not all, records for a
+# given control_number)
+n.control.numbers.remaining <-
+  sum(unique(manually.curated.duplicates.for.removal$control_number) %in% lemis$control_number)
+assert_that(n.control.numbers.remaining == n_distinct(manually.curated.duplicates.for.removal$control_number))
+
+
+# 4)
+# Identify problematic records that have NA values for "value",
+# conflicting values for "us_co"/"foreign_co", and are
+# otherwise exact duplicates of other records
+grouping.vars2 <-
+  colnames(lemis)[!(colnames(lemis) %in% c("value", "us_co", "foreign_co", "file_num"))]
 
 problem.row.set2 <- lemis %>%
-  group_by_(.dots = grouping.vars2) %>%
+  filter(
+    !(control_number %in% control.numbers.cant.be.dups),
+    control_number %in% control.numbers.w.NA.values
+  ) %>%
+  group_by_at(grouping.vars2) %>%
+  summarize(
+    row.count = n(),
+    NA.count = sum(is.na(value)),
+    distinct_value_values = paste(unique(value), collapse = ", "),
+    distinct_us_co_values = paste(unique(us_co), collapse = "@~"),
+    distinct_foreign_co_values = paste(unique(foreign_co), collapse = "@~"),
+    distinct_file_num_values = paste(unique(file_num), collapse = ",")
+  ) %>%
+  filter(row.count > 1) %>%
+  ungroup()
+
+dups2 <- problem.row.set2 %>%
+  filter(NA.count > 0,
+         str_detect(distinct_value_values, ",")) %>%
+  mutate(
+    value = NA_real_,
+    us_co = case_when(
+      str_detect(distinct_us_co_values, "@~") ~ str_extract(distinct_us_co_values, ".*(?=@~)"),
+      TRUE ~ distinct_us_co_values
+    ),
+    us_co = ifelse(us_co == "NA", NA_character_, us_co),
+    foreign_co = case_when(
+      str_detect(distinct_foreign_co_values, "@~") ~ str_extract(distinct_foreign_co_values, ".*(?=@~)"),
+      TRUE ~ distinct_foreign_co_values
+    ),
+    foreign_co = ifelse(foreign_co == "NA", NA_character_, foreign_co),
+    file_num = str_extract(distinct_file_num_values, ".")
+  )
+
+dup.years2 <- dups2 %>%
+  pull(shipment_date) %>%
+  str_extract(., "20.{1,2}") %>%
+  unique(.)
+
+# Verify all of these records come from 2013 data
+assert_that(dup.years2 == "2013")
+
+# Remove the duplicate, NA-containing records from the data
+lemis.row.count <- nrow(lemis)
+dups2.NA.count <- sum(dups2$NA.count)
+lemis <- anti_join(lemis, dups2, by = lemis.cols)
+assert_that(nrow(lemis) == (lemis.row.count - dups2.NA.count))
+
+# Manually change "us_co" and "foreign_co" values where they still
+# disagree within "control_number" because some records record
+# exemptions for these fields while others simply record missing values
+lemis <- lemis %>%
+  mutate(
+    us_co = case_when(
+      control_number == 2013302852 ~ NA_character_,
+      control_number == 2013314117 ~ NA_character_,
+      TRUE ~ us_co
+    ),
+    foreign_co = case_when(
+      control_number == 2013302852 ~ NA_character_,
+      control_number == 2013320235 ~ NA_character_,
+      TRUE ~ foreign_co
+    )
+  )
+
+# Assert that all control numbers now only have one associated
+# "country_imp_exp", "us_co" and "foreign_co"
+control.number.tests <- lemis %>%
+  group_by(control_number) %>%
+  summarize(
+    n_country_imp_exps = n_distinct(country_imp_exp_iso2c),
+    n_us_cos = n_distinct(us_co),
+    n_foreign_cos = n_distinct(foreign_co),
+    n_shipment_dates = n_distinct(shipment_date)
+  ) %>%
+  ungroup
+
+assert_that(max(control.number.tests$n_country_imp_exps) == 1)
+assert_that(max(control.number.tests$n_us_cos) == 1)
+assert_that(max(control.number.tests$n_foreign_cos) == 1)
+
+
+# 5)
+# Address potential exact duplicate records
+grouping.vars3 <-
+  colnames(lemis)[!(colnames(lemis) %in% c("file_num"))]
+
+problem.row.set3 <- lemis %>%
+  filter(!(control_number %in% control.numbers.cant.be.dups)) %>%
+  group_by_at(grouping.vars3) %>%
   summarize(
     row.count = n(),
     distinct_file_num_values = paste(unique(file_num), collapse = ", ")
@@ -254,20 +392,12 @@ problem.row.set2 <- lemis %>%
 # data file, indicating they are probably not errors generated from
 # collating together multiple data sheets within years?
 from.same.file.count <-
-  sum(!str_detect(problem.row.set2$distinct_file_num_values, ","))
+  sum(!str_detect(problem.row.set3$distinct_file_num_values, ","))
 
-assert_that(from.same.file.count == nrow(problem.row.set2))
+assert_that(from.same.file.count == nrow(problem.row.set3))
 # Since duplicate records of a given record all come from the same
 # original data file, it's probably best to keep them and treat them
-# as intentionally duplicated
-
-
-# 4)
-# Issue of US to US importation shipments. Looking at the country of origin
-# information in the database shows that the US is among the top 10 countries
-# importing to the US!
-count(lemis, country_origin, sort = TRUE)
-# Currently, this data is still included in the LEMIS database, so be careful
+# as intentionally duplicated product records
 
 #==============================================================================
 
@@ -629,8 +759,21 @@ summary(lemis$port)
 #==============================================================================
 
 
-# Clean "disposition_date" column
+# Clean date columns
 
+
+# Clean dates for control number 2006690535
+lemis <- lemis %>%
+  mutate(
+    shipment_date = case_when(
+      control_number == 2006690535 & is.na(shipment_date) ~ "2006-01-18",
+      TRUE ~ as.character(shipment_date)
+    ),
+    disposition_date = case_when(
+      control_number == 2006690535 & is.na(disposition_date) ~ "2006-01-27",
+      TRUE ~ as.character(disposition_date)
+    )
+  )
 
 # Verify that the vast majority of disposition dates occur on or after the
 # shipment date
@@ -710,6 +853,20 @@ for(i in 1:nrow(date.corrections.file)) {
         "disposition_date"] <-
     date.corrections.file$new_disposition_date[i]
 }
+
+# Assert that all control numbers now only have one associated
+# "shipment_date"
+control.number.tests <- lemis %>%
+  group_by(control_number) %>%
+  summarize(
+    n_country_imp_exps = n_distinct(country_imp_exp_iso2c),
+    n_us_cos = n_distinct(us_co),
+    n_foreign_cos = n_distinct(foreign_co),
+    n_shipment_dates = n_distinct(shipment_date)
+  ) %>%
+  ungroup
+
+assert_that(max(control.number.tests$n_shipment_dates) == 1)
 
 #==============================================================================
 

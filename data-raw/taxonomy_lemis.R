@@ -37,7 +37,7 @@ lemis_intermediate <- read_csv(
 #==============================================================================
 
 
-# Join in USFWS taxonomic information
+# Join in broad USFWS taxonomic information
 
 # Generate a table of taxa information
 taxa_code <-
@@ -388,11 +388,16 @@ lemis_taxa_added <- lemis_taxa_added %>%
 #==============================================================================
 
 
+# Add manually-curated taxonomic information onto the LEMIS data
+
+# Which taxa remain unclassified after automated taxonomy calling?
 unclassified <- lemis_taxa_added %>%
   filter(is.na(class)) %>%
   distinct(genus, species, subspecies, specific_name, generic_name, taxa) %>%
   arrange(taxa, genus, species)
 
+# Download manually-curated information from Google Sheets and load it as
+# a local CSV
 gs_title("LEMIS manual taxonomic harmonization") %>%
   gs_read(., col_types = cols(.default = col_character())) %>%
   write_csv(., h("data-raw", "data", "manual_taxonomic_harmonization.csv"))
@@ -402,10 +407,13 @@ manual_tax <- read_csv(
   col_types = cols(.default = col_character())
 )
 
+# Ensure the taxa described in the manually-curated sheet match with
+# those that are unclassified via automated calling
 assert_that(
-  all_equal(select(unclassified, 1:6), select(manual_tax, 1:6))
+  all_equal(unclassified, select(manual_tax, 1:6))
 )
 
+# Join the manually-curated taxonomic information onto the LEMIS data
 lemis_taxa_added <- lemis_taxa_added %>%
   left_join(., manual_tax,
             by = c("genus", "species", "subspecies",
@@ -414,12 +422,16 @@ lemis_taxa_added <- lemis_taxa_added %>%
   mutate(class = ifelse(!is.na(class.x), class.x, class.y)) %>%
   select(-class.x, -class.y)
 
+
+# Examine the relationship between the "taxa" and "class" classifications
 error_checking <- lemis_taxa_added %>%
   filter(!is.na(taxa)) %>%
   group_by(class, taxa) %>%
   count() %>%
   arrange(class)
 
+# Ensure that all "class" values appearing in the data are valid
+# COL classes
 col.unique.classes <- taxa_tbl("col") %>%
   pull(class) %>%
   unique()
@@ -427,7 +439,7 @@ col.unique.classes <- c(col.unique.classes, "Phaeophyceae", "Ulvophyceae")
 
 lemis.unique.classes <- unique(lemis_taxa_added$class)
 
-lemis.unique.classes %in% col.unique.classes
+assert_that(all(lemis.unique.classes %in% col.unique.classes))
 
 #==============================================================================
 
@@ -436,7 +448,8 @@ lemis.unique.classes %in% col.unique.classes
 
 lemis_to_save <- lemis_taxa_added %>%
   mutate(
-    genus = str_to_sentence(genus)
+    genus = str_to_sentence(genus),
+    genus = ifelse(genus == "noncites entry", "non-CITES entry", genus)
   ) %>%
   # select final columns to keep
   select(
