@@ -357,13 +357,14 @@ lemis <- lemis %>%
   )
 
 # Assert that all control numbers now only have one associated
-# "country_imp_exp", "us_co" and "foreign_co"
+# "country_imp_exp", "us_co", "foreign_co", and "port"
 control.number.tests <- lemis %>%
   group_by(control_number) %>%
   summarize(
     n_country_imp_exps = n_distinct(country_imp_exp_iso2c),
     n_us_cos = n_distinct(us_co),
     n_foreign_cos = n_distinct(foreign_co),
+    n_ports = n_distinct(port),
     n_shipment_dates = n_distinct(shipment_date)
   ) %>%
   ungroup
@@ -371,6 +372,7 @@ control.number.tests <- lemis %>%
 assert_that(max(control.number.tests$n_country_imp_exps) == 1)
 assert_that(max(control.number.tests$n_us_cos) == 1)
 assert_that(max(control.number.tests$n_foreign_cos) == 1)
+assert_that(max(control.number.tests$n_ports) == 1)
 
 
 # 5)
@@ -862,6 +864,7 @@ control.number.tests <- lemis %>%
     n_country_imp_exps = n_distinct(country_imp_exp_iso2c),
     n_us_cos = n_distinct(us_co),
     n_foreign_cos = n_distinct(foreign_co),
+    n_ports = n_distinct(port),
     n_shipment_dates = n_distinct(shipment_date)
   ) %>%
   ungroup
