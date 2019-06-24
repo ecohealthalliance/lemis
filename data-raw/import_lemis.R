@@ -2,7 +2,7 @@
 # by Carlos Zambrana-Torrelio
 
 # The goal of this script is to convert raw LEMIS Excel files to CSVs and
-# merge them to create yearly files
+# merge them to create yearly LEMIS files
 
 # Access to the EHA Amazon Web Services bucket is required, and it is
 # expected that credentials are in .aws/credentials
@@ -36,13 +36,15 @@ keys <- get_bucket_df(
 # In any case, get rid of these folder names since we want the actual files
 keys.mod <- grep("/$", keys, value = T, invert = T)
 
-# Save the files, making a local copy of what's on the bucket in the
-# "Original_data/by_year" subdirectory
+# Save the files, making a local copy in the "data-raw/raw_data" subdirectory
+# of what's on the bucket in the "Original_data/by_year" subdirectory
 sapply(seq_along(keys.mod), function(i)
-  save_object(keys.mod[i],
-              bucket = "eha.wild.db",
-              file = h("data-raw",
-                       str_replace(keys.mod[i], "Original_data/", ""))
+
+  save_object(keys.mod[i], bucket = "eha.wild.db",
+              file = h("data-raw", str_replace(keys.mod[i],
+                                               "Original_data/by_year",
+                                               "raw_data")
+              )
   )
 )
 
@@ -54,7 +56,7 @@ sapply(seq_along(keys.mod), function(i)
 
 # Review the number of worksheets per Excel file
 file.list <- dir(
-  path = h("data-raw", "by_year"),
+  path = h("data-raw", "raw_data"),
   full.names = TRUE, recursive = TRUE
 )
 
@@ -66,17 +68,17 @@ for (i in file.list) {
 # a "Qry" sheet, which is metadata, not core LEMIS data
 
 
-# Create a dataframe to hold information that will be used in the loop
+# Create a data frame to hold information that will be used in the loop
 # to generate yearly-level LEMIS CSV files
 # The information we need are the years of data and the Excel filenames
 # associated with each year
 df_for_looping <- data.frame(
-  year = dir(path = h("data-raw", "by_year")), stringsAsFactors = FALSE
+  year = dir(path = h("data-raw", "raw_data")), stringsAsFactors = FALSE
 ) %>%
   group_by(year) %>%
   summarize(
     files = list(
-      dir(path = h("data-raw", "by_year", year),
+      dir(path = h("data-raw", "raw_data", year),
           full.names = TRUE, recursive = TRUE
       )
     )
@@ -88,15 +90,15 @@ df_for_looping <- data.frame(
 # as well as problematic alternatives that arise. These are used for
 # error checking in the loop below
 desired_header <-
-  read_excel("data-raw/by_year/2000/DecDetail1_Q1_2000.FOIA-SmithK.2013.08.06.xlsx", sheet = 1) %>%
+  read_excel("data-raw/raw_data/2000/DecDetail1_Q1_2000.FOIA-SmithK.2013.08.06.xlsx", sheet = 1) %>%
   colnames()
 
 problem_header_1 <-
-  read_excel("data-raw/by_year/2008/DecDetail.Smith.2008JanMar.2011.08.02.xls", sheet = 1) %>%
+  read_excel("data-raw/raw_data/2008/DecDetail.Smith.2008JanMar.2011.08.02.xls", sheet = 1) %>%
   colnames()
 
 problem_header_2 <-
-  read_excel("data-raw/by_year/2013/Copy of DecDetail_Jun-Sep_2013.FOIA-Smith.2015.04.13_redacted.xlsx", sheet = 1) %>%
+  read_excel("data-raw/raw_data/2013/Copy of DecDetail_Jun-Sep_2013.FOIA-Smith.2015.04.13_redacted.xlsx", sheet = 1) %>%
   colnames()
 
 
@@ -106,7 +108,7 @@ if (!dir.exists(h("data-raw", "csv_by_year"))) dir.create(h("data-raw", "csv_by_
 # Generate the yearly-level CSV files
 for (i in seq_along(df_for_looping$year)) {
 
-  # Initialize a year-level dataframe
+  # Initialize a year-level data frame
   year_df <- data.frame()
 
   for (file_number in seq_along(df_for_looping$files[[i]])) {
@@ -118,7 +120,7 @@ for (i in seq_along(df_for_looping$year)) {
     # we don't want to record data from that
     n_sheets <- n_sheets - 1
 
-    # Initialize an Excel file-level dataframe
+    # Initialize an Excel file-level data frame
     file_df <- data.frame()
 
     for (sheet_number in seq_len(n_sheets)) {
@@ -196,7 +198,8 @@ for (i in seq_along(df_for_looping$year)) {
   }
 
   # Write out a merged CSV file for each year of the LEMIS data
-  write.csv(year_df,
+  write.csv(
+    year_df,
     h("data-raw", "csv_by_year", paste0("lemis_", df_for_looping$year[i], ".csv")),
     row.names = FALSE
   )

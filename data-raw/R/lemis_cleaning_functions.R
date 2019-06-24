@@ -9,32 +9,34 @@ compareNA <- function(x1, x2) {
   return(same)
 }
 
-# Function to clean the intermediate LEMIS dataset variables given valid codes
 
-get_cleaned_lemis <- function(variable, valid.values) {
+# Function to clean the intermediate LEMIS dataset fields given valid codes
 
-  # Get the column index of the variable to clean
-  index <- which(colnames(lemis) == variable)
+get_cleaned_lemis <- function(field, valid.values) {
+
+  # Get the column index of the field to clean
+  index <- which(colnames(lemis) == field)
 
   lemis %>%
-    # Add cleaning notes based on the values in the variable
+    # Add cleaning notes based on the values in the field
     mutate(
       cleaning_notes = case_when(
         !(.[[index]] %in% valid.values) & !is.na(.[[index]]) & is.na(cleaning_notes) ~
-          paste0("Original value in ", variable, " column: ", .[[index]]),
+          paste0("Original value in ", field, " column: ", .[[index]]),
         !(.[[index]] %in% valid.values) & !is.na(.[[index]]) & !is.na(cleaning_notes) ~
-          paste0(cleaning_notes, ", ", variable, " column: ", .[[index]]),
+          paste0(cleaning_notes, ", ", field, " column: ", .[[index]]),
         TRUE ~ cleaning_notes
       )
     ) %>%
-    # Add non-standard values to the variable in question where appropriate
+    # Add non-standard values to the field in question where appropriate
     mutate(
-      UQ(rlang::sym(variable)) :=
-        ifelse(!(UQ(rlang::sym(variable)) %in% valid.values) & !is.na(UQ(rlang::sym(variable))),
-               "non-standard value", UQ(rlang::sym(variable))),
-      UQ(rlang::sym(variable)) := as.factor(UQ(rlang::sym(variable)))
+      UQ(rlang::sym(field)) :=
+        ifelse(!(UQ(rlang::sym(field)) %in% valid.values) & !is.na(UQ(rlang::sym(field))),
+               "non-standard value", UQ(rlang::sym(field))),
+      UQ(rlang::sym(field)) := as.factor(UQ(rlang::sym(field)))
     )
 }
+
 
 # Function to produce cleaning notes for taxonomic data fields
 
@@ -64,5 +66,6 @@ get_taxonomic_cleaning_notes <- function(dataframe) {
         )
       )
   }
+
   return(dataframe)
 }
