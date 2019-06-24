@@ -328,7 +328,7 @@ lemis_metadata_ <- dplyr::tribble(
   "port", "Port or region of shipment entry (see lemis_codes())",
   "us_co", "US party of the shipment",
   "foreign_co", "Foreign party of the shipment",
-  "cleaning_notes", "Notes generated during data cleaning with 'data-raw/clean_lemis.R'"
+  "cleaning_notes", "Notes generated during data cleaning"
 )
 
 devtools::use_data(lemis_codes_, lemis_metadata_, internal = TRUE, overwrite = TRUE)
