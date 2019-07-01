@@ -448,8 +448,12 @@ assert_that(all(lemis.unique.classes %in% col.unique.classes))
 
 lemis_to_save <- lemis_taxa_added %>%
   mutate(
-    genus = str_to_sentence(genus),
-    genus = ifelse(genus == "noncites entry", "non-CITES entry", genus)
+    genus = case_when(
+      genus == "noncites entry" ~ "Non-CITES entry",
+      TRUE ~ str_to_sentence(genus)
+    ),
+    species = str_replace_all(species, "cites ", "CITES "),
+    generic_name = ifelse(generic_name == "NON CITES", "NON-CITES", generic_name)
   ) %>%
   # select final columns to keep
   select(
