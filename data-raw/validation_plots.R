@@ -30,7 +30,7 @@ lemis_to_save <- read_csv(
 plot.dir <- h("data-raw", "validation_plots")
 if(!file.exists(plot.dir)) dir.create(plot.dir)
 
-# Generate validation plots for all LEMIS fields besides "control_number"
+# Generate validation plots for all LEMIS fields besides 'control_number'
 
 for (i in colnames(lemis_to_save)[-1]) {
 

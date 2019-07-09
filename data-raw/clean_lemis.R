@@ -66,10 +66,10 @@ for (file in yearly.files) {
 }
 
 # Generate values for NA checking
-periods <- sapply(1:10, function(x) paste0(rep(".", x), collapse = ""))
+periods <- sapply(1:100, function(x) paste0(rep(".", x), collapse = ""))
 asterisks <- sapply(1:100, function(x) paste0(rep("*", x), collapse = ""))
-dashes <- sapply(1:10, function(x) paste0(rep("-", x), collapse = ""))
-slashes <- sapply(1:10, function(x) paste0(rep("/", x), collapse = ""))
+dashes <- sapply(1:100, function(x) paste0(rep("-", x), collapse = ""))
+slashes <- sapply(1:100, function(x) paste0(rep("/", x), collapse = ""))
 
 na.characters <- c(
   periods, asterisks, dashes, slashes,
@@ -80,7 +80,7 @@ na.characters <- c(
 # Convert NA values
 lemis <- lemis_raw %>%
   mutate_all(
-    funs(if_else(. %in% na.characters, NA_character_, .))
+    list(~ if_else(. %in% na.characters, NA_character_, .))
   )
 
 # Eliminate rows of all NA values
@@ -92,29 +92,28 @@ lemis <- lemis[apply(select(lemis, -file_num), 1, function(x) any(!is.na(x))), ]
 
 # Clean up control number 2006798504
 
-# In our raw data, we discovered that the record for control number
-# 2006798504 actually contains a "foreign_co" value with multiple other records
-# embedded within it. We need to extract these "hidden records" and clean up
-# the surrounding data
+# In our raw data, the record for control number 2006798504 actually contains
+# a 'foreign_co' value with multiple other records embedded within it. We need
+# to extract these "hidden records" and clean up the surrounding data
 
 
 # Extract the "hidden records"
 hidden.rows <- lemis %>%
   # Filter down to the problematic record
   filter(control_number == "2006798504") %>%
-  # Pull out the "foreign_co" value
+  # Pull out the 'foreign_co' value
   pull(foreign_co) %>%
   # Split along the newline character
   str_split("\n") %>%
-  # Create a dataframe that contains one row for each record that was
-  # hiding in the "foreign_co" column
+  # Create a data frame that contains one row for each record that was
+  # hiding in the 'foreign_co' column
   data.frame() %>%
   # Get rid of the first row, since this only corresponds to the actual
-  # "foreign_co" value of the original problematic record
+  # 'foreign_co' value of the original problematic record
   slice(-1) %>%
-  # Separate out the dataframe into columns based on tab characters
+  # Separate out the data frame into columns based on tab characters
   separate(col = 1, into = lemis.cols, sep = "\t") %>%
-  # Clean up the "foreign_co" column
+  # Clean up the 'foreign_co' column
   mutate(foreign_co = str_replace(foreign_co, "\r\r", ""))
 
 # The row following the problematic row in the raw data was cut off and
@@ -124,8 +123,8 @@ last.row.index <- nrow(hidden.rows)
 incomplete.row <- lemis[lemis$control_number == "38735", ]
 
 # The split between the last row of "hidden.rows" and "incomplete.row" happened
-# over the "shipment_date" column. From examining the raw data, it was apparent
-# that the correct "shipment_date" for the record is "01/18/2006"
+# over the 'shipment_date' column. From examining the raw data, it was apparent
+# that the correct 'shipment_date' for the record is "01/18/2006"
 hidden.rows[last.row.index, "shipment_date"] <- "01/18/2006"
 # The second through the fifth columns of "incomplete.row" actually hold what
 # should be the final four columns of data for the last row in "hidden.rows"
@@ -134,14 +133,14 @@ hidden.rows[last.row.index, 20:23] <- incomplete.row[ , 2:5]
 # Now, remove the incomplete row from the lemis data
 lemis <- lemis[lemis$control_number != "38735", ]
 
-# Replace the "foreign_co" value of the original problematic record
+# Replace the 'foreign_co' value of the original problematic record
 lemis[lemis$control_number == "2006798504", "foreign_co"] <- "EL ARPA"
 
 # Replace empty strings in hidden.rows (i.e., "" or " ") with NA values
 hidden.rows <- hidden.rows %>%
   mutate_at(
     vars(colnames(.)),
-    funs(ifelse(. == "" | . == " ", NA_character_, .))
+    list(~ ifelse(. == "" | . == " ", NA_character_, .))
   ) %>%
   # And indicate "file_num" is 1 for these records
   mutate(file_num = "1")
@@ -190,9 +189,9 @@ lemis <- lemis %>%
 
 # 1)
 # What proportion of the data does not have a value of "I" in the
-# import_export column?
+# 'import_export' column?
 nrow(lemis[lemis$import_export != "I", ])/nrow(lemis)
-# Remove any "E", "T", and NA records from the import_export column,
+# Remove any "E", "T", and NA records from the 'import_export' column,
 # leaving only importation data
 lemis <- lemis %>%
   filter(import_export != "E", import_export != "T", !is.na(import_export))
@@ -201,7 +200,7 @@ assert_that(sum(lemis$import_export == "I") == nrow(lemis))
 
 
 # 2)
-# Identify problematic records that have NA values for "value" and are
+# Identify problematic records that have NA values for 'value' and are
 # otherwise exact duplicates of other records
 control.numbers.cant.be.dups <-
   as.numeric(names(which(table(lemis$control_number) == 1)))
@@ -255,8 +254,8 @@ assert_that(nrow(lemis) == (lemis.row.count - dups.NA.count))
 # Manually remove likely duplicate records
 # Note: most of these are clear duplicates where the product was recorded
 # in year 2013 file 1 and replicated in a later file number with
-# value data present and some other field altered (for example, country_origin
-# or purpose may have changed between the two entries)
+# value data present and some other field altered (for example, 'country_origin'
+# or 'purpose' may have changed between the two entries)
 manually.curated.duplicates.for.removal <-
   read_csv(h("data-raw", "data", "manually_curated_duplicates_for_removal.csv"),
            col_types = list(
@@ -277,15 +276,15 @@ lemis <- anti_join(lemis, manually.curated.duplicates.for.removal, by = lemis.co
 assert_that(nrow(lemis) == (lemis.row.count - dups.count))
 # Check that all control_numbers for which duplicates were removed still
 # remain in the data (i.e., we removed some, but not all, records for a
-# given control_number)
+# given 'control_number')
 n.control.numbers.remaining <-
   sum(unique(manually.curated.duplicates.for.removal$control_number) %in% lemis$control_number)
 assert_that(n.control.numbers.remaining == n_distinct(manually.curated.duplicates.for.removal$control_number))
 
 
 # 4)
-# Identify problematic records that have NA values for "value",
-# conflicting values for "us_co"/"foreign_co", and are
+# Identify problematic records that have NA values for 'value',
+# conflicting values for 'us_co'/'foreign_co', and are
 # otherwise exact duplicates of other records
 grouping.vars2 <-
   colnames(lemis)[!(colnames(lemis) %in% c("value", "us_co", "foreign_co", "file_num"))]
@@ -339,8 +338,8 @@ dups2.NA.count <- sum(dups2$NA.count)
 lemis <- anti_join(lemis, dups2, by = lemis.cols)
 assert_that(nrow(lemis) == (lemis.row.count - dups2.NA.count))
 
-# Manually change "us_co" and "foreign_co" values where they still
-# disagree within "control_number" because some records record
+# Manually change 'us_co' and 'foreign_co' values where they still
+# disagree within 'control_number' because some records record
 # exemptions for these fields while others simply record missing values
 lemis <- lemis %>%
   mutate(
@@ -357,22 +356,13 @@ lemis <- lemis %>%
   )
 
 # Assert that all control numbers now only have one associated
-# "country_imp_exp", "us_co", "foreign_co", and "port"
-control.number.tests <- lemis %>%
-  group_by(control_number) %>%
-  summarize(
-    n_country_imp_exps = n_distinct(country_imp_exp_iso2c),
-    n_us_cos = n_distinct(us_co),
-    n_foreign_cos = n_distinct(foreign_co),
-    n_ports = n_distinct(port),
-    n_shipment_dates = n_distinct(shipment_date)
-  ) %>%
-  ungroup
+# 'country_imp_exp', 'us_co', 'foreign_co', and 'port'
+lemis.grouped <- group_by(lemis, control_number)
 
-assert_that(max(control.number.tests$n_country_imp_exps) == 1)
-assert_that(max(control.number.tests$n_us_cos) == 1)
-assert_that(max(control.number.tests$n_foreign_cos) == 1)
-assert_that(max(control.number.tests$n_ports) == 1)
+assert_that(max(summarize(lemis.grouped, n = n_distinct(country_imp_exp))$n) == 1)
+assert_that(max(summarize(lemis.grouped, n = n_distinct(us_co))$n) == 1)
+assert_that(max(summarize(lemis.grouped, n = n_distinct(foreign_co))$n) == 1)
+assert_that(max(summarize(lemis.grouped, n = n_distinct(port))$n) == 1)
 
 
 # 5)
@@ -404,7 +394,7 @@ assert_that(from.same.file.count == nrow(problem.row.set3))
 #==============================================================================
 
 
-# Generate a cleaning notes column to hold automatically generated notes
+# Generate a 'cleaning_notes' column to hold automatically generated notes
 lemis$cleaning_notes <- rep(NA_character_, nrow(lemis))
 
 #==============================================================================
@@ -447,6 +437,12 @@ lemis <- lemis %>%
       description == "JEW" & foreign_co == "BAYEAD ARTS AND CRAFTS" ~ "JWL",
       # Change "LI" to "LIV"
       description == "LI" ~ "LIV",
+      # Change "LPC" to "LPS", under the assumption this was a typographic
+      # error
+      description == "LPC" ~ "LPS",
+      # Change "LPW" to "LPS", under the assumption this was a typographic
+      # error
+      description == "LPW" ~ "LPS",
       # Change "MAE" to "MEA" when the unit is a weight, under the assumption
       # this was meant to indicate "meat"
       description == "MAE" & unit == "KG" ~ "MEA",
@@ -502,14 +498,27 @@ lemis <- lemis %>%
     # backup quantity and unit columns to preserve the originals
     quantity_original_value = quantity,
     unit_original_value = unit,
-    # convert pounds to kilograms by dividing the pound units by 0.454
+    # convert pounds to kilograms by multiplying the pound units by 0.453592
     quantity = case_when(
-      unit == "LB" ~ quantity / 0.454,
+      unit == "LB" ~ quantity * 0.453592,
       TRUE ~ quantity
     ),
     unit = ifelse(unit == "LB", "KG", unit)
   )
 
+# The unit "GL" may stand for gallons, so we need to change this to liters
+# where 1 gallon = 3.78541 liters
+lemis <- lemis %>%
+  mutate(
+    # convert gallons to liters by multiplying the gallon units by 3.78541
+    quantity = case_when(
+      unit == "GL" ~ quantity * 3.78541,
+      TRUE ~ quantity
+    ),
+    unit = ifelse(unit == "GL", "LT", unit)
+  )
+
+# Convert irregular values to good values
 lemis <- lemis %>%
   mutate(unit = case_when(
     # All variations of the "number of specimens" entries should be recoded
@@ -547,15 +556,15 @@ valid.country.codes <- read_csv("inst/extdata/iso_2_country_codes.csv") %>%
 # Add on other valid codes
 valid.country.codes <- c(
   valid.country.codes,
-  "BL", "BQ", "CW", "GG", "IM", "JE", "ME", "MF", "PS", "RS",
-  "SX", "TL", "VS", "XX", "ZZ"
+  "BL", "BQ", "CW", "GG", "IM", "JE", "ME", "MF", "PC", "PS", "RS",
+  "SX", "TL", "VS", "XX", "YU", "ZR", "ZZ"
 )
 
 # Which values are not in the valid codes?
 index.invalid.codes <- !(unique(lemis$country_origin) %in% valid.country.codes)
 sort(unique(lemis$country_origin)[index.invalid.codes])
 
-# Convert irregular country_origin values to good values
+# Convert irregular values to good values
 lemis <- lemis %>%
   mutate(
     country_origin = case_when(
@@ -563,9 +572,13 @@ lemis <- lemis %>%
       country_origin == "1D" & country_imp_exp == "ID" ~ "ID",
       # Change "FP" to "PF", indicating French Polynesia
       country_origin == "FP" ~ "PF",
+      # Change "FS" to "FM", indicating the Federated States of Micronesia
+      country_origin == "FS" ~ "FM",
       # Change "UK" to "GB", indicating the United Kingdom
       country_origin == "UK" & country_imp_exp == "GB" ~ "GB",
-      # Change "X" to "XX"
+      # Change "UN" ("unknown"?) to "XX" since that represents unknown country
+      country_origin == "UN" ~ "XX",
+      # Change "X" to "XX" since that represents unknown country
       country_origin == "X" ~ "XX",
       # Change NA values to "XX" since that represents unknown country
       is.na(country_origin) ~ "XX",
@@ -598,17 +611,23 @@ sort(unique(lemis$country_imp_exp))
 index.invalid.codes <- !(unique(lemis$country_imp_exp) %in% valid.country.codes)
 sort(unique(lemis$country_imp_exp)[index.invalid.codes])
 
-# Convert irregular country_origin values to good values
+# Convert irregular values to good values
 lemis <- lemis %>%
   mutate(
     country_imp_exp = case_when(
       # Change "**" to "XX" since that represents unknown country
       str_detect(country_imp_exp, fixed("**", TRUE)) ~ "XX",
+      # Change "FS" to "FM", indicating the Federated States of Micronesia
+      country_imp_exp == "FS" ~ "FM",
       # Change NA values to "XX" since that represents unknown country
       is.na(country_imp_exp) ~ "XX",
       TRUE ~ country_imp_exp
     )
   )
+
+# Which values are not in the valid codes?
+index.invalid.codes <- !(unique(lemis$country_imp_exp) %in% valid.country.codes)
+sort(unique(lemis$country_imp_exp)[index.invalid.codes])
 
 # Remove remaining non-standard country import/export
 lemis <- get_cleaned_lemis("country_imp_exp", valid.country.codes)
@@ -749,6 +768,10 @@ lemis <- lemis %>%
     )
   )
 
+# Which values are not in the valid codes?
+index.invalid.codes <- !(unique(lemis$port) %in% valid.port.codes)
+sort(unique(lemis$port)[index.invalid.codes])
+
 # Remove remaining non-standard ports
 lemis <- get_cleaned_lemis("port", valid.port.codes)
 
@@ -780,12 +803,18 @@ lemis <- lemis %>%
 # Verify that the vast majority of disposition dates occur on or after the
 # shipment date
 filter(lemis, !is.na(shipment_date) & !is.na(disposition_date)) %>%
+  mutate(
+    disposition_date = as.Date(disposition_date, format = "%Y-%m-%d"),
+    shipment_date = as.Date(shipment_date, format = "%Y-%m-%d")
+  ) %>%
   mutate(date_test = (disposition_date - shipment_date) >= 0) %>%
   summarize(sum(date_test)/n())
 
 # Clean disposition dates
 lemis <- lemis %>%
   mutate(
+    disposition_date = as.Date(disposition_date, format = "%Y-%m-%d"),
+    shipment_date = as.Date(shipment_date, format = "%Y-%m-%d"),
     disposition_date_original_value = disposition_date,
     # extract only the year component of the disposition and shipment dates
     disposition_year = format(disposition_date, "%Y"),
@@ -845,7 +874,7 @@ lemis <- lemis %>%
 date.corrections.file <- read_csv("data-raw/data/disposition_date_corrections.csv") %>%
   mutate_at(c("disposition_date", "shipment_date",
               "new_disposition_date"),
-            funs(as.character(as.Date(., format = "%m/%d/%y")))) %>%
+            list(~ as.character(as.Date(., format = "%m/%d/%y")))) %>%
   filter(!is.na(new_disposition_date))
 
 for(i in 1:nrow(date.corrections.file)) {
@@ -857,19 +886,20 @@ for(i in 1:nrow(date.corrections.file)) {
 }
 
 # Assert that all control numbers now only have one associated
-# "shipment_date"
-control.number.tests <- lemis %>%
-  group_by(control_number) %>%
-  summarize(
-    n_country_imp_exps = n_distinct(country_imp_exp_iso2c),
-    n_us_cos = n_distinct(us_co),
-    n_foreign_cos = n_distinct(foreign_co),
-    n_ports = n_distinct(port),
-    n_shipment_dates = n_distinct(shipment_date)
+# 'shipment_date'
+lemis.grouped <- lemis %>%
+  mutate_at(
+    c("country_imp_exp",
+      "port"),
+    list(~ as.character(.))
   ) %>%
-  ungroup
+  group_by(control_number)
 
-assert_that(max(control.number.tests$n_shipment_dates) == 1)
+assert_that(max(summarize(lemis.grouped, n = n_distinct(country_imp_exp))$n) == 1)
+assert_that(max(summarize(lemis.grouped, n = n_distinct(us_co))$n) == 1)
+assert_that(max(summarize(lemis.grouped, n = n_distinct(foreign_co))$n) == 1)
+assert_that(max(summarize(lemis.grouped, n = n_distinct(port))$n) == 1)
+assert_that(max(summarize(lemis.grouped, n = n_distinct(shipment_date))$n) == 1)
 
 #==============================================================================
 
@@ -916,21 +946,21 @@ lemis_intermediate <- lemis %>%
     cleaning_notes
   ) %>%
   # change column types
-  mutate_all(funs(as.character(.))) %>%
+  mutate_all(list(~ as.character(.))) %>%
   mutate_at(
     c("control_number",
       "quantity",
       "value",
       "disposition_year",
       "shipment_year"),
-    funs(as.integer(.))
+    list(~ as.integer(.))
   ) %>%
   # clean remaining values that should be NA characters
   mutate_if(
     is.character,
-    funs(if_else(. %in% na.characters, NA_character_, .))
+    list(~ if_else(. %in% na.characters, NA_character_, .))
   ) %>%
-  arrange(shipment_date, control_number)
+  arrange(shipment_date, control_number, species_code)
 
 # Write a cleaned CSV file of intermediate LEMIS data
 write_csv(

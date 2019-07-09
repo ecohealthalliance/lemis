@@ -22,9 +22,9 @@ get_cleaned_lemis <- function(field, valid.values) {
     mutate(
       cleaning_notes = case_when(
         !(.[[index]] %in% valid.values) & !is.na(.[[index]]) & is.na(cleaning_notes) ~
-          paste0("Original value in ", field, " column: ", .[[index]]),
+          paste0("Original value in '", field, "' column: ", .[[index]]),
         !(.[[index]] %in% valid.values) & !is.na(.[[index]]) & !is.na(cleaning_notes) ~
-          paste0(cleaning_notes, ", ", field, " column: ", .[[index]]),
+          paste0(cleaning_notes, ", '", field, "' column: ", .[[index]]),
         TRUE ~ cleaning_notes
       )
     ) %>%
@@ -59,9 +59,9 @@ get_taxonomic_cleaning_notes <- function(dataframe) {
       mutate(
         cleaning_notes = case_when(
           !matching & is.na(cleaning_notes) ~
-            paste0("Original value in ", x, " column: ", .[[index]]),
+            paste0("Original value in '", x, "' column: ", .[[index]]),
           !matching & !is.na(cleaning_notes) ~
-            paste0(cleaning_notes, ", ", x, " column: ", .[[index]]),
+            paste0(cleaning_notes, ", '", x, "' column: ", .[[index]]),
           TRUE ~ cleaning_notes
         )
       )

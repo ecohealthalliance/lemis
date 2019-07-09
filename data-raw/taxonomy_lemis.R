@@ -41,7 +41,7 @@ lemis_intermediate <- read_csv(
 
 # Generate a table of taxa information
 taxa_code <-
-  read.csv("inst/extdata/Taxalist_reviewed.csv", na.strings = c(" ", "")) %>%
+  read_csv("inst/extdata/Taxalist_reviewed.csv", na = c(" ", "")) %>%
   select(
     species_code_taxa = SPEC_CODE,
     taxa = Taxa
@@ -93,7 +93,7 @@ taxonomic_corrections <-
     h("data-raw", "data", "taxonomic_corrections.csv"),
     col_types = cols(.default = col_character())
   ) %>%
-  mutate_all(funs(str_replace_all(., "\\s", " "))) %>%
+  mutate_all(list(~ str_replace_all(., "\\s", " "))) %>%
   mutate(cleaning_notes = NA_character_) %>%
   get_taxonomic_cleaning_notes()
 
@@ -486,7 +486,7 @@ lemis_to_save <- lemis_taxa_added %>%
     foreign_co,
     cleaning_notes
   ) %>%
-  arrange(shipment_date, control_number)
+  arrange(shipment_date, control_number, species_code)
 
 # Write a CSV file of final LEMIS data
 write_csv(

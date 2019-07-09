@@ -298,6 +298,19 @@ lemis_codes_ <- full_join(
   select(-value.x, -value.y) %>%
   arrange(field, code)
 
+# Add additional country codes used in the data but not described in the
+# metadata
+lemis_codes_ <- lemis_codes_ %>%
+  bind_rows(.,
+            data.frame(
+              field = c("country", "country", "country"),
+              code = c("PC", "YU", "ZR"),
+              value = c("Pacific Islands (Trust Territory)", "Yugoslavia", "Zaire"),
+              post_feb_2013 = c(NA_character_, NA_character_, NA_character_)
+            )
+  ) %>%
+  arrange(field, code)
+
 
 lemis_metadata_ <- dplyr::tribble(
   ~field_name, ~description,
