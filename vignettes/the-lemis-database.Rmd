@@ -95,7 +95,7 @@ rm(ll)
 # Filter on-disk and load into memory (smaller!)
 
 l_filtered <- l %>%
-  filter(import_export == "I", port = "SS") %>%
+  filter(import_export == "I", port == "SS") %>%
   select(-taxa)
 l_filtered
 ll_filtered %>% collect()

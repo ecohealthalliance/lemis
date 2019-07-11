@@ -4,13 +4,14 @@ Title: The LEMIS Wildlife Trade Database
 Version: 2.0.0
 Authors@R: c(
     person("Noam", "Ross", , "ross@ecohealthalliance.org", role = c("aut", "cre")),
-    person("Allison", "White", , "white@ecohealthalliance.org", role = c("aut")),
+    person("Allison M.", "White", , "white@ecohealthalliance.org", role = c("aut")),
     person("Carlos", "Zambrana-Torrelio", , "zambrana@ecohealthalliance.org", role = c("aut")),
-    person("Evan", "Eskew", , "eskew@ecohealthalliance.org", role = c("aut")),
+    person("Evan A.", "Eskew", , "eskew@ecohealthalliance.org", role = c("aut")),
     person("EcoHealth Alliance", role="cph"))
-Description: Provides cleaned data and metadata from the US Fish and Wildlife
-    Service's data on wildlife and wildlife product imports and exports.
-URL: https://github.com/ecohealthalliance/lemis#readme
+Description: Provides cleaned data and metadata for the US Fish and Wildlife
+    Service's Law Enforcement Management Information System (LEMIS) data on 
+    wildlife and wildlife product imports.
+URL: https://github.com/ecohealthalliance/lemis#readme, https://github.com/ecohealthalliance/lemis/tree/master/data-raw#readme 
 BugReports: https://github.com/ecohealthalliance/lemis/issues
 License: MIT + file LICENSE
 Encoding: UTF-8
@@ -25,19 +26,27 @@ Imports:
   stringi
 Remotes:
   ropenscilabs/datastorr,
-  krlmlr/fstplyr
+  krlmlr/fstplyr,
+  mattflor/chorddiag,
+  cboettig/taxadb
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 6.0.1
+RoxygenNote: 6.1.1
 Suggests: 
-    knitr,
-    rmarkdown,
-    purrr,
-    ggplot2,
-    here,
+    chorddiag,
+    countrycode,
     desc,
-    testthat,
-    lintr,
-    taxize,
     dplyr,
-    readr
+    ggplot2,
+    googlesheets,
+    here,
+    knitr,
+    lintr,
+    lubridate,
+    purrr,
+    readr,
+    rmarkdown,
+    shiny,
+    taxadb,
+    taxize,
+    testthat,
 VignetteBuilder: knitr

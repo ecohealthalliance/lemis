@@ -3,17 +3,22 @@
 
 
 # Load packages
+library(assertthat)
 library(dplyr)
 library(readr)
-library(countrycode)
-library(assertthat)
+library(stringr)
+library(tidyr)
 
-# ==============================================================================
+h <- here::here
+source(h("data-raw", "R", "lemis_cleaning_functions.R"))
+
+#==============================================================================
 
 
 # Merge all LEMIS data
 
 
+# Merge yearly LEMIS CSV files into one data frame
 lemis.cols <- c(
   "control_number",
   "species_code",
@@ -37,214 +42,368 @@ lemis.cols <- c(
   "import_export",
   "port",
   "us_co",
-  "foreign_co"
+  "foreign_co",
+  "file_num"
 )
 
-yearly.files <- dir(path = "data-raw/csv_by_year", full.names = TRUE)
-lemis <- data.frame()
+yearly.files <- dir(path = h("data-raw", "csv_by_year"), full.names = TRUE)
+lemis_raw <- data.frame()
 
-# Merge yearly LEMIS csv files into one dataframe
 for (file in yearly.files) {
+
   print(file)
 
-  lemis <-
+  lemis_raw <-
     rbind(
-      lemis,
+      lemis_raw,
       read_csv(file,
-        col_names = lemis.cols,
-        col_types = cols(.default = col_character()),
-        na = c(
-          "", " ", "NA", "NULL",
-          "*", "**", "***", "****",
-          "*****", "******"
-        )
-      ) %>%
-        # Need to slice off the first row because the header gets imported
-        # as a row on every file given this particular header formatting
-        slice(-1)
+               col_names = lemis.cols,
+               skip = 1,
+               col_types = cols(.default = col_character()),
+               na = character()
+      )
     )
 }
 
-# Some rows of all NA values were generated during data import. Eliminate those
-lemis <- lemis[apply(lemis, 1, function(x) any(!is.na(x))), ]
+# Generate values for NA checking
+periods <- sapply(1:100, function(x) paste0(rep(".", x), collapse = ""))
+asterisks <- sapply(1:100, function(x) paste0(rep("*", x), collapse = ""))
+dashes <- sapply(1:100, function(x) paste0(rep("-", x), collapse = ""))
+slashes <- sapply(1:100, function(x) paste0(rep("/", x), collapse = ""))
 
-# ==============================================================================
+na.characters <- c(
+  periods, asterisks, dashes, slashes,
+  "", " ", "NA", "N/A", "NULL",
+  "*8", "*****8", "`*", "*`", "**`", "******`"
+)
+
+# Convert NA values
+lemis <- lemis_raw %>%
+  mutate_all(
+    list(~ if_else(. %in% na.characters, NA_character_, .))
+  )
+
+# Eliminate rows of all NA values
+lemis <- lemis[apply(select(lemis, -file_num), 1, function(x) any(!is.na(x))), ]
+# (should eliminate 28 rows with all missing data)
+
+#==============================================================================
 
 
-# Clean up column names
+# Clean up control number 2006798504
+
+# In our raw data, the record for control number 2006798504 actually contains
+# a 'foreign_co' value with multiple other records embedded within it. We need
+# to extract these "hidden records" and clean up the surrounding data
 
 
-# Define revised format for each column
+# Extract the "hidden records"
+hidden.rows <- lemis %>%
+  # Filter down to the problematic record
+  filter(control_number == "2006798504") %>%
+  # Pull out the 'foreign_co' value
+  pull(foreign_co) %>%
+  # Split along the newline character
+  str_split("\n") %>%
+  # Create a data frame that contains one row for each record that was
+  # hiding in the 'foreign_co' column
+  data.frame() %>%
+  # Get rid of the first row, since this only corresponds to the actual
+  # 'foreign_co' value of the original problematic record
+  slice(-1) %>%
+  # Separate out the data frame into columns based on tab characters
+  separate(col = 1, into = lemis.cols, sep = "\t") %>%
+  # Clean up the 'foreign_co' column
+  mutate(foreign_co = str_replace(foreign_co, "\r\r", ""))
+
+# The row following the problematic row in the raw data was cut off and
+# incomplete. We need to combine information from the last row of
+# "hidden.rows" with this data
+last.row.index <- nrow(hidden.rows)
+incomplete.row <- lemis[lemis$control_number == "38735", ]
+
+# The split between the last row of "hidden.rows" and "incomplete.row" happened
+# over the 'shipment_date' column. From examining the raw data, it was apparent
+# that the correct 'shipment_date' for the record is "01/18/2006"
+hidden.rows[last.row.index, "shipment_date"] <- "01/18/2006"
+# The second through the fifth columns of "incomplete.row" actually hold what
+# should be the final four columns of data for the last row in "hidden.rows"
+hidden.rows[last.row.index, 20:23] <- incomplete.row[ , 2:5]
+
+# Now, remove the incomplete row from the lemis data
+lemis <- lemis[lemis$control_number != "38735", ]
+
+# Replace the 'foreign_co' value of the original problematic record
+lemis[lemis$control_number == "2006798504", "foreign_co"] <- "EL ARPA"
+
+# Replace empty strings in hidden.rows (i.e., "" or " ") with NA values
+hidden.rows <- hidden.rows %>%
+  mutate_at(
+    vars(colnames(.)),
+    list(~ ifelse(. == "" | . == " ", NA_character_, .))
+  ) %>%
+  # And indicate "file_num" is 1 for these records
+  mutate(file_num = "1")
+
+# Bind on the previously hidden rows
+lemis <- bind_rows(lemis, hidden.rows)
+
+#==============================================================================
+
+
+# Clean up columns
+
+
 lemis <- lemis %>%
   mutate(
     control_number = as.numeric(control_number),
-    species_code = as.factor(species_code),
-    genus = as.factor(genus),
-    subspecies = as.factor(subspecies),
-    specific_name = as.factor(specific_name),
-    generic_name = as.factor(generic_name),
-    wildlife_description = as.factor(toupper(wildlife_description)),
+    species_code = toupper(species_code),
+    genus = tolower(genus),
+    species = tolower(species),
+    subspecies = tolower(subspecies),
+    specific_name = toupper(specific_name),
+    generic_name = toupper(generic_name),
+    description = toupper(wildlife_description), # uppercase codes
     quantity = as.numeric(gsub(",", "", quantity)),
-    unit = as.factor(unit),
-    country_origin_iso2c = as.factor(toupper(country_origin_iso2c)),
-    country_imp_exp_iso2c = as.factor(toupper(country_imp_exp_iso2c)),
-    purpose = as.factor(purpose),
-    source_ = as.factor(source_),
-    action = as.factor(action),
-    disposition = as.factor(disposition),
-    disposition_date = as.Date(disposition_date,
-      format = "%Y-%m-%d"
-    ),
-    shipment_date = as.Date(shipment_date,
-      format = "%Y-%m-%d"
-    ),
-    import_export = as.factor(import_export),
-    port = as.factor(toupper(port)),
-    us_co = as.factor(us_co),
-    foreign_co = as.factor(foreign_co)
+    unit = toupper(unit), # uppercase codes
+    value = as.numeric(gsub(",", "", value)),
+    country_origin = toupper(country_origin_iso2c), # uppercase codes
+    country_imp_exp = toupper(country_imp_exp_iso2c), # uppercase codes
+    purpose = toupper(purpose), # uppercase codes
+    source = toupper(source_), # uppercase codes
+    action = toupper(action), # uppercase codes
+    disposition = toupper(disposition), # uppercase codes
+    disposition_date = as.Date(disposition_date, format = "%Y-%m-%d"),
+    shipment_date = as.Date(shipment_date, format = "%Y-%m-%d"),
+    import_export = toupper(import_export),
+    port = toupper(port), # uppercase codes
+    us_co = toupper(us_co),
+    foreign_co = toupper(foreign_co)
   )
 
-# Column clean up and additions
-lemis <- lemis %>%
-  mutate(
-    genus = as.factor(tolower(genus)),
-    # convert "SPECIES" and NA values in the species column to "spp."
-    species = plyr::revalue(species, c(SPECIES = "spp.")),
-    species = ifelse(is.na(species), "spp.", species),
-    species = as.factor(tolower(species)),
-    # create a binomial column
-    binomial = paste(genus, species, sep = "_"),
-    # in the binomial column, convert "NA_spp." to NA values and anything
-    # with "noncites entry" for the genus column should be "noncites"
-    binomial = case_when(
-      binomial == "NA_spp." ~ NA_character_,
-      genus == "noncites entry" ~ "noncites",
-      TRUE ~ binomial
-    ),
-    binomial = as.factor(binomial),
-    # extract only the year component of the shipment date
-    shipment_year = as.numeric(format(shipment_date, "%Y")),
-    # add country, continent, and region, based on the
-    # country of origin (ISO2)
-    country_origin = as.factor(countrycode(
-      country_origin_iso2c, "iso2c", "country.name"
-    )),
-    continent_origin = as.factor(countrycode(
-      country_origin_iso2c, "iso2c", "continent"
-    )),
-    region_origin = as.factor(countrycode(
-      country_origin_iso2c, "iso2c", "region"
-    ))
-  ) %>%
-  droplevels()
-
-# ==============================================================================
+#==============================================================================
 
 
 # Further data filtering
 
 
+# 1)
+# What proportion of the data does not have a value of "I" in the
+# 'import_export' column?
+nrow(lemis[lemis$import_export != "I", ])/nrow(lemis)
+# Remove any "E", "T", and NA records from the 'import_export' column,
+# leaving only importation data
 lemis <- lemis %>%
-  # remove any duplicated shipment records
-  distinct() %>%
-  # remove record related to "AFRICAN FIELD SPORTS"
-  filter(control_number != 38735) %>%
-  # remove any "E", "T", and NA records from the import_export column,
-  # leaving only importation data
-  filter(import_export != "E", import_export != "T", !is.na(import_export)) %>%
-  droplevels()
+  filter(import_export != "E", import_export != "T", !is.na(import_export))
+
+assert_that(sum(lemis$import_export == "I") == nrow(lemis))
 
 
-# Issue of US to US importation shipments. Looking at the country of origin
-# information in the database shows that the US is among the top 10 countries
-# importing to the US!
-count(lemis, country_origin_iso2c, sort = T)
-# Currently, this data is still included in the LEMIS database so be careful
+# 2)
+# Identify problematic records that have NA values for 'value' and are
+# otherwise exact duplicates of other records
+control.numbers.cant.be.dups <-
+  as.numeric(names(which(table(lemis$control_number) == 1)))
 
-# ==============================================================================
+control.numbers.w.NA.values <- lemis %>%
+  group_by(control_number) %>%
+  summarize(n_NAs = sum(is.na(value))) %>%
+  filter(n_NAs >= 1) %>%
+  pull(control_number)
+
+grouping.vars <-
+  colnames(lemis)[!(colnames(lemis) %in% c("value", "file_num"))]
+
+problem.row.set <- lemis %>%
+  filter(
+    !(control_number %in% control.numbers.cant.be.dups),
+    control_number %in% control.numbers.w.NA.values
+  ) %>%
+  group_by_at(grouping.vars) %>%
+  summarize(
+    row.count = n(),
+    NA.count = sum(is.na(value)),
+    distinct_value_values = paste(unique(value), collapse = ", "),
+    distinct_file_num_values = paste(unique(file_num), collapse = ", ")
+  ) %>%
+  filter(row.count > 1) %>%
+  ungroup()
+
+dups <- problem.row.set %>%
+  filter(NA.count > 0,
+         str_detect(distinct_value_values, ",")) %>%
+  mutate(value = NA_real_,
+         file_num = str_extract(distinct_file_num_values, "."))
+
+dup.years <- dups %>%
+  pull(shipment_date) %>%
+  str_extract(., "20.{1,2}") %>%
+  unique(.)
+
+# Verify all of these records come from 2013 data
+assert_that(dup.years == "2013")
+
+# Remove the duplicate, NA-containing records from the data
+lemis.row.count <- nrow(lemis)
+dups.NA.count <- sum(dups$NA.count)
+lemis <- anti_join(lemis, dups, by = lemis.cols)
+assert_that(nrow(lemis) == (lemis.row.count - dups.NA.count))
 
 
-# Generate a cleaning notes column to hold automatically generated notes
+# 3)
+# Manually remove likely duplicate records
+# Note: most of these are clear duplicates where the product was recorded
+# in year 2013 file 1 and replicated in a later file number with
+# value data present and some other field altered (for example, 'country_origin'
+# or 'purpose' may have changed between the two entries)
+manually.curated.duplicates.for.removal <-
+  read_csv(h("data-raw", "data", "manually_curated_duplicates_for_removal.csv"),
+           col_types = list(
+             subspecies = col_character(),
+             value = col_double(),
+             file_num = col_character()
+           )
+  ) %>%
+  mutate(
+    disposition_date = as.Date(disposition_date, format = "%m/%d/%y"),
+    shipment_date = as.Date(shipment_date, format = "%m/%d/%y"),
+  )
+
+# Remove the manually-curated duplicates from the data
+lemis.row.count <- nrow(lemis)
+dups.count <- nrow(manually.curated.duplicates.for.removal)
+lemis <- anti_join(lemis, manually.curated.duplicates.for.removal, by = lemis.cols)
+assert_that(nrow(lemis) == (lemis.row.count - dups.count))
+# Check that all control_numbers for which duplicates were removed still
+# remain in the data (i.e., we removed some, but not all, records for a
+# given 'control_number')
+n.control.numbers.remaining <-
+  sum(unique(manually.curated.duplicates.for.removal$control_number) %in% lemis$control_number)
+assert_that(n.control.numbers.remaining == n_distinct(manually.curated.duplicates.for.removal$control_number))
+
+
+# 4)
+# Identify problematic records that have NA values for 'value',
+# conflicting values for 'us_co'/'foreign_co', and are
+# otherwise exact duplicates of other records
+grouping.vars2 <-
+  colnames(lemis)[!(colnames(lemis) %in% c("value", "us_co", "foreign_co", "file_num"))]
+
+problem.row.set2 <- lemis %>%
+  filter(
+    !(control_number %in% control.numbers.cant.be.dups),
+    control_number %in% control.numbers.w.NA.values
+  ) %>%
+  group_by_at(grouping.vars2) %>%
+  summarize(
+    row.count = n(),
+    NA.count = sum(is.na(value)),
+    distinct_value_values = paste(unique(value), collapse = ", "),
+    distinct_us_co_values = paste(unique(us_co), collapse = "@~"),
+    distinct_foreign_co_values = paste(unique(foreign_co), collapse = "@~"),
+    distinct_file_num_values = paste(unique(file_num), collapse = ",")
+  ) %>%
+  filter(row.count > 1) %>%
+  ungroup()
+
+dups2 <- problem.row.set2 %>%
+  filter(NA.count > 0,
+         str_detect(distinct_value_values, ",")) %>%
+  mutate(
+    value = NA_real_,
+    us_co = case_when(
+      str_detect(distinct_us_co_values, "@~") ~ str_extract(distinct_us_co_values, ".*(?=@~)"),
+      TRUE ~ distinct_us_co_values
+    ),
+    us_co = ifelse(us_co == "NA", NA_character_, us_co),
+    foreign_co = case_when(
+      str_detect(distinct_foreign_co_values, "@~") ~ str_extract(distinct_foreign_co_values, ".*(?=@~)"),
+      TRUE ~ distinct_foreign_co_values
+    ),
+    foreign_co = ifelse(foreign_co == "NA", NA_character_, foreign_co),
+    file_num = str_extract(distinct_file_num_values, ".")
+  )
+
+dup.years2 <- dups2 %>%
+  pull(shipment_date) %>%
+  str_extract(., "20.{1,2}") %>%
+  unique(.)
+
+# Verify all of these records come from 2013 data
+assert_that(dup.years2 == "2013")
+
+# Remove the duplicate, NA-containing records from the data
+lemis.row.count <- nrow(lemis)
+dups2.NA.count <- sum(dups2$NA.count)
+lemis <- anti_join(lemis, dups2, by = lemis.cols)
+assert_that(nrow(lemis) == (lemis.row.count - dups2.NA.count))
+
+# Manually change 'us_co' and 'foreign_co' values where they still
+# disagree within 'control_number' because some records record
+# exemptions for these fields while others simply record missing values
+lemis <- lemis %>%
+  mutate(
+    us_co = case_when(
+      control_number == 2013302852 ~ NA_character_,
+      control_number == 2013314117 ~ NA_character_,
+      TRUE ~ us_co
+    ),
+    foreign_co = case_when(
+      control_number == 2013302852 ~ NA_character_,
+      control_number == 2013320235 ~ NA_character_,
+      TRUE ~ foreign_co
+    )
+  )
+
+# Assert that all control numbers now only have one associated
+# 'country_imp_exp', 'us_co', 'foreign_co', and 'port'
+lemis.grouped <- group_by(lemis, control_number)
+
+assert_that(max(summarize(lemis.grouped, n = n_distinct(country_imp_exp))$n) == 1)
+assert_that(max(summarize(lemis.grouped, n = n_distinct(us_co))$n) == 1)
+assert_that(max(summarize(lemis.grouped, n = n_distinct(foreign_co))$n) == 1)
+assert_that(max(summarize(lemis.grouped, n = n_distinct(port))$n) == 1)
+
+
+# 5)
+# Address potential exact duplicate records
+grouping.vars3 <-
+  colnames(lemis)[!(colnames(lemis) %in% c("file_num"))]
+
+problem.row.set3 <- lemis %>%
+  filter(!(control_number %in% control.numbers.cant.be.dups)) %>%
+  group_by_at(grouping.vars3) %>%
+  summarize(
+    row.count = n(),
+    distinct_file_num_values = paste(unique(file_num), collapse = ", ")
+  ) %>%
+  filter(row.count > 1) %>%
+  ungroup()
+
+# How many of these "duplicate" records are in fact from the same original
+# data file, indicating they are probably not errors generated from
+# collating together multiple data sheets within years?
+from.same.file.count <-
+  sum(!str_detect(problem.row.set3$distinct_file_num_values, ","))
+
+assert_that(from.same.file.count == nrow(problem.row.set3))
+# Since duplicate records of a given record all come from the same
+# original data file, it's probably best to keep them and treat them
+# as intentionally duplicated product records
+
+#==============================================================================
+
+
+# Generate a 'cleaning_notes' column to hold automatically generated notes
 lemis$cleaning_notes <- rep(NA_character_, nrow(lemis))
 
-
-# Cleaning of non-standard country origins present in the LEMIS data
-
-
-summary(lemis$country_origin_iso2c)
-
-valid.country.codes <- read_csv("inst/extdata/iso_2_country_codes.csv") %>%
-  pull(Value)
-# Add on other valid codes
-valid.country.codes <- c(
-  valid.country.codes,
-  "BL", "BQ", "CW", "GG", "IM", "JE",
-  "ME", "MF", "PS", "RS", "SX", "TL",
-  "VS", "XX", "ZZ"
-)
-
-# Relevel X to XX
-lemis$country_origin_iso2c <- plyr::revalue(lemis$country_origin_iso2c, c(X = "XX"))
-
-# Remove non-standard country origins from the analysis
-lemis <- lemis %>%
-  mutate(
-    country_origin_iso2c = as.character(country_origin_iso2c),
-    cleaning_notes = case_when(
-      !(country_origin_iso2c %in% valid.country.codes) & !is.na(country_origin_iso2c) & is.na(cleaning_notes) ~
-      paste0("Original value in country_origin column: ", country_origin_iso2c),
-      !(country_origin_iso2c %in% valid.country.codes) & !is.na(country_origin_iso2c) & !is.na(cleaning_notes) ~
-      paste0(cleaning_notes, ", country_origin column: ", country_origin_iso2c),
-      TRUE ~ cleaning_notes
-    ),
-    country_origin_iso2c = case_when(
-      !(country_origin_iso2c %in% valid.country.codes) & !is.na(country_origin_iso2c) ~ "non-standard value",
-      TRUE ~ country_origin_iso2c
-    ),
-    country_origin_iso2c = as.factor(country_origin_iso2c)
-  )
-
-# Assertion for quality checking. All levels should be a valid code
-assert_that(all(levels(lemis$country_origin_iso2c) %in%
-  c(valid.country.codes, "non-standard value")))
-
-summary(lemis$country_origin_iso2c)
-
-
-# Cleaning of non-standard country import/export present in the LEMIS data
-
-
-summary(lemis$country_imp_exp_iso2c)
-
-# Remove non-standard country origins from the analysis
-lemis <- lemis %>%
-  mutate(
-    country_imp_exp_iso2c = as.character(country_imp_exp_iso2c),
-    cleaning_notes = case_when(
-      !(country_imp_exp_iso2c %in% valid.country.codes) & !is.na(country_imp_exp_iso2c) & is.na(cleaning_notes) ~
-      paste0("Original value in country_imp_exp column: ", country_imp_exp_iso2c),
-      !(country_imp_exp_iso2c %in% valid.country.codes) & !is.na(country_imp_exp_iso2c) & !is.na(cleaning_notes) ~
-      paste0(cleaning_notes, ", country_imp_exp column: ", country_imp_exp_iso2c),
-      TRUE ~ cleaning_notes
-    ),
-    country_imp_exp_iso2c = case_when(
-      !(country_imp_exp_iso2c %in% valid.country.codes) & !is.na(country_imp_exp_iso2c) ~ "non-standard value",
-      TRUE ~ country_imp_exp_iso2c
-    ),
-    country_imp_exp_iso2c = as.factor(country_imp_exp_iso2c)
-  )
-
-# Assertion for quality checking. All levels should be a valid code
-assert_that(all(levels(lemis$country_imp_exp_iso2c) %in%
-  c(valid.country.codes, "non-standard value")))
-
-summary(lemis$country_imp_exp_iso2c)
+#==============================================================================
 
 
 # Cleaning of non-standard descriptions present in the LEMIS data
 
 
-summary(lemis$wildlife_description)
+sort(unique(lemis$description))
 
 valid.description.codes <-
   c(
@@ -262,35 +421,321 @@ valid.description.codes <-
     "TUS", "UNS", "VEN", "WAX", "WNG", "WPR"
   )
 
-# Remove non-standard descriptions from the analysis
+# Which values are not in the valid codes?
+index.invalid.codes <- !(unique(lemis$description) %in% valid.description.codes)
+sort(unique(lemis$description)[index.invalid.codes])
+
+# Convert irregular values to good values
 lemis <- lemis %>%
   mutate(
-    wildlife_description = as.character(wildlife_description),
-    cleaning_notes = case_when(
-      !(wildlife_description %in% valid.description.codes) & !is.na(wildlife_description) & is.na(cleaning_notes) ~
-      paste0("Original value in description column: ", wildlife_description),
-      !(wildlife_description %in% valid.description.codes) & !is.na(wildlife_description) & !is.na(cleaning_notes) ~
-      paste0(cleaning_notes, ", description column: ", wildlife_description),
-      TRUE ~ cleaning_notes
-    ),
-    wildlife_description = case_when(
-      !(wildlife_description %in% valid.description.codes) & !is.na(wildlife_description) ~ "non-standard value",
-      TRUE ~ wildlife_description
-    ),
-    wildlife_description = as.factor(wildlife_description)
+    description = case_when(
+      # Change "GMT" to "GAR", under the assumption this was meant to indicate
+      # "garment"
+      description == "GMT" ~ "GAR",
+      # Change "JEW" to "JWL" when the foreign company is an arts and crafts
+      # dealer, under the assumption this was meant to indicate "jewelry"
+      description == "JEW" & foreign_co == "BAYEAD ARTS AND CRAFTS" ~ "JWL",
+      # Change "LI" to "LIV"
+      description == "LI" ~ "LIV",
+      # Change "LPC" to "LPS", under the assumption this was a typographic
+      # error
+      description == "LPC" ~ "LPS",
+      # Change "LPW" to "LPS", under the assumption this was a typographic
+      # error
+      description == "LPW" ~ "LPS",
+      # Change "MAE" to "MEA" when the unit is a weight, under the assumption
+      # this was meant to indicate "meat"
+      description == "MAE" & unit == "KG" ~ "MEA",
+      # Change "SK" to "SKI" when the foreign company is "BASS RIVER FARMS",
+      # under the assumption this was meant to indicate "skin"
+      description == "SK" & foreign_co == "BASS RIVER FARMS" ~ "SKI",
+      # Change "SP" and "SPW" to "SPR" when the generic name is either "MOLLUSC",
+      # "CLAM", or "SHELL" and unit is "NO", under the assumption this
+      # was meant to indicate a shell product
+      description == "SP" & generic_name %in% c("MOLLUSC", "CLAM", "SHELL") &
+        unit == "NO" ~ "SPR",
+      description == "SPW" & generic_name %in% c("MOLLUSC", "CLAM", "SHELL") &
+        unit == "NO" ~ "SPR",
+      # Change "TWO" to "TRO" when species_code is "ELAN", under the
+      # assumption this was meant to indicate a trophy
+      description == "TWO" & species_code == "ELAN" ~ "TRO",
+      TRUE ~ description
+    )
   )
 
+# Which values are not in the valid codes?
+index.invalid.codes <- !(unique(lemis$description) %in% valid.description.codes)
+sort(unique(lemis$description)[index.invalid.codes])
+
+# Remove remaining non-standard descriptions
+lemis <- get_cleaned_lemis("description", valid.description.codes)
+
 # Assertion for quality checking. All levels should be a valid code
-assert_that(all(levels(lemis$wildlife_description) %in%
+assert_that(all(levels(lemis$description) %in%
   c(valid.description.codes, "non-standard value")))
 
-summary(lemis$wildlife_description)
+summary(lemis$description)
+
+#==============================================================================
+
+
+# Cleaning of non-standard units present in the LEMIS data
+
+
+sort(unique(lemis$unit))
+
+valid.unit.codes <-
+  c("C2", "C3", "CM", "GM", "KG", "LT", "M2", "M3", "MG", "ML", "MT", "NO")
+
+# Which values are not in the valid codes?
+index.invalid.codes <- !(unique(lemis$unit) %in% valid.unit.codes)
+sort(unique(lemis$unit)[index.invalid.codes])
+
+# The unit "LB" may stand for pounds, so we need to change this to kilograms
+# where 1 LB = 0.454 KG
+lemis <- lemis %>%
+  mutate(
+    # backup quantity and unit columns to preserve the originals
+    quantity_original_value = quantity,
+    unit_original_value = unit,
+    # convert pounds to kilograms by multiplying the pound units by 0.453592
+    quantity = case_when(
+      unit == "LB" ~ quantity * 0.453592,
+      TRUE ~ quantity
+    ),
+    unit = ifelse(unit == "LB", "KG", unit)
+  )
+
+# The unit "GL" may stand for gallons, so we need to change this to liters
+# where 1 gallon = 3.78541 liters
+lemis <- lemis %>%
+  mutate(
+    # convert gallons to liters by multiplying the gallon units by 3.78541
+    quantity = case_when(
+      unit == "GL" ~ quantity * 3.78541,
+      TRUE ~ quantity
+    ),
+    unit = ifelse(unit == "GL", "LT", unit)
+  )
+
+# Convert irregular values to good values
+lemis <- lemis %>%
+  mutate(unit = case_when(
+    # All variations of the "number of specimens" entries should be recoded
+    # as "NO" ("CT" is likely "count" while "PC" is likely "piece")
+    unit %in% c("CT", "N", "N0", "PC") ~ "NO",
+    # Recode "L" as "liters"
+    unit == "L" ~ "LT",
+    TRUE ~ unit
+    )
+  )
+
+# Which values are not in the valid codes?
+index.invalid.codes <- !(unique(lemis$unit) %in% valid.unit.codes)
+sort(unique(lemis$unit)[index.invalid.codes])
+
+# Remove remaining non-standard units
+lemis <- get_cleaned_lemis("unit", valid.unit.codes)
+
+# Assertion for quality checking. All levels should be a valid code
+assert_that(all(levels(lemis$unit) %in%
+  c(valid.unit.codes, "non-standard value")))
+
+summary(lemis$unit)
+
+#==============================================================================
+
+
+# Cleaning of non-standard country origins present in the LEMIS data
+
+
+sort(unique(lemis$country_origin))
+
+valid.country.codes <- read_csv("inst/extdata/iso_2_country_codes.csv") %>%
+  pull(Value)
+# Add on other valid codes
+valid.country.codes <- c(
+  valid.country.codes,
+  "BL", "BQ", "CW", "GG", "IM", "JE", "ME", "MF", "PC", "PS", "RS",
+  "SX", "TL", "VS", "XX", "YU", "ZR", "ZZ"
+)
+
+# Which values are not in the valid codes?
+index.invalid.codes <- !(unique(lemis$country_origin) %in% valid.country.codes)
+sort(unique(lemis$country_origin)[index.invalid.codes])
+
+# Convert irregular values to good values
+lemis <- lemis %>%
+  mutate(
+    country_origin = case_when(
+      # Change "1D" to "ID", indicating Indonesia
+      country_origin == "1D" & country_imp_exp == "ID" ~ "ID",
+      # Change "FP" to "PF", indicating French Polynesia
+      country_origin == "FP" ~ "PF",
+      # Change "FS" to "FM", indicating the Federated States of Micronesia
+      country_origin == "FS" ~ "FM",
+      # Change "UK" to "GB", indicating the United Kingdom
+      country_origin == "UK" & country_imp_exp == "GB" ~ "GB",
+      # Change "UN" ("unknown"?) to "XX" since that represents unknown country
+      country_origin == "UN" ~ "XX",
+      # Change "X" to "XX" since that represents unknown country
+      country_origin == "X" ~ "XX",
+      # Change NA values to "XX" since that represents unknown country
+      is.na(country_origin) ~ "XX",
+      TRUE ~ country_origin
+    )
+  )
+
+# Which values are not in the valid codes?
+index.invalid.codes <- !(unique(lemis$country_origin) %in% valid.country.codes)
+sort(unique(lemis$country_origin)[index.invalid.codes])
+
+# Remove remaining non-standard country origins
+lemis <- get_cleaned_lemis("country_origin", valid.country.codes)
+
+# Assertion for quality checking. All levels should be a valid code
+assert_that(all(levels(lemis$country_origin) %in%
+  c(valid.country.codes, "non-standard value")))
+
+summary(lemis$country_origin)
+
+#==============================================================================
+
+
+# Cleaning of non-standard country import/export present in the LEMIS data
+
+
+sort(unique(lemis$country_imp_exp))
+
+# Which values are not in the valid codes?
+index.invalid.codes <- !(unique(lemis$country_imp_exp) %in% valid.country.codes)
+sort(unique(lemis$country_imp_exp)[index.invalid.codes])
+
+# Convert irregular values to good values
+lemis <- lemis %>%
+  mutate(
+    country_imp_exp = case_when(
+      # Change "**" to "XX" since that represents unknown country
+      str_detect(country_imp_exp, fixed("**", TRUE)) ~ "XX",
+      # Change "FS" to "FM", indicating the Federated States of Micronesia
+      country_imp_exp == "FS" ~ "FM",
+      # Change NA values to "XX" since that represents unknown country
+      is.na(country_imp_exp) ~ "XX",
+      TRUE ~ country_imp_exp
+    )
+  )
+
+# Which values are not in the valid codes?
+index.invalid.codes <- !(unique(lemis$country_imp_exp) %in% valid.country.codes)
+sort(unique(lemis$country_imp_exp)[index.invalid.codes])
+
+# Remove remaining non-standard country import/export
+lemis <- get_cleaned_lemis("country_imp_exp", valid.country.codes)
+
+# Assertion for quality checking. All levels should be a valid code
+assert_that(all(levels(lemis$country_imp_exp) %in%
+  c(valid.country.codes, "non-standard value")))
+
+summary(lemis$country_imp_exp)
+
+#==============================================================================
+
+
+# Cleaning of non-standard purposes present in the LEMIS data
+
+
+sort(unique(lemis$purpose))
+
+valid.purpose.codes <-
+  c("B", "E", "G", "H", "L", "M", "P", "Q", "S", "T", "Y", "Z")
+
+# Which values are not in the valid codes?
+index.invalid.codes <- !(unique(lemis$purpose) %in% valid.purpose.codes)
+sort(unique(lemis$purpose)[index.invalid.codes])
+
+# Remove remaining non-standard purposes
+lemis <- get_cleaned_lemis("purpose", valid.purpose.codes)
+
+# Assertion for quality checking. All levels should be a valid code
+assert_that(all(levels(lemis$purpose) %in%
+  c(valid.purpose.codes, "non-standard value")))
+
+summary(lemis$purpose)
+
+#==============================================================================
+
+
+# Cleaning of non-standard sources present in the LEMIS data
+
+
+sort(unique(lemis$source))
+
+valid.source.codes <-
+  c("A", "C", "D", "F", "I", "P", "R", "U", "W")
+
+# Which values are not in the valid codes?
+index.invalid.codes <- !(unique(lemis$source) %in% valid.source.codes)
+sort(unique(lemis$source)[index.invalid.codes])
+
+# Remove remaining non-standard sources
+lemis <- get_cleaned_lemis("source", valid.source.codes)
+
+# Assertion for quality checking. All levels should be a valid code
+assert_that(all(levels(lemis$source) %in%
+  c(valid.source.codes, "non-standard value")))
+
+summary(lemis$source)
+
+#==============================================================================
+
+
+# Cleaning of non-standard actions present in the LEMIS data
+
+
+sort(unique(lemis$action))
+
+valid.action.codes <- c("C", "R")
+
+# Which values are not in the valid codes?
+index.invalid.codes <- !(unique(lemis$action) %in% valid.action.codes)
+sort(unique(lemis$action)[index.invalid.codes])
+
+# Assertion for quality checking. All levels should be a valid code
+assert_that(all(levels(lemis$action) %in%
+  c(valid.action.codes, "non-standard value")))
+
+summary(as.factor(lemis$action))
+
+#==============================================================================
+
+
+# Cleaning of non-standard dispositions present in the LEMIS data
+
+
+sort(unique(lemis$disposition))
+
+valid.disposition.codes <- c("A", "C", "R", "S")
+
+# Which values are not in the valid codes?
+index.invalid.codes <- !(unique(lemis$disposition) %in% valid.disposition.codes)
+sort(unique(lemis$disposition)[index.invalid.codes])
+
+# Remove remaining non-standard dispositions
+lemis <- get_cleaned_lemis("disposition", valid.disposition.codes)
+
+# Assertion for quality checking. All levels should be a valid code
+assert_that(all(levels(lemis$disposition) %in%
+  c(valid.disposition.codes, "non-standard value")))
+
+summary(lemis$disposition)
+
+#==============================================================================
 
 
 # Cleaning of non-standard ports present in the LEMIS data
 
 
-summary(lemis$port)
+sort(unique(lemis$port))
 
 valid.port.codes <-
   c(
@@ -307,31 +752,28 @@ valid.port.codes <-
     "TP", "XX"
   )
 
-# All NA values can be converted to "XX" since that represents unknown port
-# of entry
+# Which values are not in the valid codes?
+index.invalid.codes <- !(unique(lemis$port) %in% valid.port.codes)
+sort(unique(lemis$port)[index.invalid.codes])
+
+# Convert irregular values to good values
 lemis <- lemis %>%
   mutate(
-    port = ifelse(is.na(port), "XX", as.character(port)),
-    port = as.factor(port)
+    port = case_when(
+      # Change "03" to "3"
+      port == "03" ~ "3",
+      # Change NA values to "XX" since that represents unknown port of entry
+      is.na(port) ~ "XX",
+      TRUE ~ port
+    )
   )
 
-# Remove non-standard ports from the analysis
-lemis <- lemis %>%
-  mutate(
-    port = as.character(port),
-    cleaning_notes = case_when(
-      !(port %in% valid.port.codes) & !is.na(port) & is.na(cleaning_notes) ~
-      paste0("Original value in port column: ", port),
-      !(port %in% valid.port.codes) & !is.na(port) & !is.na(cleaning_notes) ~
-      paste0(cleaning_notes, ", port column: ", port),
-      TRUE ~ cleaning_notes
-    ),
-    port = case_when(
-      !(port %in% valid.port.codes) & !is.na(port) ~ "non-standard value",
-      TRUE ~ port
-    ),
-    port = as.factor(port)
-  )
+# Which values are not in the valid codes?
+index.invalid.codes <- !(unique(lemis$port) %in% valid.port.codes)
+sort(unique(lemis$port)[index.invalid.codes])
+
+# Remove remaining non-standard ports
+lemis <- get_cleaned_lemis("port", valid.port.codes)
 
 # Assertion for quality checking. All levels should be a valid code
 assert_that(all(levels(lemis$port) %in%
@@ -339,238 +781,198 @@ assert_that(all(levels(lemis$port) %in%
 
 summary(lemis$port)
 
+#==============================================================================
 
-# Cleaning of non-standard units present in the LEMIS data
+
+# Clean date columns
 
 
-summary(lemis$unit)
-
-valid.unit.codes <-
-  c(
-    "C2", "C3", "CM", "GM", "KG", "LT",
-    "M2", "M3", "MG", "ML", "MT", "NO"
-  )
-
-# The unit "LB" may stand for pounds, so we need to change this to kilograms
-# where 1 LB = 0.454 KG
+# Clean dates for control number 2006690535
 lemis <- lemis %>%
   mutate(
-    # backup quantity and unit columns to preserve the originals
-    quantity_bkp = quantity,
-    unit_bkp = unit,
-    # convert pounds to kilograms by dividing the pound units by 0.454
-    quantity = case_when(
-      unit == "LB" ~ quantity / 0.454,
-      TRUE ~ quantity
+    shipment_date = case_when(
+      control_number == 2006690535 & is.na(shipment_date) ~ "2006-01-18",
+      TRUE ~ as.character(shipment_date)
     ),
-    unit = plyr::revalue(unit, c(LB = "KG"))
+    disposition_date = case_when(
+      control_number == 2006690535 & is.na(disposition_date) ~ "2006-01-27",
+      TRUE ~ as.character(disposition_date)
+    )
   )
 
-# All variations of the "number of specimens" entries should be recoded
-# as "NO"
-lemis$unit <- plyr::revalue(
-  lemis$unit,
-  c(N = "NO", N0 = "NO", no = "NO", No = "NO")
-)
-
-# Remove non-standard units from the analysis
-lemis <- lemis %>%
+# Verify that the vast majority of disposition dates occur on or after the
+# shipment date
+filter(lemis, !is.na(shipment_date) & !is.na(disposition_date)) %>%
   mutate(
-    unit = as.character(unit),
-    cleaning_notes = case_when(
-      !(unit %in% valid.unit.codes) & !is.na(unit) & is.na(cleaning_notes) ~
-      paste0("Original value in unit column: ", unit),
-      !(unit %in% valid.unit.codes) & !is.na(unit) & !is.na(cleaning_notes) ~
-      paste0(cleaning_notes, ", unit column: ", unit),
-      TRUE ~ cleaning_notes
-    ),
-    unit = case_when(
-      !(unit %in% valid.unit.codes) & !is.na(unit) ~ "non-standard value",
-      TRUE ~ unit
-    ),
-    unit = as.factor(unit)
-  )
-
-# Assertion for quality checking. All levels should be a valid code
-assert_that(all(levels(lemis$unit) %in%
-  c(valid.unit.codes, "non-standard value")))
-
-summary(lemis$unit)
-
-
-# Cleaning of non-standard purposes present in the LEMIS data
-
-
-summary(lemis$purpose)
-
-valid.purpose.codes <-
-  c("B", "E", "G", "H", "L", "M", "P", "Q", "S", "T", "Y", "Z")
-
-# Remove non-standard purposes from the analysis
-lemis <- lemis %>%
-  mutate(
-    purpose = as.character(purpose),
-    cleaning_notes = case_when(
-      !(purpose %in% valid.purpose.codes) & !is.na(purpose) & is.na(cleaning_notes) ~
-      paste0("Original value in purpose column: ", purpose),
-      !(purpose %in% valid.purpose.codes) & !is.na(purpose) & !is.na(cleaning_notes) ~
-      paste0(cleaning_notes, ", purpose column: ", purpose),
-      TRUE ~ cleaning_notes
-    ),
-    purpose = case_when(
-      !(purpose %in% valid.purpose.codes) & !is.na(purpose) ~ "non-standard value",
-      TRUE ~ purpose
-    ),
-    purpose = as.factor(purpose)
-  )
-
-# Assertion for quality checking. All levels should be a valid code
-assert_that(all(levels(lemis$purpose) %in%
-  c(valid.purpose.codes, "non-standard value")))
-
-summary(lemis$purpose)
-nrow(lemis)
-
-
-
-# Cleaning of non-standard sources present in the LEMIS data
-
-
-summary(lemis$source_)
-
-valid.source.codes <-
-  c("A", "C", "D", "F", "I", "P", "R", "U", "W")
-
-# Relevel lowercase variations of source_ entries
-lemis$source_ <- plyr::revalue(lemis$source_, c(w = "W"))
-
-# Remove non-standard sources from the analysis
-lemis <- lemis %>%
-  mutate(
-    source_ = as.character(source_),
-    cleaning_notes = case_when(
-      !(source_ %in% valid.source.codes) & !is.na(source_) & is.na(cleaning_notes) ~
-      paste0("Original value in source column: ", source_),
-      !(source_ %in% valid.source.codes) & !is.na(source_) & !is.na(cleaning_notes) ~
-      paste0(cleaning_notes, ", source column: ", source_),
-      TRUE ~ cleaning_notes
-    ),
-    source_ = case_when(
-      !(source_ %in% valid.source.codes) & !is.na(source_) ~ "non-standard value",
-      TRUE ~ source_
-    ),
-    source_ = as.factor(source_)
-  )
-
-# Assertion for quality checking. All levels should be a valid code
-assert_that(all(levels(lemis$source_) %in%
-  c(valid.source.codes, "non-standard value")))
-
-summary(lemis$purpose)
-
-
-# Cleaning of non-standard actions present in the LEMIS data
-
-
-summary(lemis$action)
-nrow(lemis)
-
-valid.action.codes <- c("C", "R")
-
-# Assertion for quality checking. All levels should be a valid code
-assert_that(all(levels(lemis$action) %in%
-  c(valid.action.codes, "non-standard value")))
-
-summary(lemis$action)
-
-
-# Cleaning of non-standard dispositions present in the LEMIS data
-
-
-summary(lemis$disposition)
-
-valid.disposition.codes <- c("A", "C", "R", "S")
-
-# Remove non-standard dispositions from the analysis
-lemis <- lemis %>%
-  mutate(
-    disposition = as.character(disposition),
-    cleaning_notes = case_when(
-      !(disposition %in% valid.disposition.codes) & !is.na(disposition) & is.na(cleaning_notes) ~
-      paste0("Original value in disposition column: ", disposition),
-      !(disposition %in% valid.disposition.codes) & !is.na(disposition) & !is.na(cleaning_notes) ~
-      paste0(cleaning_notes, ", disposition column: ", disposition),
-      TRUE ~ cleaning_notes
-    ),
-    disposition = case_when(
-      !(disposition %in% valid.disposition.codes) & !is.na(disposition) ~ "non-standard value",
-      TRUE ~ disposition
-    ),
-    disposition = as.factor(disposition)
-  )
-
-# Assertion for quality checking. All levels should be a valid code
-assert_that(all(levels(lemis$disposition) %in%
-  c(valid.disposition.codes, "non-standard value")))
-
-summary(lemis$disposition)
-
-# ==============================================================================
-
-
-# Join in taxonomic information and create new variables
-
-
-# Generate a table of taxa information
-taxa_code <- read.csv("inst/extdata/Taxalist_reviewed.csv",
-  na.strings = c(" ", "")
-) %>%
-  select(species_code_taxa = SPEC_CODE, taxa = Taxa) %>%
-  mutate(
-    species_code_taxa = as.factor(toupper(species_code_taxa)),
-    taxa = as.factor(tolower(taxa))
+    disposition_date = as.Date(disposition_date, format = "%Y-%m-%d"),
+    shipment_date = as.Date(shipment_date, format = "%Y-%m-%d")
   ) %>%
-  distinct()
+  mutate(date_test = (disposition_date - shipment_date) >= 0) %>%
+  summarize(sum(date_test)/n())
 
-# Join this table with the LEMIS data
+# Clean disposition dates
 lemis <- lemis %>%
-  left_join(taxa_code, by = c("species_code" = "species_code_taxa")) %>%
-  mutate(species_code = as.factor(species_code))
+  mutate(
+    disposition_date = as.Date(disposition_date, format = "%Y-%m-%d"),
+    shipment_date = as.Date(shipment_date, format = "%Y-%m-%d"),
+    disposition_date_original_value = disposition_date,
+    # extract only the year component of the disposition and shipment dates
+    disposition_year = format(disposition_date, "%Y"),
+    shipment_year = format(shipment_date, "%Y"),
+    disposition_date = case_when(
+      # clean cases where "disposition_date" is far later than "shipment_date"
+      shipment_date == "2012-02-13" & disposition_date == "2016-02-16" ~
+        "2012-02-16",
+      shipment_date == "2014-06-15" & disposition_date == "2017-06-17" ~
+        "2014-06-17",
+      shipment_date == "2014-12-17" & disposition_date == "2019-12-17" ~
+        "2014-12-17",
+      shipment_year == "2002" & disposition_year == "2020" ~
+        str_replace(disposition_date, "2020", "2002"),
+      shipment_date == "2002-03-27" & disposition_date == "2027-03-27" ~
+        "2002-03-27",
+      shipment_year == "2003" & disposition_year == "2030" ~
+        str_replace(disposition_date, "2030", "2003"),
+      shipment_date == "2002-11-27" & disposition_date == "2030-02-06" ~
+        "2003-02-06",
+      shipment_year == "2003" & disposition_year == "2033" ~
+        str_replace(disposition_date, "2033", "2003"),
+      shipment_year == "2004" & disposition_year == "2044" ~
+        str_replace(disposition_date, "2044", "2004"),
+      shipment_year == "2001" & disposition_year == "2201" ~
+        str_replace(disposition_date, "2201", "2001"),
+      shipment_year == "2002" & disposition_year == "2202" ~
+        str_replace(disposition_date, "2202", "2002"),
+      shipment_year == "2001" & disposition_year == "2991" ~
+        str_replace(disposition_date, "2991", "2001"),
+      shipment_year == "2003" & disposition_year == "3003" ~
+        str_replace(disposition_date, "3003", "2003"),
+      shipment_year == "2004" & disposition_year == "3004" ~
+        str_replace(disposition_date, "3004", "2004"),
+      shipment_date == "2003-12-28" & disposition_date == "5004-01-06" ~
+        "2004-01-06",
+      # clean cases where "disposition_date" is far earlier than "shipment_date"
+      disposition_date == "1900-01-01" ~ NA_character_,
+      disposition_date == "1933-07-15" ~ NA_character_,
+      (shipment_year == "2003" | shipment_year == "2004") &
+        disposition_year == "1996" ~ NA_character_,
+      shipment_date == "2002-07-23" & disposition_date == "1954-07-26" ~
+        "2002-07-26",
+      shipment_date == "2002-07-24" & disposition_date == "1954-07-26" ~
+        "2002-07-26",
+      shipment_date == "2002-01-07" & disposition_date == "1992-01-11" ~
+        "2002-01-11",
+      shipment_date == "2000-02-29" & disposition_date == "1996-03-04" ~
+        "2000-03-04",
+      shipment_year == "2000" & disposition_year == "1998" ~
+        str_replace(disposition_date, "1998", "2000"),
+      # keep all others
+      TRUE ~ as.character(disposition_date)
+    )
+  )
 
-# Create variables for Wild/Captive, Live/Not live, and bird|mammal|reptile
-# or not
-lemis$Wild <- ifelse(lemis$source_ == "W", 1, 0)
-lemis$Live <- ifelse(lemis$wildlife_description == "LIV", 1, 0)
-lemis$NonAq <- ifelse(lemis$taxa == "bird" | lemis$taxa == "mammal" |
-  lemis$taxa == "reptile", 1, 0)
+date.corrections.file <- read_csv("data-raw/data/disposition_date_corrections.csv") %>%
+  mutate_at(c("disposition_date", "shipment_date",
+              "new_disposition_date"),
+            list(~ as.character(as.Date(., format = "%m/%d/%y")))) %>%
+  filter(!is.na(new_disposition_date))
 
-summary(lemis$Wild)
-summary(lemis$Live)
-summary(lemis$NonAq)
+for(i in 1:nrow(date.corrections.file)) {
 
-# ==============================================================================
+  lemis[which(lemis$disposition_date == date.corrections.file$disposition_date[i] &
+                lemis$shipment_date == date.corrections.file$shipment_date[i]),
+        "disposition_date"] <-
+    date.corrections.file$new_disposition_date[i]
+}
 
-
-# Data saving and directory cleanup
-
-
-# Clean column types to ensure good parsing in process_lemis.R
-lemis <- lemis %>%
+# Assert that all control numbers now only have one associated
+# 'shipment_date'
+lemis.grouped <- lemis %>%
   mutate_at(
-    c("control_number", "quantity", "shipment_year", "quantity_bkp"),
-    funs(as.integer(.))
-  )
+    c("country_imp_exp",
+      "port"),
+    list(~ as.character(.))
+  ) %>%
+  group_by(control_number)
 
-# Write a cleaned CSV file of all LEMIS data
+assert_that(max(summarize(lemis.grouped, n = n_distinct(country_imp_exp))$n) == 1)
+assert_that(max(summarize(lemis.grouped, n = n_distinct(us_co))$n) == 1)
+assert_that(max(summarize(lemis.grouped, n = n_distinct(foreign_co))$n) == 1)
+assert_that(max(summarize(lemis.grouped, n = n_distinct(port))$n) == 1)
+assert_that(max(summarize(lemis.grouped, n = n_distinct(shipment_date))$n) == 1)
+
+#==============================================================================
+
+
+# Data saving
+
+na.characters <- c("na", "?", ".", "/", "`", "=", "-")
+
+lemis_intermediate <- lemis %>%
+  # extract only the year component of the disposition and shipment dates
+  mutate(
+    disposition_date = as.Date(disposition_date, format = "%Y-%m-%d"),
+    shipment_date = as.Date(shipment_date, format = "%Y-%m-%d"),
+    disposition_year = as.numeric(format(disposition_date, "%Y")),
+    shipment_year = as.numeric(format(shipment_date, "%Y"))
+  ) %>%
+  # select columns to keep
+  select(
+    control_number,
+    species_code,
+    genus,
+    species,
+    subspecies,
+    specific_name,
+    generic_name,
+    description,
+    quantity,
+    unit,
+    value,
+    country_origin,
+    country_imp_exp,
+    purpose,
+    source,
+    action,
+    disposition,
+    disposition_date,
+    disposition_year,
+    shipment_date,
+    shipment_year,
+    import_export,
+    port,
+    us_co,
+    foreign_co,
+    cleaning_notes
+  ) %>%
+  # change column types
+  mutate_all(list(~ as.character(.))) %>%
+  mutate_at(
+    c("control_number",
+      "quantity",
+      "value",
+      "disposition_year",
+      "shipment_year"),
+    list(~ as.integer(.))
+  ) %>%
+  # clean remaining values that should be NA characters
+  mutate_if(
+    is.character,
+    list(~ if_else(. %in% na.characters, NA_character_, .))
+  ) %>%
+  arrange(shipment_date, control_number, species_code)
+
+# Write a cleaned CSV file of intermediate LEMIS data
 write_csv(
-  lemis,
-  paste0(
-    "data-raw/lemis_", min(lemis$shipment_year), "_",
-    max(lemis$shipment_year), "_cleaned.csv"
-  )
+  lemis_intermediate,
+  h("data-raw", "lemis_intermediate.csv")
 )
 
-# At this point it should be safe to delete subdirectories holding
-# intermediate LEMIS files
-unlink("data-raw/by_year/", recursive = TRUE)
-unlink("data-raw/csv_by_year/", recursive = TRUE)
+#==============================================================================
+
+
+# Directory cleanup
+
+# Delete subdirectories containing intermediate LEMIS files, if desired
+# unlink(h("data-raw", "by_year"), recursive = TRUE)
+# unlink(h("data-raw", "csv_by_year"), recursive = TRUE)

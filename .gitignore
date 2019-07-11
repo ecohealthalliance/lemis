@@ -4,7 +4,10 @@
 .Ruserdata
 *.fst
 data-raw/*
-!data-raw/*.R
 !data-raw/*.md
+!data-raw/*.R
+!data-raw/data/*
+!data-raw/R/*
 /home/noamross/.local/share/datastorr/httr-oath
 *.DS_Store
+.httr-oauth

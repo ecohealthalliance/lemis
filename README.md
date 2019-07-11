@@ -5,20 +5,20 @@
 
 [![CircleCI](https://circleci.com/gh/ecohealthalliance/lemis.svg?style=shield&circle-token=23cd13e8d5276a8100a83984982d065d1773fd77)](https://circleci.com/gh/ecohealthalliance/lemis)
 
-Authors: *Noam Ross, Allison White, Carlos Zambrana-Torrelio, Evan
+Authors: *Noam Ross, Allison M. White, Carlos Zambrana-Torrelio, Evan A.
 Eskew*
 
-The **lemis** package provides access to U.S. Fish and Wildlife Service
-(USFWS) data on wildlife and wildlife product imports to and exports
-from the United States. This data was obtained via more than 14 years of
-Freedom of Information Act (FOIA) requests by EcoHealth Alliance.
+The **lemis** package provides access to United States Fish and Wildlife
+Service (USFWS) data on wildlife and wildlife product imports to the
+U.S. This data was obtained via more than 14 years of Freedom of
+Information Act (FOIA) requests by EcoHealth Alliance.
 
 ## Installation
 
 Install the **lemis** package with this command:
 
 ``` r
-source("https://install-github.me/ecohealthalliance/lemis")
+devtools::install_github("ecohealthalliance/lemis")
 ```
 
 As this is currently a private repository, you must have a GitHub
@@ -28,7 +28,7 @@ Instructions for this can be found
 
 ## Usage
 
-The main function in **lemis** is `lemis_data()`. This returns the main
+The main function in **lemis** is `lemis_data()`. This returns the
 cleaned LEMIS database as a **dplyr** tibble.
 
 **lemis** makes use of
@@ -51,14 +51,16 @@ all_lemis <- lemis_data() %>%
 
 Note that the full database will be ~1 GB in memory.
 
-`lemis_codes()` returns a data frame with descriptions of the codes used
-by USFWS in the various columns of `lemis_data()`. This is useful for
-lookup or joining with the main data for more descriptive outputs. The
-`?lemis_code` help file also has a searchable table of these codes.
+`lemis_metadata()` provides a brief description of each of the data
+fields in `lemis_data()`, while `lemis_codes()` returns a data frame
+with the codes (abbreviations) used by USFWS in the various columns.
+This is useful for lookup or joining with the main data for more
+descriptive outputs. The `?lemis_codes` help file also has a searchable
+table of USFWS codes.
 
 Our [paper (Smith et.
 al. 2017)](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5357285/)
-provides a broader introduction to this data and its relevance to
+provides a broad introduction to this data and its relevance to
 infectious disease. See the
 [vignette](https://github.com/ecohealthalliance/lemis/tree/master/inst/doc/the-lemis-database.md)
 for a more in-depth tutorial and example use cases for the package. See

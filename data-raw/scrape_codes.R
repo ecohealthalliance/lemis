@@ -273,41 +273,75 @@ lemis_codes_ <- full_join(
   filter(!(code == "GB" & !(value.x == "United Kingdom" & value.y == "United Kingdom"))) %>%
   filter(!(code == "ES" & !(value.x == "Spain" & value.y == "Spain"))) %>%
   filter(!(code == "AN" & value.x == "Curacao")) %>%
-  mutate(value = ifelse(is.na(value.y), value.x, value.y)) %>%
-  mutate(value = ifelse(value == "Saint Helena, Ascension, and Tristan da", "Saint Helena, Ascension, and Tristan da Cunha", value)) %>%
-  mutate(value = ifelse(value == "Saint Vincent & The", "Saint Vincent & The Grenadines", value)) %>%
-  mutate(value = ifelse(code == "AN", "Curacao / Netherlands Antilles", value)) %>%
-  mutate(post_feb_2013 = !(is.na(value.y) | value.y == "")) %>%
-  select(-value.x, -value.y)
+  mutate(
+    value = ifelse(is.na(value.y), value.x, value.y),
+    value = case_when(
+      # clean country codes
+      field == "country" & code == "AN" ~ "Curacao / Netherlands Antilles",
+      field == "country" & value == "Cocos (keeling) Islands" ~ "Cocos (Keeling) Islands",
+      field == "country" & value == "Saint Helena, Ascension, and Tristan da" ~ "Saint Helena, Ascension, and Tristan da Cunha",
+      field == "country" & value == "Saint Vincent & The" ~ "Saint Vincent & The Grenadines",
+      # clean description codes
+      field == "description" & value == "Eggshell - raw or unworked" ~ "Eggshell (raw or unworked)",
+      field == "description" & value == "Fin - (fresh, frozen or dried fins or parts)" ~ "Fin (fresh, frozen or dried fins or parts)",
+      field == "description" & value == "Root, (dead)" ~ "Root (dead)",
+      field == "description" & value == "Scale ( turtle, other reptile, fish, pangolin)" ~ "Scale (turtle, other reptile, fish, pangolin)",
+      # clean port codes
+      field == "port" & value == "Miami. FL" ~ "Miami",
+      field == "port" & value == "Minneapolis./St. Paul" ~ "Minneapolis/St. Paul",
+      # clean unit codes
+      field == "unit" & value == "Square Centimeter" ~ "Square Centimeters",
+      TRUE ~ value
+    ),
+    post_feb_2013 = !(is.na(value.y) | value.y == "")
+  ) %>%
+  select(-value.x, -value.y) %>%
+  arrange(field, code)
+
+# Add additional country codes used in the data but not described in the
+# metadata
+lemis_codes_ <- lemis_codes_ %>%
+  bind_rows(.,
+            data.frame(
+              field = c("country", "country", "country"),
+              code = c("PC", "YU", "ZR"),
+              value = c("Pacific Islands (Trust Territory)", "Yugoslavia", "Zaire"),
+              post_feb_2013 = c(NA_character_, NA_character_, NA_character_)
+            )
+  ) %>%
+  arrange(field, code)
 
 
 lemis_metadata_ <- dplyr::tribble(
   ~field_name, ~description,
-  "control_number", "unique ID",
-  "species_code", "A USFWS code for the species",
-  "taxa", "an EHA-derived broad taxonomic categorization",
-  "genus", "genus of the wildlife product",
-  "species", "species of the wildlife product",
-  "subspecies", "subspecies of the wildlife product",
-  "specific_name", "the species-specific common name",
-  "generic_name", "a general common name",
-  "description", "description of the type/form of wildlife import (see codes)",
-  "quantity", "numeric quantity of the shipment",
-  "unit", "units for the numeric quantity (see codes)",
-  "value", "reported value of the shipment in dollars",
-  "country_origin", "ISO2C code for the country of origin of the product (see codes)",
-  "country_imp_exp", "ISO2C code for the country to/from which the product is shipped (see codes)",
-  "purpose", "the reason the item is being imported or exported",
-  "source", "the type of source within the origin country (e.g., wild, bred; see codes)",
-  "action", "action taken by USFWS on import ((C)leared/(R)efused)",
-  "disposition", "what happens to the import (see codes)",
-  "disposition_date", "when disposition occurred",
-  "shipment_date", "when the shipment arrived",
-  "import_export", "whether the shipment is an (I)mport or (E)xport",
-  "port", "port or region of shipment (see codes)",
-  "us_co", "U.S. party of the shipment",
+  "control_number", "Shipment ID number",
+  "species_code", "USFWS code for the wildlife product",
+  "taxa", "USFWS-derived broad taxonomic categorization",
+  "class", "EHA-derived class-level taxonomic designation",
+  "genus", "Genus (or higher-level taxonomic name) of the wildlife product",
+  "species", "Species of the wildlife product",
+  "subspecies", "Subspecies of the wildlife product",
+  "specific_name", "A specific common name for the wildlife product",
+  "generic_name", "A general common name for the wildlife product",
+  "description", "Type/form of the wildlife product (see lemis_codes())",
+  "quantity", "Numeric quantity of the wildlife product",
+  "unit", "Unit for the numeric quantity (see lemis_codes())",
+  "value", "Reported value of the wildlife product in US dollars",
+  "country_origin", "Code for the country of origin of the wildlife product (see lemis_codes())",
+  "country_imp_exp", "Code for the country to/from which the wildlife product is shipped (see lemis_codes())",
+  "purpose", "The reason the wildlife product is being imported (see lemis_codes())",
+  "source", "The type of source within the origin country (e.g., wild, bred; see lemis_codes())",
+  "action", "Action taken by USFWS on import ((C)leared/(R)efused)",
+  "disposition", "Fate of the import (see lemis_codes())",
+  "disposition_date", "Full date when disposition occurred",
+  "disposition_year", "Year when disposition occurred (derived from 'disposition_date')",
+  "shipment_date", "Full date when the shipment arrived",
+  "shipment_year", "Year when the shipment arrived (derived from 'shipment_date')",
+  "import_export", "Whether the shipment is an (I)mport or (E)xport",
+  "port", "Port or region of shipment entry (see lemis_codes())",
+  "us_co", "US party of the shipment",
   "foreign_co", "Foreign party of the shipment",
-  "cleaning_notes", "Notes generated during data cleaning with 'data-raw/clean_lemis.R'"
+  "cleaning_notes", "Notes generated during data cleaning"
 )
 
 devtools::use_data(lemis_codes_, lemis_metadata_, internal = TRUE, overwrite = TRUE)

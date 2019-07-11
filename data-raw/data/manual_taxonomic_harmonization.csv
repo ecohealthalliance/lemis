@@ -1,0 +1,601 @@
+genus,species,subspecies,specific_name,generic_name,taxa,class
+adenomera,sp.,NA,TROPICAL,BULLFROG,amphibian,Amphibia
+andinobates,claudiae,NA,NA,POISON-ARROW FROG,amphibian,Amphibia
+chirixalus,sp.,NA,ASIAN TREE,FROG,amphibian,Amphibia
+paa,sp.,NA,PAA,FROG,amphibian,Amphibia
+phrynohyas,sp.,NA,GOLDEN-EYED TREE,FROG,amphibian,Amphibia
+rhacophorus,leucomystax,NA,FLYING,FROG,amphibian,Amphibia
+rhacophorus,sp.,NA,FLYING,FROG,amphibian,Amphibia
+scutiger,sp.,NA,LAZY,TOAD,amphibian,Amphibia
+vibrissaphora,sp.,NA,SPINY,TOAD,amphibian,Amphibia
+hirudinaria,manillensis,NA,NA,LEECH,annelid,Clitellata
+serpula,sp.,NA,NA,WORM,annelid,Polychaeta
+agyrtria,brevirostris,chionopectus,WHITE-CHESTED,EMERALD,bird,Aves
+agyrtria,candida,NA,WHITE-BELLIED,EMERALD,bird,Aves
+agyrtria,cyanocephala,NA,AZURE-CROWNED,HUMMINGBIRD,bird,Aves
+agyrtria,leucogaster,NA,PLAIN-BELLIED,EMERALD,bird,Aves
+agyrtria,versicolor,NA,VERSICOLORED,EMERALD,bird,Aves
+agyrtria,violiceps,NA,VIOLET-CROWNED,HUMMINGBIRD,bird,Aves
+anserini,sp.,NA,NA,GEESE,bird,Aves
+asturina,plagiata,NA,GREY,HAWK,bird,Aves
+canchites,canadensis,NA,SPRUCE,GROUSE,bird,Aves
+chloropipo,sp.,NA,NA,MANAKIN,bird,Aves
+cosmopsarus,sp.,NA,NA,STARLING,bird,Aves
+crax,sp.,NA,NA,CURASSOW,bird,Aves
+cygnini,sp.,NA,NA,SWANS,bird,Aves
+ergaticus,sp.,NA,NA,WARBLER,bird,Aves
+gallus,sp.,NA,JUNGLE,FOWL,bird,Aves
+gallus,sp.,NA,NA,JUNGLEFOWL,bird,Aves
+glaucidium,sp.,NA,NA,OWLET,bird,Aves
+himantopus,sp.,NA,NA,STILT,bird,Aves
+hypochera,sp.,NA,NA,FINCH,bird,Aves
+leiothrix,sp.,NA,NA,ROBIN,bird,Aves
+monarcha,sp.,NA,NA,MONARCH,bird,Aves
+monticola,sp.,NA,ROCK,THRUSH,bird,Aves
+nesomimus,sp.,NA,NA,MOCKINGBIRD,bird,Aves
+oenanthe,sp.,NA,NA,WHEATEAR,bird,Aves
+passerina,sp.,NA,NA,BUNTING,bird,Aves
+pelecanus,sp.,NA,NA,PELICAN,bird,Aves
+pipromorpha,sp.,NA,NA,FLYCATCHER,bird,Aves
+polyborus,plancus,NA,CRESTED,CARACARA,bird,Aves
+polyerata,amabilis,NA,BLUE-CHESTED,HUMMINGBIRD,bird,Aves
+polyerata,fimbriata,NA,GLITTERING-THROAT,EMERALD,bird,Aves
+polyerata,lactea,NA,SAPPHIRE-SPANGLED,EMERALD,bird,Aves
+polyerata,rosenbergi,NA,PURPLE-CHESTED,HUMMINGBIRD,bird,Aves
+propyrrhura,auricollis,NA,YELLOW-COLLARED,MACAW,bird,Aves
+propyrrhura,couloni,NA,BLUE-HEADED,MACAW,bird,Aves
+propyrrhura,maracana,NA,BLUE-WINGED,MACAW,bird,Aves
+prunella,sp.,NA,NA,ACCENTOR,bird,Aves
+rupicola,sp.,NA,NA,COCK-OF-THE-ROCK,bird,Aves
+saucerottia,beryllina,NA,BERYLLINE,HUMMINGBIRD,bird,Aves
+saucerottia,cupreicauda,NA,COPPER-TAILED,HUMMINGBIRD,bird,Aves
+saucerottia,cyanura,NA,BLUE-TAILED,HUMMINGBIRD,bird,Aves
+saucerottia,edward,NA,SNOWY-BREASTED,HUMMINGBIRD,bird,Aves
+saucerottia,saucerrottei,NA,STEELY-VENTED,HUMMINGBIRD,bird,Aves
+saucerottia,viridigaster,NA,GREEN-BELLIED,HUMMINGBIRD,bird,Aves
+steganura,sp.,NA,NA,WHYDAH,bird,Aves
+actinastrea,pectinata,NA,NA,CORAL,coral,Anthozoa
+actinastrea,sp.,NA,NA,CORAL,coral,Anthozoa
+amphelia,atlantica,NA,NA,CORAL,coral,Anthozoa
+amphelia,sp.,NA,NA,CORAL,coral,Anthozoa
+antipatharia,sp.,NA,BLACK,CORAL,coral,Anthozoa
+astropsammia,sp.,NA,NA,CORAL,coral,Anthozoa
+barabattoia,sp.,NA,NA,CORAL,coral,Anthozoa
+cantharellus,sp.,NA,NA,CORAL,coral,Anthozoa
+corals,sp.,NA,NON-CITES,CORALS,coral,NA
+coscinastrea,exesa,NA,NA,CORAL,coral,Anthozoa
+coscinastrea,monile,NA,NA,CORAL,coral,Anthozoa
+coscinastrea,sp.,NA,NA,CORAL,coral,Anthozoa
+ctenella,sp.,NA,NA,CORAL,coral,Anthozoa
+faviidae,sp.,NA,NA,CORAL,coral,Anthozoa
+gorgonacea,sp.,NA,NA,CORAL,coral,Anthozoa
+gorgonea,sp.,NA,NA,CORAL,coral,Anthozoa
+helioporacea,sp.,NA,NA,CORAL,coral,Anthozoa
+helioporidae,sp.,NA,NA,CORAL,coral,Anthozoa
+maeandroseris,bottae,NA,NA,CORAL,coral,Anthozoa
+milleporidae,sp.,NA,FIRE,CORALS,coral,Hydrozoa
+nephthea,sp.,NA,NA,CORAL,coral,Anthozoa
+noncites entry,sp.,NA,NA,CORAL,coral,NA
+odontocyathus,sp.,NA,NA,CORAL,coral,Anthozoa
+parasmilia,sp.,NA,NA,CORAL,coral,Anthozoa
+platycyathus,sp.,NA,NA,CORAL,coral,Anthozoa
+poritipora,sp.,NA,NA,CORAL,coral,Anthozoa
+radianthus,sp.,NA,NA,ANEMONE,coral,Anthozoa
+radianthus,sp.,NA,SEA,ANEMONE,coral,Anthozoa
+sarcophyton,sp.,NA,NA,CORAL,coral,Anthozoa
+scleractinia,sp.,NA,STONY,CORAL,coral,Anthozoa
+stoichactis,sp.,NA,NA,ANEMONE,coral,Anthozoa
+stylasteridae,sp.,NA,NA,CORAL,coral,Hydrozoa
+stylophora,compressa,NA,CAULIFLOWER,CORAL,coral,Anthozoa
+stylophora,contorta,NA,CAULIFLOWER,CORAL,coral,Anthozoa
+stylophora,sp.,NA,CAULIFLOWER,CORAL,coral,Anthozoa
+tropidopathes,saliciformis,NA,BLACK,CORAL,coral,Hydrozoa
+tubiporidae,sp.,NA,ORGAN-PIPE,CORALS,coral,Anthozoa
+NA,NA,NA,NA,NA,coral,NA
+conchylepes,conchylepes,NA,NA,CRUSTACEAN,crustacean,Maxillopoda
+conchylepes,conchylepes,NA,NA,SHELL,crustacean,Maxillopoda
+conchylepes,conchylepes,NA,NA,BARNACLE,crustacean,Maxillopoda
+leucothoe,sp.,NA,NA,WATERFLEA,crustacean,Malacostraca
+noculacia,sp.,NA,NA,AMPHIPOD,crustacean,Malacostraca
+noncites entry,sp.,NA,NA,CRUSTACEAN,crustacean,NA
+platens,sp.,NA,NA,CRUSTACEAN,crustacean,Malacostraca
+solitariopagurus,sp.,NA,NA,CRAWFISH,crustacean,Malacostraca
+NA,NA,NA,"CRABS,LOBSTERS,",CRUSTACEANS,crustacean,Malacostraca
+NA,NA,NA,NA,NA,crustacean,NA
+asterina,sp.,NA,NA,STARFISH,echinoderms,Asteroidea
+asteroidea,sp.,NA,NA,STARFISH,echinoderms,Asteroidea
+diadema,ceylonica,NA,NA,ECHINODERM,echinoderms,Echinoidea
+diadema,ceylonica,NA,SEA,URCHIN,echinoderms,Echinoidea
+diadema,sp.,NA,NA,ECHINODERM,echinoderms,Echinoidea
+diadema,sp.,NA,SEA,URCHIN,echinoderms,Echinoidea
+NA,NA,NA,NA,NA,echinoderms,NA
+acipenseriformes,sp.,NA,NA,STURGEONS,fish,Actinopterygii
+all live tropical fish,(including goldfish),NA,NA,NA,fish,Actinopterygii
+brachydanio,sp.,NA,NA,DANIO,fish,Actinopterygii
+chaetostoma,sp.,NA,NA,CATFISH,fish,Actinopterygii
+cirrhina,sp.,NA,NA,CARP,fish,Actinopterygii
+clariidae,sp.,NA,WALKING,CATFISH,fish,Actinopterygii
+conoporoderma,sp.,NA,NA,SHARK,fish,Elasmobranchii
+elasmobranchii,sp.,NA,NA,SHARKS,fish,Elasmobranchii
+eupomacentrus,sp.,NA,BEAU,GREGORY,fish,Actinopterygii
+hypoprion,sp.,NA,NA,SHARK,fish,Elasmobranchii
+micropterus,sp.,NA,NA,BASS,fish,Actinopterygii
+noncites entry,sp.,NA,NA,FISH,fish,NA
+ophicephalus,sp.,NA,NA,SNAKEHEAD,fish,Actinopterygii
+phyllopteryx,sp.,NA,SEA,DRAGON,fish,Actinopterygii
+platichthys,sp.,NA,NA,FLOUNDER,fish,Actinopterygii
+salmonidae,sp.,NA,NA,SALMONS,fish,Actinopterygii
+sphyrnidae,sp.,NA,HAMMERHEAD,SHARK,fish,Elasmobranchii
+symphysodon,sp.,NA,DISCUS,FISH,fish,Actinopterygii
+trachichthodes,sp.,NA,NA,FISH,fish,Actinopterygii
+tropical fish,(freshwater sp.),NA,NA,NA,fish,Actinopterygii
+tropical fish,(marine sp.),NA,NA,NA,fish,Actinopterygii
+various fish,sp.,NA,COLD WATER,GAMEFISH,fish,NA
+various fish,sp.,NA,WARM WATER,GAMEFISH,fish,NA
+various fish,sp.,NA,ROUGH,FISH,fish,Actinopterygii
+various fish,sp.,NA,NA,CATFISH,fish,Actinopterygii
+NA,NA,NA,NON-CITES,FISH,fish,NA
+NA,NA,NA,MARINE GAME,FISH,fish,NA
+NA,NA,NA,FISH,ALL FISH,fish,NA
+NA,NA,NA,NA,NA,fish,NA
+athyma,perius,NA,NA,BUTTERFLY,insect,Insecta
+athyma,sp.,NA,NA,BUTTERFLY,insect,Insecta
+callicore,sp.,NA,NA,BUTTERFLY,insect,Insecta
+chelorrhina,sp.,NA,NA,BEETLE,insect,Insecta
+coleopra,sp.,NA,NA,BEETLE,insect,Insecta
+crenis,sp.,NA,NA,BUTTERFLY,insect,Insecta
+euphorus,sp.,NA,NA,WASP,insect,Insecta
+evylaeus,sp.,NA,NA,BEE,insect,Insecta
+glossina,sp.,NA,TSETSE,FLY,insect,Insecta
+glyptapanteles,indiensis,NA,NA,WASP,insect,Insecta
+glyptapanteles,sp.,NA,NA,WASP,insect,Insecta
+graphium,sp.,NA,NA,BUTTERFLY,insect,Insecta
+idolum,diabolicum,NA,NA,MANTIS,insect,Insecta
+loxostethus,sp.,NA,DARKLING,BEETLE,insect,Insecta
+megalorrhina,sp.,NA,NA,BEETLE,insect,Insecta
+mutilla,sp.,NA,VELVET,ANT,insect,Insecta
+pieris,sp.,NA,WHITE,BUTTERFLY,insect,Insecta
+polyura,sp.,NA,NA,BUTTERFLY,insect,Insecta
+pseudacteon,sp.,NA,NA,FLY,insect,Insecta
+pterostichini,sp.,NA,NA,BEETLE,insect,Insecta
+satyrium,sp.,NA,NA,BUTTERFLY,insect,Insecta
+stephanocrates,sp.,NA,NA,BEETLE,insect,Insecta
+taxiarchus,sp.,NA,NA,INSECT,insect,Insecta
+tirumala,petiverana,NA,NA,BUTTERFLY,insect,Insecta
+tirumala,sp.,NA,NA,BUTTERFLY,insect,Insecta
+zophobas,sp.,NA,DARKLING,BEETLE,insect,Insecta
+aotus,sp.,NA,NIGHT,MONKEY,mammal,Mammalia
+cetacea,sp.,NA,"WHALES,DOLPHINS",ALL CETACEANS,mammal,Mammalia
+clethrionomys,sp.,NA,RED-BACKED,MOUSE,mammal,Mammalia
+eutamias,sibiricus,NA,ASIATIC,CHIPMUNK,mammal,Mammalia
+eutamias,sp.,NA,NA,CHIPMUNK,mammal,Mammalia
+galerella,sp.,NA,NA,MONGOOSE,mammal,Mammalia
+lasiurus,sp.,NA,HAIRY-TAILED,BAT,mammal,Mammalia
+lasiurus,sp.,NA,NA,BAT,mammal,Mammalia
+mammuthus,primigenius,NA,WOOLLY,MAMMOTH,mammal,Mammalia
+mysticeti,sp.,NA,BALEEN,WHALES,mammal,Mammalia
+pinnipedia,sp.,NA,(SUBORDER),"SEALS, SEA LIONS",mammal,Mammalia
+primates,sp.,NA,NA,PRIMATES,mammal,Mammalia
+pteropus,sp.,NA,FLYING FOX,BAT,mammal,Mammalia
+pteropus,sp.,NA,NA,FLYING FOX,mammal,Mammalia
+stenella,sp.,NA,NA,DOLPHIN,mammal,Mammalia
+vampyrops,sp.,NA,NA,BAT,mammal,Mammalia
+animals,museum specimens,NA,NA,NA,other,NA
+demospongia,sp.,NA,NA,SPONGE,other,Demospongiae
+dugesia,sp.,NA,NA,PLANARIAN,other,Rhabditophora
+euspongia,sp.,NA,NA,SPONGE,other,Demospongiae
+nemertea,sp.,NA,RIBBON,WORM,other,NA
+noncites entry,sp.,NA,NA,NON CITES,other,NA
+noncites entry,sp.,NA,NA,OTHER INVERTEBRATE,other,NA
+none,none,none,NONE,NONE,other,NA
+other live inverts,in trop fish &,other shipments,NA,NA,other,NA
+xenoturbella,sp.,NA,NA,FLATWORM,other,NA
+NA,NA,NA,"(NOT LIVE,PRODUCT)",OTHER INVERTEBRATE,other,NA
+NA,NA,NA,NA,ALL SPECIES,other,NA
+NA,NA,NA,NA,NA,other,NA
+all plants,sp.,NA,NA,NA,plant,NA
+alluaudia,sp.,NA,NA,ALLUAUDIA,plant,Magnoliopsida
+avonia,sp.,NA,NA,NA,plant,Magnoliopsida
+byblis,sp.,NA,NA,BYBLIS,plant,Magnoliopsida
+cactaceae,sp.,NA,NA,CACTUS,plant,Magnoliopsida
+cereus,sp.,NA,NA,NA,plant,Magnoliopsida
+chloanthaceae,sp.,NA,NA,LAMB TAILS,plant,Magnoliopsida
+cycadaceae,sp.,NA,NA,CYCADS,plant,Cycadopsida
+hoodia,sp.,NA,NA,HOODIA,plant,Magnoliopsida
+melandrium,mongolicus,NA,NA,NA,plant,Magnoliopsida
+orchidaceae,hybrid,NA,ORCHID,HYBRID,plant,Liliopsida
+orchidaceae,sp.,NA,ORCHID,SPECIES,plant,Liliopsida
+plants,"herbariums, live",NA,NA,NA,plant,NA
+psygmorchis,sp.,NA,NA,ORCHID,plant,Liliopsida
+stangeriaceae,sp.,NA,NA,NA,plant,Cycadopsida
+abronia,sp.,NA,ARBOREAL,ALLIGATOR LIZARD,reptile,Reptilia
+boulengerina,sp.,NA,WATER,COBRA,reptile,Reptilia
+callagur,sp.,NA,PAINTED,TERRAPIN,reptile,Reptilia
+chamaeleolis,sp.,NA,FALSE,CHAMELEON,reptile,Reptilia
+cistoclemmys,sp.,NA,NA,TURTLE,reptile,Reptilia
+cosymbotus,sp.,NA,HOUSE,GECKO,reptile,Reptilia
+crocodylia,sp.,NA,"CROCODILES,ALLIG.,","CAIMANS,GAVIALS",reptile,Reptilia
+cycloderma,sp.,NA,FLAPSHELL,TURTLE,reptile,Reptilia
+cyclura,sp.,NA,GROUND,IGUANA,reptile,Reptilia
+dinodon,sp.,NA,BIG-TOOTH,SNAKE,reptile,Reptilia
+dracaena,sp.,NA,CAIMAN,LIZARD,reptile,Reptilia
+dryophis,sp.,NA,NA,SNAKE,reptile,Reptilia
+enyaliosaurus,sp.,NA,SPINY-TAILED,SWIFT,reptile,Reptilia
+gambelia,sp.,NA,LEOPARD,LIZARD,reptile,Reptilia
+gongylophis,sp.,NA,SAND,BOA,reptile,Reptilia
+grayia,sp.,NA,AFRICAN WATER,SNAKE,reptile,Reptilia
+hieremys,sp.,NA,YELLOW-HEAD TEMPLE,TURTLE,reptile,Reptilia
+homopholis,sp.,NA,VELVET,GECKO,reptile,Reptilia
+kachuga,sp.,NA,ROOFED,TURTLE,reptile,Reptilia
+lapemis,sp.,NA,SEA,SNAKE,reptile,Reptilia
+liophis,sp.,NA,GROUND,SNAKE,reptile,Reptilia
+lystrophis,semicinctus,NA,RINGED HOGNOSE,SNAKE,reptile,Reptilia
+lystrophis,sp.,NA,HOGNOSE,SNAKE,reptile,Reptilia
+masticophis,lateralis,NA,STRIPED,RACER,reptile,Reptilia
+masticophis,sp.,NA,NA,WHIPSNAKE,reptile,Reptilia
+maticora,sp.,NA,MALAYSIAN CORAL,SNAKE,reptile,Reptilia
+mehelya,sp.,NA,FILE,SNAKE,reptile,Reptilia
+morelia,sp.,NA,NA,PYTHON,reptile,Reptilia
+norops,sp.,NA,NA,IGUANA,reptile,Reptilia
+ophryoessoides,sp.,NA,KEELED,IGUANA,reptile,Reptilia
+palmatogecko,sp.,NA,NAMIB,GECKO,reptile,Reptilia
+pantodactylus,sp.,NA,MANY-FINGERED,TEIID,reptile,Reptilia
+phrynosaura,sp.,NA,TREE,IGUANA,reptile,Reptilia
+prionodactylus,sp.,NA,SLENDER,PRIONODACTYLUS,reptile,Reptilia
+pseustes,sp.,NA,PUFFING,SNAKE,reptile,Reptilia
+salvadora,sp.,NA,PATCHNOSE,SNAKE,reptile,Reptilia
+stellio,sp.,NA,ROCK,AGAMA,reptile,Reptilia
+teratolepis,sp.,NA,VIPER,GECKO,reptile,Reptilia
+zaocys,sp.,NA,KEELED RAT,SNAKE,reptile,Reptilia
+achatinella,fulgens,NA,OAHU TREE,SNAIL,shell,Gastropoda
+achatinella,sp.,NA,OAHU TREE,SNAIL,shell,Gastropoda
+astraea,sp.,NA,NA,SHELL,shell,Gastropoda
+chione,sp.,NA,NA,CLAM,shell,Bivalvia
+chione,sp.,NA,NA,VENUS,shell,Bivalvia
+comptopallium,sp.,NA,NA,SHELL,shell,Bivalvia
+cristaria,discoidea,NA,NA,SHELL,shell,Bivalvia
+cristaria,sp.,NA,NA,SHELL,shell,Bivalvia
+donax,sp.,NA,NA,SHELL,shell,Bivalvia
+ficus,sp.,NA,NA,SHELL,shell,Gastropoda
+ficus,sp.,NA,NA,FIGSNAIL,shell,Gastropoda
+fimbriata,fimbriata,NA,NA,SHELL,shell,Gastropoda
+fimbriata,sp.,NA,NA,SHELL,shell,Gastropoda
+helicostyla,annulata,NA,LAND,SNAIL,shell,Gastropoda
+helicostyla,sp.,NA,LAND,SNAIL,shell,Gastropoda
+meleagrina,margaritifera,NA,NA,SHELL,shell,Bivalvia
+meleagrina,margaritifera,NA,NA,OYSTER,shell,Bivalvia
+meleagrina,sp.,NA,NA,SHELL,shell,Bivalvia
+meleagrina,sp.,NA,NA,OYSTER,shell,Bivalvia
+melocorona,sp.,NA,NA,SHELL,shell,Gastropoda
+melocorona,sp.,NA,NA,SNAIL,shell,Gastropoda
+mitra,sp.,NA,MITER,SHELL,shell,Gastropoda
+mitrella,sp.,NA,DOVE,SHELL,shell,Gastropoda
+monodonta,sp.,NA,NA,SHELL,shell,Gastropoda
+muricoidea,sp.,NA,NA,SHELL,shell,Gastropoda
+mytilopsis,sp.,NA,FALSE,MUSSEL,shell,Bivalvia
+noncites entry,sp.,NA,NA,MOLLUSCS,shell,NA
+nymphophilus,minckleyi,NA,NYMPHOPHILUS DE MI,CARACOL,shell,Gastropoda
+patella,sp.,NA,LIMPET,SHELL,shell,Gastropoda
+pernula,secretia,NA,NA,SHELL,shell,NA
+proptera,sp.,NA,NA,SHELL,shell,Bivalvia
+pterocera,sp.,NA,NA,SHELL,shell,Gastropoda
+semele,sp.,NA,NA,CLAM,shell,Bivalvia
+semisalsa,sp.,NA,NA,SHELL,shell,Gastropoda
+tridacnidae,sp.,NA,GIANT,CLAM,shell,Bivalvia
+triforis,sp.,NA,NA,SNAIL,shell,Gastropoda
+triphora,sp.,NA,NA,SHELL,shell,Gastropoda
+triphoris,sp.,NA,NA,SNAIL,shell,Gastropoda
+tritonia,sp.,NA,SEA,SLUG,shell,Gastropoda
+viveora,sp.,NA,TRAPDOOR,SNAIL,shell,Gastropoda
+zaplagius,navicula,NA,LANDSNAIL,SHELL,shell,Gastropoda
+NA,NA,NA,SHELLS,MOLLUSCS,shell,NA
+NA,NA,NA,NA,NA,shell,NA
+centruroides,sp.,NA,NA,SCORPION,spider,Arachnida
+centruroides,sp.,NA,BARK,SCORPION,spider,Arachnida
+chilocosmia,sp.,NA,NA,SPIDER,spider,Arachnida
+melopoeus,minax,NA,NA,SPIDER,spider,Arachnida
+melopoeus,sp.,NA,NA,SPIDER,spider,Arachnida
+palamnaeus,fulvipes,NA,NA,SCORPION,spider,Arachnida
+palamnaeus,sp.,NA,NA,SCORPION,spider,Arachnida
+pseudotheraphosa,apophysis,NA,NA,SPIDER,spider,Arachnida
+rhechostica,sp.,NA,NA,TARANTULA,spider,Arachnida
+solpugida,sp.,NA,NA,SPIDER,spider,Arachnida
+solpugida,sp.,NA,SUN,SPIDER,spider,Arachnida
+acari,sp.,NA,NA,NA,NA,Arachnida
+accipitridae,sp.,NA,BALD AND GOLDEN,EAGLES,NA,Aves
+achaster,sp.,NA,MUSHROOM,CORAL,NA,NA
+acrididae,sp.,NA,NA,NA,NA,Insecta
+actaea,sp.,NA,NA,NA,NA,Magnoliopsida
+actiniaria,sp.,NA,NA,NA,NA,Anthozoa
+actinodiscus,sp.,NA,MUSHROOM,CORAL,NA,Anthozoa
+afrana,sp.,NA,RIVER,FROG,NA,Amphibia
+agrostoma,philipdinarium,NA,NA,SHELL,NA,NA
+akymnopellis,chilensis,NA,NA,NA,NA,Chilopoda
+amnirana,sp.,NA,NA,FROG,NA,Amphibia
+amphipoda,sp.,NA,NA,NA,NA,Malacostraca
+ancylomenes,pedersoni,NA,NA,NA,NA,Malacostraca
+anthelia,sp.,NA,NA,CORAL,NA,Anthozoa
+antillipeltis,darlingtoni,NA,NA,NA,NA,Insecta
+antillipeltis,maculata,NA,NA,NA,NA,Insecta
+antillipeltis,pubescens,NA,NA,NA,NA,Insecta
+anura,sp.,NA,NA,NA,NA,Amphibia
+aphroditidae,sp.,NA,NA,NA,NA,Polychaeta
+arachnidae,sp.,NA,NA,NA,NA,Arachnida
+archaeoprepona,demophon,NA,NA,BUTTERFLY,NA,Insecta
+archaeoprepona,sp.,NA,NA,BUTTERFLY,NA,Insecta
+ascaris,lumbricoides,NA,NA,ROUNDWORM,NA,Secernentea
+ascaris,sp.,NA,NA,ROUNDWORM,NA,Secernentea
+ascidiacea,sp.,NA,NA,NA,NA,Ascidiacea
+asperitas,sp.,NA,LAND,SNAIL,NA,Gastropoda
+aspites,deplorata,NA,NA,NA,NA,NA
+asterinidae,sp.,NA,NA,NA,NA,Asteroidea
+asterope,sp.,NA,NA,BUTTERFLY,NA,Insecta
+atyopsis,moluccensis,NA,ASIAN FAN,SHRIMP,NA,Malacostraca
+atyopsis,moluccensis,NA,NA,NA,NA,Malacostraca
+austropurcellia,sp.,NA,NA,NA,NA,Arachnida
+balanidae,sp.,NA,NA,NA,NA,Maxillopoda
+bambusicola,sp.,NA,NA,BAMBOO-PARTRIDGE,NA,Aves
+batillus,cornutus,NA,HORNED,TURBAN,NA,Gastropoda
+batis,sp.,NA,NA,BATIS,NA,Aves
+bivalvia,sp.,NA,NA,NA,NA,Bivalvia
+bothriopsis,sp.,NA,FOREST PIT,VIPER,NA,Reptilia
+brachyura,sp.,NA,NA,NA,NA,Malacostraca
+brugia,malayi,NA,NA,ROUNDWORM,NA,Secernentea
+cactospiza,pallidus,NA,NA,NA,NA,Aves
+callicore,excelsior,NA,NA,NA,NA,Insecta
+callicore,hesperis,NA,NA,NA,NA,Insecta
+callicore,hystaspes,NA,NA,NA,NA,Insecta
+capitellidae,sp.,NA,NA,NA,NA,Polychaeta
+carabidae,sp.,NA,NA,NA,NA,Insecta
+catacanthus,incarnatus,NA,MAN BEETLE,INSECT,NA,Insecta
+cavernularia,sp.,NA,NA,SEA PEN,NA,Anthozoa
+cephalopoda,sp.,NA,NA,NA,NA,Cephalopoda
+cerambycinae,sp.,NA,NA,NA,NA,Insecta
+cercomela,sp.,NA,NA,CHAT,NA,Aves
+chaetostoma,sp.,NA,NA,CATFISH,NA,Actinopterygii
+chalcidoidea,sp.,NA,PARASITIC,WASP,NA,Insecta
+chalina,sp.,NA,NA,SPONGE,NA,Demospongiae
+chilopoda,sp.,NA,NA,CENTIPEDE,NA,Chilopoda
+chiroptera,sp.,NA,NA,NA,NA,Mammalia
+chloropeta,sp.,NA,YELLOW,WARBLER,NA,Aves
+chondrichthyes,sp.,NA,NA,NA,NA,NA
+chordata,sp.,NA,NA,NA,NA,NA
+chulla,brown,NA,NA,NA,NA,Gastropoda
+cicadidae,sp.,NA,NA,NA,NA,Insecta
+cicindelidae,sp.,NA,NA,NA,NA,Insecta
+cirripedia,sp.,NA,NA,NA,NA,Maxillopoda
+coleoptera,sp.,NA,NA,NA,NA,Insecta
+colubridae,sp.,NA,NA,NA,NA,Reptilia
+conchylepes,sp.,NA,NA,BARNACLE,NA,Maxillopoda
+cornularia,sp.,NA,NA,CORAL,NA,Anthozoa
+crinoidea,sp.,NA,NA,NA,NA,Crinoidea
+cristaria,discoidea,NA,NA,NA,NA,Bivalvia
+cryptomphalus,aspersus,NA,NA,NA,NA,Gastropoda
+crypturellus,sp.,NA,NA,TINAMOU,NA,Aves
+crytomay,grissotti,NA,NA,NA,NA,NA
+curculionidae,sp.,NA,NA,NA,NA,Insecta
+cymbiolacca,pulchra,NA,NA,NA,NA,Gastropoda
+cypraeidae,sp.,NA,NA,NA,NA,Gastropoda
+cypraeoidea,sp.,NA,NA,NA,NA,Gastropoda
+cyprinodontoidei,sp.,NA,NA,NA,NA,Actinopterygii
+dendrochirotida,sp.,NA,NA,NA,NA,Holothuroidea
+dendroica,sp.,NA,NA,WARBLER,NA,Aves
+dermaptera,sp.,NA,NA,NA,NA,Insecta
+diplommatinidae,sp.,NA,NA,NA,NA,Gastropoda
+diplopoda,sp.,NA,NA,NA,NA,Diplopoda
+diptera,sp.,NA,NA,NA,NA,Insecta
+dipylidium,caninum,NA,CUCUMBER,TAPEWORM,NA,Cestoda
+disogmus,sp.,NA,NA,WASP,NA,Insecta
+dominamaria,sp.,NA,NA,NA,NA,Gastropoda
+dryadophis,sp.,NA,FOREST,RACER,NA,Reptilia
+drymophila,sp.,NA,NA,ANTBIRD,NA,Aves
+dryonastes,courtoisi,NA,NA,NA,NA,Aves
+echinellopsis,grandinatus,NA,NA,NA,NA,Gastropoda
+echinoidea,sp.,NA,NA,NA,NA,Echinoidea
+edentulina,sp.,NA,NA,SHELL,NA,Gastropoda
+edentulina,usambarensis,NA,NA,SHELL,NA,Gastropoda
+ehanna,asinintea,NA,NA,NA,NA,NA
+elapidae,sp.,NA,NA,NA,NA,Reptilia
+elasmobranchii,sp.,NA,SHARK,TOOTH,NA,Elasmobranchii
+enantia,sp.,NA,NA,BUTTERFLY,NA,Insecta
+enteromorpha,sp.,NA,NA,NA,NA,Ulvophyceae
+euhadra,herklotsi,NA,JAPANESE LAND,SNAIL,NA,Gastropoda
+euhadra,peliomphala,NA,NA,NA,NA,Gastropoda
+eurypelma,sp.,NA,NA,TARANTULA,NA,Arachnida
+eurypelma,spinicrus,NA,NA,TARANTULA,NA,Arachnida
+eurypelma,spinicrus,NA,NA,NA,NA,Arachnida
+ficus,gracilis,NA,GRACEFUL,FIGSHELL,NA,Gastropoda
+fish ectoparasites,invertebrates,NA,NA,NA,NA,NA
+formicidae,sp.,NA,NA,NA,NA,Insecta
+freshwater fish,freshwater fish,NA,NA,NA,NA,NA
+globorentonium,plaumanni,NA,NA,NA,NA,Insecta
+glyphis,gangeticus,NA,GANGES,SHARK,NA,Elasmobranchii
+glyphis,sp.,NA,RIVER,SHARK,NA,Elasmobranchii
+glyphis,sp.,NA,NA,NA,NA,Elasmobranchii
+gobiidae,sp.,NA,NA,NA,NA,Actinopterygii
+gomphus,sp.,NA,NA,DRAGONFLY,NA,Insecta
+graphosoma,rubrolineatum,NA,RED STRIPED SHIELD,BUG,NA,Insecta
+graphosoma,sp.,NA,SHIELD,BUG,NA,Insecta
+gymnotiformes,sp.,NA,NA,NA,NA,Actinopterygii
+halocaridinides,trigonophthalma,NA,NA,NA,NA,Malacostraca
+hamadryas,sp.,NA,CRACKER,BUTTERFLY,NA,Insecta
+harmonia,sp.,NA,NA,NA,NA,Insecta
+helicarionidae,sp.,NA,NA,NA,NA,Gastropoda
+helicostyla,partuloides,NA,NA,NA,NA,Gastropoda
+hemiptera,sp.,NA,NA,NA,NA,Insecta
+heraclides,sp.,NA,NA,BUTTERFLY,NA,Insecta
+hersilia,sp.,NA,NA,SPIDER,NA,Arachnida
+holothuroidea,sp.,NA,NA,NA,NA,Holothuroidea
+hydrophilus,sp.,NA,WATER SCAVENGER,BEETLE,NA,Insecta
+hymenoptera,sp.,NA,NA,NA,NA,Insecta
+inachis,io,NA,PEACOCK,BUTTERFLY,NA,Insecta
+inezia,sp.,NA,NA,TYRANNULET,NA,Aves
+irregularia,sp.,NA,NA,NA,NA,Echinoidea
+isididae,sp.,NA,NA,NA,NA,Anthozoa
+kaniska,canace,NA,BLUE ADMIRAL,BUTTERFLY,NA,Insecta
+laparus,doris,NA,NA,NA,NA,Insecta
+lavigeria,sp.,NA,NA,NA,NA,Gastropoda
+lepidoptera,sp.,NA,NA,NA,NA,Insecta
+lexias,dirtea,NA,ARCHDUKE,BUTTERFLY,NA,Insecta
+lexias,pardalis,NA,ARCHDUKE,BUTTERFLY,NA,Insecta
+lexias,satrapes,NA,ARCHDUKE,BUTTERFLY,NA,Insecta
+lexias,sp.,NA,ARCHDUKE,BUTTERFLY,NA,Insecta
+liophis,miliaris,NA,NA,NA,NA,Reptilia
+liposarcus,sp.,NA,NA,NA,NA,Actinopterygii
+litomosoides,sigmodontis,NA,NA,NA,NA,Secernentea
+lohita,grandis,NA,NA,NA,NA,Insecta
+lophocarenum,sp.,NA,NA,SPIDER,NA,Arachnida
+lophostoma,sp.,NA,ROUND-EARED,BAT,NA,Mammalia
+loricaria,sp.,NA,NA,CATFISH,NA,Actinopterygii
+lucinidae,sp.,NA,NA,NA,NA,Bivalvia
+luhanos,linne,NA,NA,NA,NA,NA
+macrochirus,praetor,NA,NA,NA,NA,Insecta
+maizaniella,sp.,NA,NA,SHELL,NA,Gastropoda
+mammalia,sp.,NA,NA,NA,NA,Mammalia
+mansonia,uniformis,NA,NA,NA,NA,Insecta
+manta,alfredi,NA,REEF MANTA,RAY,NA,Elasmobranchii
+manta,sp.,NA,MANTA,RAY,NA,Elasmobranchii
+mayamastax,sp.,NA,NA,NA,NA,Insecta
+membracidae,sp.,NA,NA,NA,NA,Insecta
+metagyndes,sp.,NA,NA,HARVESTMAN,NA,Arachnida
+mitra,rugosum,NA,NA,NA,NA,Gastropoda
+moduza,procris,NA,NA,BUTTERFLY,NA,Insecta
+moduza,sp.,NA,NA,BUTTERFLY,NA,Insecta
+mohona,ochrocephala,NA,NA,NA,NA,Aves
+mollusca,sp.,NA,NA,NA,NA,NA
+moniezia,expansa,NA,DBLE-PORE RUMINANT,TAPEWORM,NA,Cestoda
+moniezia,sp.,NA,NA,TAPEWORM,NA,Cestoda
+morus,sp.,NA,NA,GANNET,NA,Aves
+mugilidae,sp.,NA,NA,NA,NA,Actinopterygii
+muscelimis,sp.,NA,NA,NA,NA,NA
+myliobatoidei,sp.,NA,NA,NA,NA,Elasmobranchii
+myrmeleontidae,sp.,NA,NA,NA,NA,Insecta
+neuroptera,sp.,NA,NA,NA,NA,Insecta
+ninia,sp.,NA,COFFEE,SNAKE,NA,Reptilia
+noncites entry,sp.,NA,NA,NON CITES,NA,NA
+noncites entry,sp.,NA,NA,NA,NA,NA
+none,none,NA,NA,NA,NA,NA
+nordotis,discus,NA,NA,NA,NA,Gastropoda
+nordotis,sp.,NA,NA,ABALONE,NA,Gastropoda
+nototriphyllus,araucania,NA,NA,NA,NA,Insecta
+nyctimystes,sp.,NA,BIG-EYED,FROG,NA,Amphibia
+nylanderia,sp.,NA,NA,NA,NA,Insecta
+obba,bigonia,NA,NA,NA,NA,Gastropoda
+oceanodroma,sp.,NA,NA,STORM-PETREL,NA,Aves
+odonata,sp.,NA,NA,NA,NA,Insecta
+oides,sp.,NA,NA,BEETLE,NA,Insecta
+omalacantha,bicornuta,NA,NA,NA,NA,Malacostraca
+ophioderma,sp.,NA,NA,BRITTLE STAR,NA,Ophiuroidea
+ortalis,sp.,NA,NA,CHACHALACA,NA,Aves
+orthoptera,sp.,NA,NA,NA,NA,Insecta
+ostreidae,sp.,NA,NA,NA,NA,Bivalvia
+other live inverts,inverts,other shipments,NA,NA,NA,NA
+otodus,obliquus,NA,MACKEREL,SHARK,NA,Elasmobranchii
+pachyclavularia,sp.,NA,STAR,POLYP,NA,Anthozoa
+pachyclavularia,violacea,NA,NA,NA,NA,Anthozoa
+paedophryne,swiftorum,NA,NA,NA,NA,Amphibia
+paphia,sp.,NA,NA,CLAM,NA,Bivalvia
+paracucujus,rostratus,NA,NA,NA,NA,Insecta
+parisoma,layardi,NA,LAYARD'S,WARBLER,NA,Aves
+parisoma,sp.,NA,NA,WARBLER,NA,Aves
+parisoma,subcaeruleum,NA,CHESTNUT-VENTED,WARBLER,NA,Aves
+patallus,mollis,NA,NA,NA,NA,Holothuroidea
+patallus,mollis,NA,NA,SEA CUCUMBER,NA,Holothuroidea
+pathysa,antiphates,NA,FIVE BAR SWORDTAIL,BUTTERFLY,NA,Insecta
+pathysa,nomius,NA,NA,NA,NA,Insecta
+pathysa,nomius,NA,SPOT SWORDTAIL,BUTTERFLY,NA,Insecta
+pathysa,sp.,NA,SWORDTAIL,BUTTERFLY,NA,Insecta
+patinigera,magellanica,NA,NA,NA,NA,Gastropoda
+pazala,euroa,NA,NA,NA,NA,Insecta
+pedunculata,sp.,NA,NA,NA,NA,Maxillopoda
+peripatus,sp.,NA,VELVET,WORM,NA,NA
+photololigo,edulis,NA,NA,NA,NA,Cephalopoda
+phyllidiidae,sp.,NA,NA,NA,NA,Gastropoda
+phyllodoce,sp.,NA,NA,NA,NA,Polychaeta
+pinnidae,sp.,NA,NA,NA,NA,Bivalvia
+platens,omnodum,NA,NA,NA,NA,Malacostraca
+platens,omnodum,NA,NA,CRUSTACEAN,NA,Malacostraca
+pleuronectiformes,sp.,NA,NA,NA,NA,Actinopterygii
+poecilocoris,latus,NA,STINK,BUG,NA,Insecta
+poecilocoris,sp.,NA,STINK,BUG,NA,Insecta
+polynoidae,sp.,NA,NA,NA,NA,Polychaeta
+porifera,sp.,NA,NA,NA,NA,NA
+pristidae,sp.,NA,NA,SAWFISHES,NA,Elasmobranchii
+pseudosciaena,sp.,NA,NA,CROAKER,NA,Actinopterygii
+pterourus,sp.,NA,NA,BUTTERFLY,NA,Insecta
+pupinidae,sp.,NA,NA,NA,NA,Gastropoda
+purcellia,sp.,NA,NA,HARVESTMAN,NA,Arachnida
+ranzania,bertolonii,NA,NA,NA,NA,Insecta
+ranzania,sp.,NA,NA,SUNFISH,NA,Actinopterygii
+re-export,re-export,NA,NA,NA,NA,NA
+rhacophorus,helenae,NA,NA,NA,NA,Amphibia
+rhacophorus,javanus,NA,JAVA FLYING,FROG,NA,Amphibia
+rhizostomeae,sp.,NA,NA,NA,NA,Scyphozoa
+rhynchotragus,kirkii,NA,NA,DIK-DIK,NA,Mammalia
+rhytimna,sp.,NA,RUSTY-RED,HUNTSMAN,NA,Arachnida
+rodentia,sp.,NA,NA,NA,NA,Mammalia
+ryssota,lamarckiana,NA,NA,SHELL,NA,Gastropoda
+ryssota,ovum,NA,NA,SHELL,NA,Gastropoda
+ryssota,sp.,NA,NA,SHELL,NA,Gastropoda
+sabellidae,sp.,NA,NA,NA,NA,Polychaeta
+scapharca,sp.,NA,NA,CLAM,NA,Bivalvia
+scarabaeidae,sp.,NA,NA,NA,NA,Insecta
+schizocarpus,faini,NA,NA,NA,NA,Arachnida
+schizocarpus,testiculatus,NA,NA,NA,NA,Arachnida
+schoutedenella,sp.,NA,SCREECHING,FROG,NA,Amphibia
+scleractinia,sp.,NA,NA,NA,NA,Anthozoa
+scorpaenidae,sp.,NA,NA,NA,NA,Actinopterygii
+serpentes,sp.,NA,NA,NA,NA,Reptilia
+sicydium,sp.,NA,NA,GOBY,NA,Actinopterygii
+siluriformes,sp.,NA,NA,NA,NA,Actinopterygii
+spermestes,cucullata,NA,NA,NA,NA,Aves
+spheniscinae,sp.,NA,NA,NA,NA,Aves
+spreo,sp.,NA,NA,STARLING,NA,Aves
+spreo,superbus,NA,NA,NA,NA,Aves
+staphylinidae,sp.,NA,NA,NA,NA,Insecta
+stenonycteris,lanosus,NA,NA,NA,NA,Mammalia
+stenophis,sp.,NA,TREE,SNAKE,NA,Reptilia
+stizostedion,sp.,NA,NA,PIKE,NA,Actinopterygii
+streblidae,sp.,NA,NA,NA,NA,Insecta
+stylocellus,sp.,NA,NA,STYLOCELLUS,NA,Arachnida
+sulculus,diversicolor,NA,NA,NA,NA,Gastropoda
+sulculus,diversicolor,NA,NA,ABALONE,NA,Gastropoda
+tadpole,sp. 1,NA,NA,NA,NA,Amphibia
+tadpole,sp. 10,NA,NA,NA,NA,Amphibia
+tadpole,sp. 11,NA,NA,NA,NA,Amphibia
+tadpole,sp. 2,NA,NA,NA,NA,Amphibia
+tadpole,sp. 3,NA,NA,NA,NA,Amphibia
+tadpole,sp. 4,NA,NA,NA,NA,Amphibia
+tadpole,sp. 5,NA,NA,NA,NA,Amphibia
+tadpole,sp. 6,NA,NA,NA,NA,Amphibia
+tadpole,sp. 7,NA,NA,NA,NA,Amphibia
+tadpole,sp. 8,NA,NA,NA,NA,Amphibia
+tadpole,sp. 9,NA,NA,NA,NA,Amphibia
+taenotriccus,andrei,NA,NA,NA,NA,Aves
+talpidae,sp.,NA,NA,NA,NA,Mammalia
+tarphonomus,harterti,NA,NA,NA,NA,Aves
+teleostei,sp.,NA,NA,NA,NA,Actinopterygii
+tenebrionidae,sp.,NA,NA,NA,NA,Insecta
+terebellidae,sp.,NA,NA,NA,NA,Polychaeta
+teretristis,fernandina,NA,NA,NA,NA,Aves
+teuthida,sp.,NA,NA,NA,NA,Cephalopoda
+theraphosinae,cuzco,NA,NA,NA,NA,Arachnida
+theraphosinae,panama,NA,NA,NA,NA,Arachnida
+theridiidae,sp.,NA,NA,NA,NA,Arachnida
+thraupidae,sp.,NA,NA,NA,NA,Aves
+thysanoptera,sp.,NA,NA,NA,NA,Insecta
+tirumala,limniace,NA,BLUE TIGER,BUTTERFLY,NA,Insecta
+trochozonites,sp.,NA,NA,SHELL,NA,Gastropoda
+tropical fish,(marine sp.),NA,NA,NA,NA,Actinopterygii
+tropical fish,(marine sp.),egg,NA,NA,NA,Actinopterygii
+truncatellidae,sp.,NA,NA,NA,NA,Gastropoda
+trygon,sp.,NA,NA,RAY,NA,Elasmobranchii
+uniandra,contradens,NA,NA,NA,NA,Bivalvia
+unknown,mammalian,NA,NA,NA,NA,Mammalia
+unknown,sp.,NA,NA,NA,NA,NA
+verongida,sp.,NA,NA,NA,NA,Demospongiae
+xancus,sp.,NA,NA,CHANK,NA,Gastropoda
+xenobatrachus,sp.,NA,FANGED,FROG,NA,Amphibia
+yersinia,sp.,NA,NA,NA,NA,Gammaproteobacteria
+NA,NA,NA,NA,NA,NA,NA
+NA,NA,NA,TROPICAL,HARDWOOD,NA,NA

@@ -13,13 +13,14 @@ jobs:
             - deps1-$R_VERSION
       - run:
           command: |
+            R -e "devtools::install_github('cran/MonetDBLite@0.6.0')"
             R -e "devtools::install_deps(dependencies=TRUE)"
             R -e "devtools::install_cran('goodpractice')"
       - run:
           command: |
             R -e 'devtools::check()'
       - save_cache:
-          key: deps1-{{ .Branch }}-{{ checksum "DESCRIPTION" }}-{{ checksum ".circleci/config.yml" }}
+          key: deps1-$R_VERSION-{{ .Branch }}-{{ checksum "DESCRIPTION" }}-{{ checksum ".circleci/config.yml" }}
           paths:
             - "/usr/local/lib/R/site-library"
       - run:
@@ -32,4 +33,10 @@ jobs:
       - store_artifacts:
           path: /root/main/artifacts/
           destination: artifacts
+      - deploy:
+          name: "Deploy Shiny App"
+          command: |
+            Rscript /root/main/inst/shiny/preprocess.R
+            scp -r -P 22022 -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no /root/main/inst/shiny/* noamross@aegypti.ecohealthalliance.org:~/ShinyApps/lemisapp/
+
 
