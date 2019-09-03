@@ -70,9 +70,11 @@ for (i in file.list) {
 # to generate yearly-level LEMIS CSV files
 # The information we need are the years of data and the Excel filenames
 # associated with each year
-df.for.looping <- data.frame(
-  year = dir(path = h("data-raw", "raw_data")), stringsAsFactors = FALSE
-) %>%
+df.for.looping <-
+  data.frame(
+    year = dir(path = h("data-raw", "raw_data")),
+    stringsAsFactors = FALSE
+  ) %>%
   group_by(year) %>%
   summarize(
     files = list(

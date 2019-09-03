@@ -194,7 +194,11 @@ nrow(lemis[lemis$import_export != "I", ])/nrow(lemis)
 # Remove any "E", "T", and NA records from the 'import_export' column,
 # leaving only importation data
 lemis <- lemis %>%
-  filter(import_export != "E", import_export != "T", !is.na(import_export))
+  filter(
+    import_export != "E",
+    import_export != "T",
+    !is.na(import_export)
+  )
 
 assert_that(sum(lemis$import_export == "I") == nrow(lemis))
 
@@ -257,12 +261,13 @@ assert_that(nrow(lemis) == (lemis.row.count - dups.NA.count))
 # value data present and some other field altered (for example, 'country_origin'
 # or 'purpose' may have changed between the two entries)
 manually.curated.duplicates.for.removal <-
-  read_csv(h("data-raw", "data", "manually_curated_duplicates_for_removal.csv"),
-           col_types = list(
-             subspecies = col_character(),
-             value = col_double(),
-             file_num = col_character()
-           )
+  read_csv(
+    h("data-raw", "data", "manually_curated_duplicates_for_removal.csv"),
+    col_types = list(
+      subspecies = col_character(),
+      value = col_double(),
+      file_num = col_character()
+    )
   ) %>%
   mutate(
     disposition_date = as.Date(disposition_date, format = "%m/%d/%y"),
@@ -974,5 +979,5 @@ write_csv(
 # Directory cleanup
 
 # Delete subdirectories containing intermediate LEMIS files, if desired
-# unlink(h("data-raw", "by_year"), recursive = TRUE)
+# unlink(h("data-raw", "raw_data"), recursive = TRUE)
 # unlink(h("data-raw", "csv_by_year"), recursive = TRUE)

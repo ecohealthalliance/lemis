@@ -1,11 +1,15 @@
-# lemis 2.0.0
+# lemis 1.0.0
 
-This is the first major update to the **lemis** package. Changes include:
+This is the first version of the **lemis** data intended for public release.
+
+# lemis 0.2.0
+
+This is the first update to the **lemis** package. Changes include:
 
 * Addition of data from late 2013 and all of 2014.
-* A major reorganization of **lemis** data processing for release. Briefly, all data importation and cleaning steps are now automated with scripts located in the `data-raw/` subdirectory. While this should be mostly irrelevant to the end user, it means that all data processing code is now fully contained within the **lemis** package repository. This should make it easier to incorporate future data into the pipeline.
+* A major reorganization of **lemis** data processing. Briefly, all data importation and cleaning steps are now automated with scripts located in the `data-raw/` subdirectory. While this should be mostly irrelevant to the end user, it means that all data processing code is now fully contained within the **lemis** package repository. This should make it easier to incorporate future data into the pipeline.
 * Improved error handling for non-standard data values. Previously, some records with non-standard values in specific fields were dropped from the data. Now the **lemis** cleaning workflow incorporates error checking for non-standard values across all the fields of data for which valid values are described in USFWS spreadsheets. Non-standard values are converted to `non-standard value` (as opposed to being converted to `NA` or dropped) and a `cleaning_notes` column has been added to describe the original value.
-* Note that data versions from previous releases can still be had with `lemis_data('v1.0.0')`
+* Note that data versions from previous releases can still be had with `lemis_data('0.1.0')`
 
 ## Bug fixes
 
@@ -16,6 +20,6 @@ This is the first major update to the **lemis** package. Changes include:
 * Reduced dependencies by removing tidyverse package
 * Updated test infrastructure to R 3.5.1
 
-# lemis 1.0.0
+# lemis 0.1.0
 
-* Initial release
+* Initial pre-release version of the **lemis** data

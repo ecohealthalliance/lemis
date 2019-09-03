@@ -53,8 +53,8 @@ taxa_code <-
   distinct() %>%
   # Filter out species_code values that lead to erroneous taxa calls
   filter(
-    !(species_code_taxa %in% c("AGS?", "AMCY", "HSQU",
-                               "HTS?", "MEGM", "PLOM"))
+    !(species_code_taxa %in%
+        c("AGS?", "AMCY", "HSQU", "HTS?", "MEGM", "PLOM"))
   )
 
 # Join this table with the LEMIS data

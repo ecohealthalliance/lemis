@@ -21,11 +21,10 @@ lemis_for_compression <- read_csv(
     control_number = col_integer(),
     quantity = col_integer(),
     value = col_integer(),
-    disposition_date = col_date(format = ""),
+    disposition_date = col_date(format = "%Y-%m-%d"),
     disposition_year = col_integer(),
-    shipment_date = col_date(format = ""),
-    shipment_year = col_integer(),
-    quantity_original_value = col_integer()
+    shipment_date = col_date(format = "%Y-%m-%d"),
+    shipment_year = col_integer()
   )
 )
 
@@ -33,6 +32,6 @@ lemis_for_compression <- read_csv(
 write_fst(lemis_for_compression, h("data-raw", "lemis.fst"), compress = 100)
 
 # Release the compressed data
-# lemis:::lemis_release(description = "First major package update (v2.0.0)",
+# lemis:::lemis_release(description = "First package data for public release (v1.0.0)",
 #                       filename = h("data-raw", "lemis.fst"),
 #                       target = "master", ignore_dirty = FALSE)
