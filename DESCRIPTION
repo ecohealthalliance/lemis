@@ -4,9 +4,9 @@ Title: The LEMIS Wildlife Trade Database
 Version: 1.0.0
 Authors@R: c(
     person("Noam", "Ross", , "ross@ecohealthalliance.org", role = c("aut", "cre")),
+    person("Evan A.", "Eskew", , "eskew@ecohealthalliance.org", role = c("aut")),
     person("Allison M.", "White", , "white@ecohealthalliance.org", role = c("aut")),
     person("Carlos", "Zambrana-Torrelio", , "zambrana@ecohealthalliance.org", role = c("aut")),
-    person("Evan A.", "Eskew", , "eskew@ecohealthalliance.org", role = c("aut")),
     person("EcoHealth Alliance", role="cph"))
 Description: Provides cleaned data and metadata for the US Fish and Wildlife
     Service's Law Enforcement Management Information System (LEMIS) data on 

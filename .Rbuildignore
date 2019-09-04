@@ -9,3 +9,5 @@
 ^\.circleci$
 ^\.lintr$
 ^\.httr-oauth$
+^doc$
+^Meta$

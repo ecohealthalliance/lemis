@@ -24,9 +24,9 @@ Useful links:
 
 Authors:
 \itemize{
+  \item Evan A. Eskew \email{eskew@ecohealthalliance.org}
   \item Allison M. White \email{white@ecohealthalliance.org}
   \item Carlos Zambrana-Torrelio \email{zambrana@ecohealthalliance.org}
-  \item Evan A. Eskew \email{eskew@ecohealthalliance.org}
 }
 
 Other contributors:

@@ -1,6 +1,6 @@
 ---
 title: "The LEMIS Database"
-author: "Noam Ross, Allison White, Carlos Zambrana-Torrelio, Evan Eskew"
+author: "Noam Ross, Evan A. Eskew, Allison M. White, Carlos Zambrana-Torrelio"
 date: "`r Sys.Date()`"
 output:
   html_document:
