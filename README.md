@@ -12,7 +12,7 @@ The **lemis** R package provides access to the United States Fish and
 Wildlife Service’s (USFWS) Law Enforcement Management Information System
 (LEMIS) data on wildlife and wildlife product imports into the US. This
 data was obtained via more than 14 years of Freedom of Information Act
-(FOIA) requests by EcoHealth Alliance. Our [paper (Smith et.
+(FOIA) requests by EcoHealth Alliance. Our [paper (Smith et
 al. 2017)](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5357285/)
 provides a broad introduction to this data and its relevance to
 infectious disease research specifically.

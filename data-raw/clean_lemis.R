@@ -142,6 +142,11 @@ hidden.rows <- hidden.rows %>%
     vars(colnames(.)),
     list(~ ifelse(. == "" | . == " ", NA_character_, .))
   ) %>%
+  # Change date string formatting
+  mutate(
+    disposition_date = as.character(as.Date(disposition_date, format = "%m/%d/%Y")),
+    shipment_date = as.character(as.Date(shipment_date, format = "%m/%d/%Y")),
+  ) %>%
   # And indicate "file_num" is 1 for these records
   mutate(file_num = "1")
 
@@ -825,7 +830,7 @@ lemis <- lemis %>%
     disposition_year = format(disposition_date, "%Y"),
     shipment_year = format(shipment_date, "%Y"),
     disposition_date = case_when(
-      # clean cases where "disposition_date" is far later than "shipment_date"
+      # clean cases where 'disposition_date' is far later than 'shipment_date'
       shipment_date == "2012-02-13" & disposition_date == "2016-02-16" ~
         "2012-02-16",
       shipment_date == "2014-06-15" & disposition_date == "2017-06-17" ~
@@ -856,7 +861,7 @@ lemis <- lemis %>%
         str_replace(disposition_date, "3004", "2004"),
       shipment_date == "2003-12-28" & disposition_date == "5004-01-06" ~
         "2004-01-06",
-      # clean cases where "disposition_date" is far earlier than "shipment_date"
+      # clean cases where 'disposition_date' is far earlier than 'shipment_date'
       disposition_date == "1900-01-01" ~ NA_character_,
       disposition_date == "1933-07-15" ~ NA_character_,
       (shipment_year == "2003" | shipment_year == "2004") &
@@ -890,8 +895,7 @@ for(i in 1:nrow(date.corrections.file)) {
     date.corrections.file$new_disposition_date[i]
 }
 
-# Assert that all control numbers now only have one associated
-# 'shipment_date'
+# Assert that all control numbers now only have one associated 'shipment_date'
 lemis.grouped <- lemis %>%
   mutate_at(
     c("country_imp_exp",
