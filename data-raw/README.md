@@ -16,6 +16,6 @@ The scripts in this directory import, clean, and process the data for the **lemi
 
 Finally, `data-raw/` contains two supplemental scripts related to **lemis** package development:
 
-1) `scrape_codes.R` uses the **tabulizer** package to extract text from USFWS codebooks (in PDF form) and generates `lemis_codes()` and `lemis_metadata()`. 
+1) `scrape_codes.R` uses the [`tabulizer`](https://github.com/ropensci/tabulizer) package to extract text from USFWS codebooks (in PDF form) and generates `lemis_codes()` and `lemis_metadata()`. 
 
 2) `validation_plots.R` generates visualizations (in `data-raw/validation_plots/`) that are useful for confirming data quality prior to a data release.
