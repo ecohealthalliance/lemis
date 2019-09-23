@@ -17,6 +17,11 @@ al. 2017)](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5357285/)
 provides a broad introduction to this data and its relevance to
 infectious disease research specifically.
 
+Both the raw LEMIS data and the final, cleaned dataset accessed with
+this package are available via a Zeonodo data repository: [United States
+LEMIS wildlife trade data curated by EcoHealth
+Alliance](https://doi.org/10.5281/zenodo.3387661).
+
 ## Installation
 
 Install the **lemis** package with this command:
@@ -24,11 +29,6 @@ Install the **lemis** package with this command:
 ``` r
 devtools::install_github("ecohealthalliance/lemis")
 ```
-
-As this is currently a private repository, you must have a GitHub
-personal access token set up to install and use the package.
-Instructions can be found
-[here](http://happygitwithr.com/github-pat.html#step-by-step).
 
 ## Usage
 
