@@ -33,10 +33,4 @@ jobs:
       - store_artifacts:
           path: /root/main/artifacts/
           destination: artifacts
-      - deploy:
-          name: "Deploy Shiny App"
-          command: |
-            Rscript /root/main/inst/shiny/preprocess.R
-            scp -r -P 22022 -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no /root/main/inst/shiny/* noamross@aegypti.ecohealthalliance.org:~/ShinyApps/lemisapp/
-
 
