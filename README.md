@@ -3,11 +3,14 @@
 
 # lemis
 
-[![CircleCI](https://circleci.com/gh/ecohealthalliance/lemis.svg?style=shield&circle-token=23cd13e8d5276a8100a83984982d065d1773fd77)](https://circleci.com/gh/ecohealthalliance/lemis)
+<!-- badges: start -->
 
+[![CircleCI](https://circleci.com/gh/ecohealthalliance/lemis.svg?style=shield&circle-token=23cd13e8d5276a8100a83984982d065d1773fd77)](https://circleci.com/gh/ecohealthalliance/lemis)
 [![Project Status: Active – The project has reached a stable, usable
 state and is being actively
 developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
+
+<!-- badges: end -->
 
 Authors: *Noam Ross, Evan A. Eskew, Allison M. White, Carlos
 Zambrana-Torrelio*
