@@ -5,6 +5,10 @@
 
 [![CircleCI](https://circleci.com/gh/ecohealthalliance/lemis.svg?style=shield&circle-token=23cd13e8d5276a8100a83984982d065d1773fd77)](https://circleci.com/gh/ecohealthalliance/lemis)
 
+[![Project Status: Active – The project has reached a stable, usable
+state and is being actively
+developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
+
 Authors: *Noam Ross, Evan A. Eskew, Allison M. White, Carlos
 Zambrana-Torrelio*
 
@@ -12,10 +16,14 @@ The **lemis** R package provides access to the United States Fish and
 Wildlife Service’s (USFWS) Law Enforcement Management Information System
 (LEMIS) data on wildlife and wildlife product imports into the US. This
 data was obtained via more than 14 years of Freedom of Information Act
-(FOIA) requests by EcoHealth Alliance. Our [paper (Smith et
-al. 2017)](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5357285/)
-provides a broad introduction to this data and its relevance to
-infectious disease research specifically.
+(FOIA) requests by EcoHealth Alliance.
+
+A preprint describes the data used in this package in detail: [United
+States wildlife and wildlife product imports
+from 2000-2014](https://doi.org/10.1101/780197). In addition, our [paper
+(Smith et al. 2017)](https://doi.org/10.1007/s10393-017-1211-7) provides
+a broad introduction to the LEMIS data and its relevance to infectious
+disease research specifically.
 
 Both the raw LEMIS data and the final, cleaned dataset accessed with
 this package are available via a Zeonodo data repository: [United States
@@ -32,8 +40,8 @@ devtools::install_github("ecohealthalliance/lemis")
 
 ## Usage
 
-The main function in **lemis** is `lemis_data()`. This returns cleaned
-LEMIS data as a **dplyr** tibble.
+The main function in **lemis** is `lemis_data()`. This returns the
+cleaned LEMIS data as a **dplyr** tibble.
 
 **lemis** makes use of
 [**datastorr**](https://github.com/ropenscilabs/datastorr) to manage
@@ -56,9 +64,8 @@ all_lemis <- lemis_data() %>%
 
 Note that the full database will be ~1 GB in memory.
 
-See the
-[vignette](https://github.com/ecohealthalliance/lemis/tree/master/inst/doc/the-lemis-database.md)
-for a more in-depth tutorial and example use cases for the package.
+See the data paper [preprint](https://doi.org/10.1101/780197) for a more
+in-depth description and example use cases for the package data.
 
 ### Working with data versions
 
