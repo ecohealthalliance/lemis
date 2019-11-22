@@ -37,6 +37,46 @@ lemis_intermediate <- read_csv(
 #==============================================================================
 
 
+# Resolve cases where there is a species code provided, but no further
+# taxonomic information
+
+species_code_no_taxonomic_info <-
+  read_csv(
+    h("data-raw", "data", "species_code_no_taxonomic_info.csv"),
+    col_types = cols(.default = col_character())
+  ) %>%
+  mutate(
+    new_genus = tolower(new_genus),
+    new_species = tolower(new_species),
+    new_subspecies = tolower(new_subspecies)
+  )
+
+lemis_taxa_added <- lemis_intermediate %>%
+  left_join(
+    ., species_code_no_taxonomic_info,
+    by = c("species_code", "genus", "species",
+           "subspecies", "specific_name", "generic_name")
+  ) %>%
+  mutate(
+    genus =
+      ifelse(!is.na(new_genus), new_genus, genus),
+    species =
+      ifelse(!is.na(new_species), new_species, species),
+    subspecies =
+      ifelse(!is.na(new_subspecies), new_subspecies, subspecies),
+    specific_name =
+      ifelse(!is.na(new_specific_name), new_specific_name, specific_name),
+    generic_name =
+      ifelse(!is.na(new_generic_name), new_generic_name, generic_name)
+  ) %>%
+  select(
+    -c(new_genus, new_species, new_subspecies,
+       new_specific_name, new_generic_name)
+  )
+
+#==============================================================================
+
+
 # Join in broad USFWS taxonomic information
 
 # Generate a table of taxa information
@@ -58,7 +98,7 @@ taxa_code <-
   )
 
 # Join this table with the LEMIS data
-lemis_taxa_added <- lemis_intermediate %>%
+lemis_taxa_added <- lemis_taxa_added %>%
   left_join(., taxa_code, by = c("species_code" = "species_code_taxa"))
 
 #==============================================================================
@@ -74,7 +114,7 @@ lemis_taxa_added <- lemis_taxa_added %>%
     # convert relevant values in the species column to "sp."
     species = case_when(
       species %in%
-        c("?", "species", "sp", "spp", "spp.",
+        c("?", "species", "sp", "spp", "spp.", "undescribed sp.",
           "unknown", "(genus)") ~ "sp.",
       !is.na(genus) & is.na(species) ~ "sp.",
       TRUE ~ species

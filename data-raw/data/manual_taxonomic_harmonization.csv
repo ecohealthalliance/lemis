@@ -91,7 +91,6 @@ stylophora,contorta,NA,CAULIFLOWER,CORAL,coral,Anthozoa
 stylophora,sp.,NA,CAULIFLOWER,CORAL,coral,Anthozoa
 tropidopathes,saliciformis,NA,BLACK,CORAL,coral,Hydrozoa
 tubiporidae,sp.,NA,ORGAN-PIPE,CORALS,coral,Anthozoa
-NA,NA,NA,NA,NA,coral,NA
 conchylepes,conchylepes,NA,NA,CRUSTACEAN,crustacean,Maxillopoda
 conchylepes,conchylepes,NA,NA,SHELL,crustacean,Maxillopoda
 conchylepes,conchylepes,NA,NA,BARNACLE,crustacean,Maxillopoda
@@ -101,14 +100,12 @@ noncites entry,sp.,NA,NA,CRUSTACEAN,crustacean,NA
 platens,sp.,NA,NA,CRUSTACEAN,crustacean,Malacostraca
 solitariopagurus,sp.,NA,NA,CRAWFISH,crustacean,Malacostraca
 NA,NA,NA,"CRABS,LOBSTERS,",CRUSTACEANS,crustacean,Malacostraca
-NA,NA,NA,NA,NA,crustacean,NA
 asterina,sp.,NA,NA,STARFISH,echinoderms,Asteroidea
 asteroidea,sp.,NA,NA,STARFISH,echinoderms,Asteroidea
 diadema,ceylonica,NA,NA,ECHINODERM,echinoderms,Echinoidea
 diadema,ceylonica,NA,SEA,URCHIN,echinoderms,Echinoidea
 diadema,sp.,NA,NA,ECHINODERM,echinoderms,Echinoidea
 diadema,sp.,NA,SEA,URCHIN,echinoderms,Echinoidea
-NA,NA,NA,NA,NA,echinoderms,NA
 acipenseriformes,sp.,NA,NA,STURGEONS,fish,Actinopterygii
 all live tropical fish,(including goldfish),NA,NA,NA,fish,Actinopterygii
 brachydanio,sp.,NA,NA,DANIO,fish,Actinopterygii
@@ -137,7 +134,6 @@ various fish,sp.,NA,NA,CATFISH,fish,Actinopterygii
 NA,NA,NA,NON-CITES,FISH,fish,NA
 NA,NA,NA,MARINE GAME,FISH,fish,NA
 NA,NA,NA,FISH,ALL FISH,fish,NA
-NA,NA,NA,NA,NA,fish,NA
 athyma,perius,NA,NA,BUTTERFLY,insect,Insecta
 athyma,sp.,NA,NA,BUTTERFLY,insect,Insecta
 callicore,sp.,NA,NA,BUTTERFLY,insect,Insecta
@@ -192,7 +188,6 @@ other live inverts,in trop fish &,other shipments,NA,NA,other,NA
 xenoturbella,sp.,NA,NA,FLATWORM,other,NA
 NA,NA,NA,"(NOT LIVE,PRODUCT)",OTHER INVERTEBRATE,other,NA
 NA,NA,NA,NA,ALL SPECIES,other,NA
-NA,NA,NA,NA,NA,other,NA
 all plants,sp.,NA,NA,NA,plant,NA
 alluaudia,sp.,NA,NA,ALLUAUDIA,plant,Magnoliopsida
 avonia,sp.,NA,NA,NA,plant,Magnoliopsida
@@ -289,7 +284,6 @@ tritonia,sp.,NA,SEA,SLUG,shell,Gastropoda
 viveora,sp.,NA,TRAPDOOR,SNAIL,shell,Gastropoda
 zaplagius,navicula,NA,LANDSNAIL,SHELL,shell,Gastropoda
 NA,NA,NA,SHELLS,MOLLUSCS,shell,NA
-NA,NA,NA,NA,NA,shell,NA
 centruroides,sp.,NA,NA,SCORPION,spider,Arachnida
 centruroides,sp.,NA,BARK,SCORPION,spider,Arachnida
 chilocosmia,sp.,NA,NA,SPIDER,spider,Arachnida
