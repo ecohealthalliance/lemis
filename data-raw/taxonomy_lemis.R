@@ -470,6 +470,28 @@ error_checking <- lemis_taxa_added %>%
   count() %>%
   arrange(class)
 
+# Where possible, use "class" information to add "taxa" information to
+# missing records since "class" always maps unambiguously to "taxa"
+manual_class_taxa_additions <- data.frame(
+  class = c("Cubozoa", "Gymnolaemata", "Hexactinellida", "Ostracoda", "Pycnogonida", "Thaliacea", "Trematoda"),
+  taxa = c("coral", "other", "other", "crustacean", "other", "other", "other")
+)
+
+lemis_taxa_added <- lemis_taxa_added %>%
+  left_join(
+    .,
+    error_checking %>%
+      filter(!is.na(class)) %>%
+      select(class, taxa) %>%
+      bind_rows(manual_class_taxa_additions) %>%
+      rename(new_taxa = taxa),
+    by = c("class")
+  ) %>%
+  mutate(
+    taxa = ifelse(is.na(taxa) & !is.na(new_taxa), new_taxa, taxa),
+  ) %>%
+  select(-new_taxa)
+
 # Ensure that all "class" values appearing in the data are valid
 # COL classes
 col.unique.classes <- taxa_tbl("col") %>%
@@ -480,6 +502,10 @@ col.unique.classes <- c(col.unique.classes, "Phaeophyceae", "Ulvophyceae")
 lemis.unique.classes <- unique(lemis_taxa_added$class)
 
 assert_that(all(lemis.unique.classes %in% col.unique.classes))
+
+# Ensure that the data frame to be saved has the same number of rows as
+# "lemis_intermediate"
+assert_that(nrow(lemis_intermediate) == nrow(lemis_taxa_added))
 
 #==============================================================================
 
