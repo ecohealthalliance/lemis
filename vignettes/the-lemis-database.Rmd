@@ -162,7 +162,7 @@ Lots o' bears, it seems.
 
 ```{r}
 lemis_data() %>% 
-  filter(genus == "pteropus", import_export == "I") %>% 
+  filter(genus == "Pteropus", import_export == "I") %>% 
   collect() %>% 
   group_by(description) %>% 
   summarize(shipments = n()) %>% 
@@ -188,8 +188,7 @@ library(taxize)
 bat_genera <- downstream(get_tsn("Chiroptera", rows=1), downto = "Genus", db = "itis") %>% 
   `[[`(1)%>% 
   filter(rankname == "genus") %>% 
-  pull(taxonname) %>% 
-  stri_trans_tolower()
+  pull(taxonname)
 lemis_data() %>% 
   filter(import_export == "I", description == "LIV", genus %in% bat_genera) %>% 
   group_by(country_origin) %>% 

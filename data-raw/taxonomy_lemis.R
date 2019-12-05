@@ -4,7 +4,7 @@
 # Load packages
 library(assertthat)
 library(dplyr)
-library(googlesheets)
+library(googlesheets4)
 library(readr)
 library(stringr)
 library(taxadb)
@@ -37,7 +37,7 @@ lemis_intermediate <- read_csv(
 #==============================================================================
 
 
-# Resolve cases where there is a species code provided, but no further
+# Resolve cases where there is a species code provided but no further
 # taxonomic information
 
 species_code_no_taxonomic_info <-
@@ -230,10 +230,17 @@ col_itis_harmonize <- taxatbl1 %>%
   filter(!is.na(class_col), !is.na(class_itis)) %>%
   select(class_col, class_itis) %>%
   distinct() %>%
-  arrange(class_col) %>%
-  # Filter out Chondrichthyes since this is the only ITIS class that
-  # does not map unambiguously onto COL taxonomy
-  filter(class_itis != "Chondrichthyes")
+  arrange(class_col)
+
+# Filter out ITIS classes that do not map unambiguously onto COL taxonomy
+ambiguous_itis_classes <- col_itis_harmonize %>%
+  group_by(class_itis) %>%
+  count() %>%
+  filter(n > 1) %>%
+  pull(class_itis)
+
+col_itis_harmonize <- col_itis_harmonize %>%
+  filter(!(class_itis %in% ambiguous_itis_classes))
 
 assert_that(
   nrow(col_itis_harmonize) ==
@@ -266,6 +273,7 @@ genera_to_resolve <- taxatbl2 %>%
 
 # Gather genera-level class information from COL database
 generatbl_col <- taxa_tbl("col") %>%
+  filter(taxonomicStatus == "accepted") %>%
   distinct(class, genus) %>%
   arrange(genus, class) %>%
   filter(
@@ -278,6 +286,7 @@ generatbl_col <- taxa_tbl("col") %>%
 
 # Gather genera-level class information from ITIS database
 generatbl_itis <- taxa_tbl("itis") %>%
+  filter(taxonomicStatus == "accepted") %>%
   distinct(class, genus) %>%
   arrange(genus, class) %>%
   filter(
@@ -290,15 +299,21 @@ generatbl_itis <- taxa_tbl("itis") %>%
 
 # Remove any genera for which there are multiple potential class
 # affiliations to ensure our eventual taxonomic calls are unambiguous
-ambiguous_genera_col <- generatbl_col %>%
+ambiguous_genera_col <- taxa_tbl("col") %>%
+  filter(taxonomicStatus != "provisionally accepted name") %>%
+  distinct(class, genus) %>%
+  arrange(genus, class) %>%
   group_by(genus) %>%
-  summarize(n = n_distinct(class_col)) %>%
+  summarize(n = n_distinct(class)) %>%
   filter(n > 1) %>%
   pull(genus)
 
-ambiguous_genera_itis <- generatbl_itis %>%
+ambiguous_genera_itis <- taxa_tbl("itis") %>%
+  filter(taxonomicStatus != "provisionally accepted name") %>%
+  distinct(class, genus) %>%
+  arrange(genus, class) %>%
   group_by(genus) %>%
-  summarize(n = n_distinct(class_itis)) %>%
+  summarize(n = n_distinct(class)) %>%
   filter(n > 1) %>%
   pull(genus)
 
@@ -438,8 +453,10 @@ unclassified <- lemis_taxa_added %>%
 
 # Download manually-curated information from Google Sheets and load it as
 # a local CSV
-gs_title("LEMIS manual taxonomic harmonization") %>%
-  gs_read(., col_types = cols(.default = col_character())) %>%
+read_sheet(
+  "1NR_vIhqvNgI8aOOTN4cQNdzS1TwPGBuwEPS8z-MZ-jw",
+  col_types = "c", na = "NA"
+) %>%
   write_csv(., h("data-raw", "data", "manual_taxonomic_harmonization.csv"))
 
 manual_tax <- read_csv(
@@ -488,7 +505,7 @@ lemis_taxa_added <- lemis_taxa_added %>%
     by = c("class")
   ) %>%
   mutate(
-    taxa = ifelse(is.na(taxa) & !is.na(new_taxa), new_taxa, taxa),
+    taxa = ifelse(is.na(taxa) & !is.na(new_taxa), new_taxa, taxa)
   ) %>%
   select(-new_taxa)
 
@@ -497,9 +514,12 @@ lemis_taxa_added <- lemis_taxa_added %>%
 col.unique.classes <- taxa_tbl("col") %>%
   pull(class) %>%
   unique()
-col.unique.classes <- c(col.unique.classes, "Phaeophyceae", "Ulvophyceae")
+col.unique.classes <- sort(c(col.unique.classes, "Phaeophyceae", "Ulvophyceae"))
 
-lemis.unique.classes <- unique(lemis_taxa_added$class)
+lemis.unique.classes <- lemis_taxa_added %>%
+  distinct(class) %>%
+  filter(!is.na(class)) %>%
+  pull(class)
 
 assert_that(all(lemis.unique.classes %in% col.unique.classes))
 
