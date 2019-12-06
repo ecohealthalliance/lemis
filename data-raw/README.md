@@ -12,7 +12,7 @@ The scripts in this directory import, clean, and process the data for the **lemi
   
     Once the `.fst` file is generated, it can be attached to the package as a release using `datastorr::github_release_create()`. Please read the help file for this function before doing so. Also, before release, one should update the package version in `DESCRIPTION` and commit all changes to GitHub.
 
-    v1.0.0 of **lemis** has the 2000-2014 data set.
+    v1.1.0 of **lemis** has the 2000-2014 data set.
 
 Finally, `data-raw/` contains two supplemental scripts related to **lemis** package development:
 

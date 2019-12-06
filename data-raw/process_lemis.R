@@ -32,6 +32,6 @@ lemis_for_compression <- read_csv(
 write_fst(lemis_for_compression, h("data-raw", "lemis.fst"), compress = 100)
 
 # Release the compressed data
-# lemis:::lemis_release(description = "First package data for public release (v1.0.0)",
+# lemis:::lemis_release(description = "Data release revisions following peer review (v1.1.0)",
 #                       filename = h("data-raw", "lemis.fst"),
 #                       target = "master", ignore_dirty = FALSE)

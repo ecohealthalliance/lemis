@@ -1,7 +1,7 @@
 Package: lemis
 Type: Package
 Title: The LEMIS Wildlife Trade Database
-Version: 1.0.0
+Version: 1.1.0
 Authors@R: c(
     person("Noam", "Ross", , "ross@ecohealthalliance.org", role = c("aut", "cre")),
     person("Evan A.", "Eskew", , "eskew@ecohealthalliance.org", role = c("aut")),

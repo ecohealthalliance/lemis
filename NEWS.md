@@ -1,3 +1,7 @@
+# lemis 1.1.0
+
+This data release has the same temporal scope as the v1.0.0 data (2000-2014) but with minor revisions (mainly related to taxonomy calling) resulting from peer review feedback.
+
 # lemis 1.0.0
 
 This is the first version of the **lemis** data intended for public release. Changes include:
