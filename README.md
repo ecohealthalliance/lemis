@@ -21,12 +21,12 @@ Wildlife Service’s (USFWS) Law Enforcement Management Information System
 data was obtained via more than 14 years of Freedom of Information Act
 (FOIA) requests by EcoHealth Alliance.
 
-A preprint describes the data used in this package in detail: [United
+A manuscript describes the data used in this package in detail: [United
 States wildlife and wildlife product imports
-from 2000-2014](https://doi.org/10.1101/780197). In addition, [Smith et
-al. (2017)](https://doi.org/10.1007/s10393-017-1211-7) provide a broad
-introduction to the LEMIS data and its relevance to infectious disease
-research specifically.
+from 2000-2014](https://doi.org/10.1038/s41597-020-0354-5). In addition,
+[Smith et al. (2017)](https://doi.org/10.1007/s10393-017-1211-7) provide
+a broad introduction to the LEMIS data and its relevance to infectious
+disease research specifically.
 
 Both the raw LEMIS data and the final, cleaned dataset accessed with
 this package are available via a Zenodo data repository: [United States
@@ -74,8 +74,8 @@ all_lemis <- lemis_data() %>%
 
 Note that the full database will be ~1 GB in memory.
 
-See the data paper [preprint](https://doi.org/10.1101/780197) for a more
-in-depth description and example use cases for the package data.
+See the [data paper](https://doi.org/10.1038/s41597-020-0354-5) for a
+more in-depth description and example use cases for the package data.
 
 ### Working with data versions
 
