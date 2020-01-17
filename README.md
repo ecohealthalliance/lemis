@@ -1,39 +1,22 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-
-# lemis
+lemis
+=====
 
 <!-- badges: start -->
-
-[![CircleCI](https://circleci.com/gh/ecohealthalliance/lemis.svg?style=shield&circle-token=23cd13e8d5276a8100a83984982d065d1773fd77)](https://circleci.com/gh/ecohealthalliance/lemis)
-[![Project Status: Active – The project has reached a stable, usable
-state and is being actively
-developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
+[![CircleCI](https://circleci.com/gh/ecohealthalliance/lemis.svg?style=shield&circle-token=23cd13e8d5276a8100a83984982d065d1773fd77)](https://circleci.com/gh/ecohealthalliance/lemis) [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 
 <!-- badges: end -->
+Authors: *Noam Ross, Evan A. Eskew, Allison M. White, Carlos Zambrana-Torrelio*
 
-Authors: *Noam Ross, Evan A. Eskew, Allison M. White, Carlos
-Zambrana-Torrelio*
+The **lemis** R package provides access to the United States Fish and Wildlife Service's (USFWS) Law Enforcement Management Information System (LEMIS) data on wildlife and wildlife product imports into the US. This data was obtained via more than 14 years of Freedom of Information Act (FOIA) requests by EcoHealth Alliance.
 
-The **lemis** R package provides access to the United States Fish and
-Wildlife Service’s (USFWS) Law Enforcement Management Information System
-(LEMIS) data on wildlife and wildlife product imports into the US. This
-data was obtained via more than 14 years of Freedom of Information Act
-(FOIA) requests by EcoHealth Alliance.
+A manuscript describes the data used in this package in detail: [United States wildlife and wildlife product imports from 2000-2014](https://doi.org/10.1038/s41597-020-0354-5). In addition, [Smith et al. (2017)](https://doi.org/10.1007/s10393-017-1211-7) provide a broad introduction to the LEMIS data and its relevance to infectious disease research specifically.
 
-A manuscript describes the data used in this package in detail: [United
-States wildlife and wildlife product imports
-from 2000-2014](https://doi.org/10.1038/s41597-020-0354-5). In addition,
-[Smith et al. (2017)](https://doi.org/10.1007/s10393-017-1211-7) provide
-a broad introduction to the LEMIS data and its relevance to infectious
-disease research specifically.
+Both the raw LEMIS data and the final, cleaned dataset accessed with this package are available via a Zenodo data repository: [United States LEMIS wildlife trade data curated by EcoHealth Alliance](https://doi.org/10.5281/zenodo.3387660).
 
-Both the raw LEMIS data and the final, cleaned dataset accessed with
-this package are available via a Zenodo data repository: [United States
-LEMIS wildlife trade data curated by EcoHealth
-Alliance](https://doi.org/10.5281/zenodo.3387661).
-
-## Installation
+Installation
+------------
 
 Install the **lemis** package with this command:
 
@@ -41,31 +24,16 @@ Install the **lemis** package with this command:
 devtools::install_github("ecohealthalliance/lemis")
 ```
 
-In addition, *users must have a GitHub personal access token* set up to
-ensure complete package functionality. Detailed instructions for
-generating a personal access token can be found
-[here](http://happygitwithr.com/github-pat.html#step-by-step). Note,
-when setting up your token, selecting the `repo` scope should be
-sufficient for **lemis** package use.
+In addition, *users must have a GitHub personal access token* set up to ensure complete package functionality. Detailed instructions for generating a personal access token can be found [here](http://happygitwithr.com/github-pat.html#step-by-step). Note, when setting up your token, selecting the `repo` scope should be sufficient for **lemis** package use.
 
-## Usage
+Usage
+-----
 
-The main function in **lemis** is `lemis_data()`. This returns the
-cleaned LEMIS data as a **dplyr** tibble.
+The main function in **lemis** is `lemis_data()`. This returns the cleaned LEMIS data as a **dplyr** tibble.
 
-**lemis** makes use of
-[**datastorr**](https://github.com/ropenscilabs/datastorr) to manage
-data download. The first time you run `lemis_data()`, the package will
-download the most recent version of the database (~200 MB at present).
-Subsequent function calls will load the database from storage on your
-computer.
+**lemis** makes use of [**datastorr**](https://github.com/ropenscilabs/datastorr) to manage data download. The first time you run `lemis_data()`, the package will download the most recent version of the database (~200 MB at present). Subsequent function calls will load the database from storage on your computer.
 
-The **lemis** database is stored as an efficiently compressed [`.fst`
-file](https://github.com/fstpackage/fst), and loading it loads it a
-[remote dplyr source](https://github.com/krlmlr/fstplyr). This means
-that it does not load fully into memory but can be filtered and
-manipulated on-disk. If you wish to manipulate it as a data frame,
-simply call `dplyr::collect()` to load it fully into memory, like so:
+The **lemis** database is stored as an efficiently compressed [`.fst` file](https://github.com/fstpackage/fst), and loading it loads it a [remote dplyr source](https://github.com/krlmlr/fstplyr). This means that it does not load fully into memory but can be filtered and manipulated on-disk. If you wish to manipulate it as a data frame, simply call `dplyr::collect()` to load it fully into memory, like so:
 
 ``` r
 all_lemis <- lemis_data() %>% 
@@ -74,62 +42,34 @@ all_lemis <- lemis_data() %>%
 
 Note that the full database will be ~1 GB in memory.
 
-See the [data paper](https://doi.org/10.1038/s41597-020-0354-5) for a
-more in-depth description and example use cases for the package data.
+See the [data paper](https://doi.org/10.1038/s41597-020-0354-5) for a more in-depth description and example use cases for the package data.
 
 ### Working with data versions
 
-While most users will only want to access the most recent **lemis** data
-version, the package provides access to multiple [data
-releases](https://github.com/ecohealthalliance/lemis/releases) made
-throughout the package development cycle. Users can view all available
-data releases using `lemis_versions(local = FALSE)`, while
-`lemis_versions()` will show only data versions currently available
-locally on the user’s machine. In order to download and subsequently
-manipulate older data versions, the desired data release needs to be
-specified:
+While most users will only want to access the most recent **lemis** data version, the package provides access to multiple [data releases](https://github.com/ecohealthalliance/lemis/releases) made throughout the package development cycle. Users can view all available data releases using `lemis_versions(local = FALSE)`, while `lemis_versions()` will show only data versions currently available locally on the user's machine. In order to download and subsequently manipulate older data versions, the desired data release needs to be specified:
 
 ``` r
 lemis_data("0.2.0")
 ```
 
-Conversely, the `lemis_del()` function can be used to delete a specific
-data version from the user’s machine. For users who wish to fully reset
-their local **lemis** data files, the following code will delete *all*
-local data versions and download only the most recent data release:
+Conversely, the `lemis_del()` function can be used to delete a specific data version from the user's machine. For users who wish to fully reset their local **lemis** data files, the following code will delete *all* local data versions and download only the most recent data release:
 
 ``` r
 lemis_del(version = NULL)
 lemis_data()
 ```
 
-To help confirm data versions, `lemis_version_current()` shows the local
-data version that is returned by default when the user runs
-`lemis_data()`.
+To help confirm data versions, `lemis_version_current()` shows the local data version that is returned by default when the user runs `lemis_data()`.
 
 ### Metadata and background on data preparation
 
-`lemis_metadata()` provides a brief description of each of the data
-fields in `lemis_data()`, while `lemis_codes()` returns a data frame
-with the codes (abbreviations) used by USFWS in the various columns.
-This is useful for lookup or joining with the main data for more
-descriptive outputs. The `?lemis_codes` help file also has a searchable
-table of USFWS codes. See the [developer README
-file](https://github.com/ecohealthalliance/lemis/tree/master/data-raw/README.md)
-for more on the data cleaning workflow used to process raw LEMIS data
-into the `.fst` database files that are accessed via the **lemis**
-package.
+`lemis_metadata()` provides a brief description of each of the data fields in `lemis_data()`, while `lemis_codes()` returns a data frame with the codes (abbreviations) used by USFWS in the various columns. This is useful for lookup or joining with the main data for more descriptive outputs. The `?lemis_codes` help file also has a searchable table of USFWS codes. See the [developer README file](https://github.com/ecohealthalliance/lemis/tree/master/data-raw/README.md) for more on the data cleaning workflow used to process raw LEMIS data into the `.fst` database files that are accessed via the **lemis** package.
 
-## About
+About
+-----
 
-Please give us feedback or ask questions by filing
-[issues](https://github.com/ecohealthalliance/lemis/issues).
+Please give us feedback or ask questions by filing [issues](https://github.com/ecohealthalliance/lemis/issues).
 
-**lemis** is developed at [EcoHealth
-Alliance](https://github.com/ecohealthalliance). Please note that this
-project is released with a [Contributor Code of
-Conduct](CODE_OF_CONDUCT.md). By participating in this project, you
-agree to abide by its
-terms.
+**lemis** is developed at [EcoHealth Alliance](https://github.com/ecohealthalliance). Please note that this project is released with a [Contributor Code of Conduct](CODE_OF_CONDUCT.md). By participating in this project, you agree to abide by its terms.
 
 [![http://www.ecohealthalliance.org/](inst/figs/eha-footer.png)](http://www.ecohealthalliance.org/)

@@ -36,7 +36,7 @@ The **lemis** R package provides access to the United States Fish and Wildlife S
 
 A manuscript describes the data used in this package in detail: [United States wildlife and wildlife product imports from 2000-2014](https://doi.org/10.1038/s41597-020-0354-5). In addition, [Smith et al. (2017)](https://doi.org/10.1007/s10393-017-1211-7) provide a broad introduction to the LEMIS data and its relevance to infectious disease research specifically.
 
-Both the raw LEMIS data and the final, cleaned dataset accessed with this package are available via a Zenodo data repository: [United States LEMIS wildlife trade data curated by EcoHealth Alliance](https://doi.org/10.5281/zenodo.3387661). 
+Both the raw LEMIS data and the final, cleaned dataset accessed with this package are available via a Zenodo data repository: [United States LEMIS wildlife trade data curated by EcoHealth Alliance](https://doi.org/10.5281/zenodo.3387660). 
 
 ## Installation
 
