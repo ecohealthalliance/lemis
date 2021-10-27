@@ -55,8 +55,8 @@ lemis_del <- function(version, path = NULL) {
 lemis_info <- function(path) {
   datastorr::github_release_info(
     "ecohealthalliance/lemis",
-    private = TRUE,
-    filename = NULL,
+    private = FALSE,
+    filename = "lemis.fst",
     read = lemis::fst_tbl,
     path = path
   )
